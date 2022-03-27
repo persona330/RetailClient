@@ -1,4 +1,4 @@
-# retail
+# RetailClient
 
 A new Flutter project.
 
