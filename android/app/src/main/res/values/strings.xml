@@ -1,0 +1,21 @@
+<resources>
+    <string name="applicationName">Товар</string>
+    <string name="input">Введите</string>
+    <string name="read">Отправить</string>
+    <string name="write">Записать</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="add">Добавить</string>
+    <string name="product">Продукт</string>
+    <string name="search">Поиск</string>
+    <string name="item1">Очистить</string>
+    <string name="item2">Элемент 2</string>
+    <string name="item3">Выход</string>
+    <string name="context_item1">Элемент 1</string>
+    <string name="context_item2">Элемент 2</string>
+    <string name="context_item3">Элемент 3</string>
+    <string name="edit_object_item">Редактировать</string>
+    <string name="save_object_item">Сохранить</string>
+    <string name="close_object_item">Закрыть</string>
+    <string name="empty"></string>
+</resources>
