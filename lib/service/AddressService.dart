@@ -3,13 +3,18 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-class AddressService {
-  final String url = 'http://localhost:8080/addresses';
-  final String url1 = 'http://localhost:8080/addresses/1';
+class AddressService
+{
+  final String _url = 'http://localhost:8080/addresses';
+  final String _url1 = 'http://localhost:8080/addresses/1';
+  Map<String, String> headers = {
+    "content-type": "application/json",
+    "accept": "application/json",
+  };
 
   Future<Address> getAddress() async
   {
-    final response = await http.get(Uri.parse(url1));
+    final response = await http.get(Uri.parse(_url1));
 
     if (response.statusCode == 200)
     {
@@ -21,7 +26,7 @@ class AddressService {
 
   Future<List<Address>> fetchAddresses() async
   {
-    final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(_url));
 
     if (response.statusCode == 200)
     {

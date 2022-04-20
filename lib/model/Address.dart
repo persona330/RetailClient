@@ -53,4 +53,16 @@ class Address
   String get getCity => city;
   String get getNation => nation;
 
+  @override
+  String toString() {
+    return 'Address{id: $idAddress,'
+        ' apartment: $apartment,'
+        ' entrance: $entrance,'
+        ' house: $house,'
+        ' street: $street'
+        ' region: $region'
+        ' city: $city'
+        ' nation: $nation'
+        '}';
+  }
 }
