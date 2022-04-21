@@ -40,4 +40,17 @@ class AddressService
       throw Exception('Failed to load server data');
     }
   }
+
+  Future<Address> postAddress() async
+  {
+    final response = await http.post(Uri.parse(_url));
+
+    if (response.statusCode == 200)
+    {
+      return Address.fromJson(jsonDecode(response.body));
+
+    } else {
+      throw Exception('Failed to load server data');
+    }
+  }
 }
