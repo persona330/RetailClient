@@ -34,11 +34,7 @@ class _CreateAddressPage extends State<AddressPage>
 
 
   _changeApartment() { setState(() => _apartment = _apartmentController.text); }
-  _changeEntrance()
-  {
-    setState(() => _entrance = _entranceController.text);
-   // print(int.parse(_entrance));
-  }
+  _changeEntrance() {setState(() => _entrance = _entranceController.text);}
   _changeHouse() {setState(() => _house = _houseController.text);}
   _changeStreet() { setState(() => _street = _streetController.text); }
   _changeRegion() { setState(() => _region = _regionController.text); }
@@ -77,11 +73,11 @@ class _CreateAddressPage extends State<AddressPage>
     // Scaffold - заполняет все свободное пространство
     // Нужен для отображения основных виджетов
     return Scaffold(
-      appBar: AppBar(title: Text('Создание адреса')),
+      appBar: AppBar(title: const Text('Создание адреса')),
       body:  Scrollbar(
           child: Container(
             // this.left, this.top, this.right, this.bottom
-            padding: EdgeInsets.fromLTRB(50, 30, 500, 0),
+            padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
             child: Column (
               children: [
                 Text("Адрес: $_apartment, $_entrance, $_house, $_street, $_region, $_city, $_nation", style: TextStyle(fontSize: 14)),
@@ -141,7 +137,7 @@ class _CreateAddressPage extends State<AddressPage>
                   controller: _nationController,
                   textInputAction: TextInputAction.done,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
