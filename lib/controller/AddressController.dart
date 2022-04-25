@@ -8,5 +8,4 @@ class AddressController
 
   AddressController();
 
-  //AddressController currentState = Ad
 }

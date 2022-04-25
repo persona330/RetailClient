@@ -1,13 +1,13 @@
 class Address
 {
-  final int idAddress;
-  final String apartment;
-  final int entrance;
-  final String house;
-  final String street;
-  final String region;
-  final String city;
-  final String nation;
+  final int? idAddress;
+  final String? apartment;
+  final int? entrance;
+  final String? house;
+  final String? street;
+  final String? region;
+  final String? city;
+  final String? nation;
 
   Address({
     required this.idAddress,
@@ -44,25 +44,12 @@ class Address
     "id": idAddress,
   };
 
-  int get getIdAddress => idAddress;
-  String get getApartment => apartment;
-  int get getEntrance => entrance;
-  String get getHouse => house;
-  String get getStreet => street;
-  String get getRegion => region;
-  String get getCity => city;
-  String get getNation => nation;
-
-  @override
-  String toString() {
-    return 'Address{id: $idAddress,'
-        ' apartment: $apartment,'
-        ' entrance: $entrance,'
-        ' house: $house,'
-        ' street: $street'
-        ' region: $region'
-        ' city: $city'
-        ' nation: $nation'
-        '}';
-  }
+  int? get getIdAddress => idAddress;
+  String? get getApartment => apartment;
+  int? get getEntrance => entrance;
+  String? get getHouse => house;
+  String? get getStreet => street;
+  String? get getRegion => region;
+  String? get getCity => city;
+  String? get getNation => nation;
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/page/CreateAddressPage.dart';
+import 'package:retail/page/AddressPage.dart';
 import 'package:retail/service/AddressService.dart';
 
 // StatefulWidget - для изменяемых виджетов
@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget
 // Домашняя страница
 class _HomePageState extends State<HomePage>
 {
-  AddressService addressService = AddressService();
+  final AddressService _addressService = AddressService();
 
   late Future <List<Address>> _futureAddresses;
   late Future <Address> _futureAddress;
@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage>
   void initState()
   {
     super.initState();
-    //_futureAddress = addressService.getAddress();
-    _futureAddresses = addressService.fetchAddresses();
+    //_futureAddress = _addressService.getAddress();
+    _futureAddresses = _addressService.fetchAddresses();
   }
   // Вызывает перестроение виджета при изменении состояния через функцию build() в классе состояния
   void _f1() {setState(() {});}
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()  {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAddressPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddressPage()));
         },
         tooltip: 'Создать адрес',
         child: const Icon(Icons.add),

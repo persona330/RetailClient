@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/CreateAddressPage.dart';
+import 'package:retail/page/AddressPage.dart';
 import 'package:retail/page/HomePage.dart';
 
 // Запускает главное окно приложения. Принимает виджет.
