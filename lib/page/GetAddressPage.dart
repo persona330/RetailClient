@@ -62,7 +62,7 @@ class _GetAddressPageState extends State<GetAddressPage>
                 OutlinedButton(
                   onPressed: ()
                   {
-                    _futureAddress = _addressService.getAddress(int.parse(_idAddress)));
+                    _futureAddress = _addressService.getAddress(int.parse(_idAddress));
                   },
                   child: const Text('Найти'),
                 ),
