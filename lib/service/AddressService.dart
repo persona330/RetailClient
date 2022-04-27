@@ -12,10 +12,10 @@ class AddressService
     "accept": "application/json",
   };
 
-  Future<Address> getAddress() async
+  Future<Address> getAddress(int id) async
   {
-    final response = await http.get(Uri.parse(_url1));
-
+    final response = await http.get(Uri.parse(_url + "/$id"));
+    //статус 200 - хорошо
     if (response.statusCode == 200)
     {
       return Address.fromJson(jsonDecode(response.body));
@@ -24,7 +24,7 @@ class AddressService
     }
   }
 
-  Future<List<Address>> fetchAddresses() async
+  Future<List<Address>> getAddresses() async
   {
     final response = await http.get(Uri.parse(_url));
 
@@ -40,12 +40,23 @@ class AddressService
   Future<Address> addAddress(Address address) async
   {
     final response = await http.post(Uri.parse(_url), headers: headers, body: json.encode(address.toJson()));
-
+    //статус 201 - создан
     if (response.statusCode == 201)
     {
       return Address.fromJson(jsonDecode(response.body));
     } else {
-      // return PostAddFailure();
+      throw Exception('Failed to load server data');
+    }
+  }
+
+  Future<Address> putAddress(Address address) async
+  {
+    final response = await http.put(Uri.parse(_url1), headers: headers, body: json.encode(address.toJson()));
+
+    if (response.statusCode == 200)
+    {
+      return Address.fromJson(jsonDecode(response.body));
+    } else {
       throw Exception('Failed to load server data');
     }
   }

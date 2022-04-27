@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/service/AddressService.dart';
 
-class AddressPage extends StatefulWidget
+class CreateAddressPage extends StatefulWidget
 {
-  AddressPage({Key? key}) : super(key: key);
+  CreateAddressPage({Key? key}) : super(key: key);
 
   @override
-  _CreateAddressPage createState() => _CreateAddressPage();
+  _CreateAddressPageState createState() => _CreateAddressPageState();
 }
 
-class _CreateAddressPage extends State<AddressPage>
+class _CreateAddressPageState extends State<CreateAddressPage>
 {
   final AddressService _addressService = AddressService();
 
@@ -147,6 +147,14 @@ class _CreateAddressPage extends State<AddressPage>
                     Address address = Address(idAddress: _idAddress, apartment: _apartment, entrance: _entInt, house: _house, street: _street, region: _region, city: _city, nation: _nation);
                     //Address address = Address(idAddress: 3, apartment: "12a", entrance: 1, house: "12", street: "ghj", region: "gjg", city: "fhgfh", nation: "jhl");
                     _addressService.addAddress(address);
+
+                    /*showDialog(context: context, builder: (BuildContext context)
+                    {
+                      return AlertDialog(
+                        title: Text("Сохранение"),
+                        content: Text("Адрес добавлен"),
+                      );
+                    });*/
                   },
                   child: const Text('Отправить'),
                 ),
