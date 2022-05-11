@@ -169,13 +169,6 @@ class _AddressPageState extends State<AddressPage>
                                     subtitle: Text(
                                       'Тело: $body\n'
                                     ),
-                                    /*subtitle: Text(
-                                      'Квартира: $apartment\n'
-                                          ' Подъезд: $entrance\n'
-                                          ' Дом: $house\n'
-                                          ' Улица: $street\n'
-                                          ' Регион: $region\n',
-                                    ),*/
                                     trailing: Text('$id'),
                                   ),
                                 ),);

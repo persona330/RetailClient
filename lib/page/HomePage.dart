@@ -4,6 +4,7 @@ import 'package:retail/page/AddreessPage.dart';
 import 'package:retail/page/CresteAddressPage.dart';
 import 'package:retail/page/GetAddressPage.dart';
 import 'package:retail/page/LIstPostPage.dart';
+import 'package:retail/page/ListAddressPage.dart';
 import 'package:retail/service/AddressService.dart';
 import 'package:flutter/services.dart';
 
@@ -25,10 +26,6 @@ class _HomePageState extends State<HomePage>
   {
     super.initState();
   }
-
-
-  // Вызывает перестроение виджета при изменении состояния через функцию build() в классе состояния
-  void _f1() {setState(() {});}
 
   @override
   Widget build(BuildContext context)
@@ -67,6 +64,7 @@ class _HomePageState extends State<HomePage>
               ListTile(
                 leading: Icon(Icons.account_circle),
                 title: Text('Profile'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListAddressPage())),
               ),
               ListTile(
                 leading: Icon(Icons.settings),

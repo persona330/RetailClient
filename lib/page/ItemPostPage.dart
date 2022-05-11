@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:retail/model/Post.dart';
 
-class PostListItem extends StatelessWidget {
+class ItemPostPage extends StatelessWidget {
 
   final Post post;
 
   // элемент списка отображает один пост
-  PostListItem(this.post);
+  ItemPostPage(this.post);
 
   Widget build(BuildContext context)
   {

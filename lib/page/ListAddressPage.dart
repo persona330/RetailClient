@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/controller/AddressController.dart';
 import 'package:retail/controller/PostController.dart';
+import 'package:retail/model/Address.dart';
 import 'package:retail/model/Post.dart';
+import 'package:retail/page/ItemAddressPage.dart';
 import 'package:retail/page/ItemPostPage.dart';
 import 'package:retail/page/ShowAddressPage.dart';
 
-class ListPostPage extends StatefulWidget
+class ListAddressPage extends StatefulWidget
 {
   @override
-  _ListPostPageState createState() => _ListPostPageState();
+  _ListAddressPageState createState() => _ListAddressPageState();
 }
 
 // не забываем расширяться от StateMVC
-class _ListPostPageState extends StateMVC {
+class _ListAddressPageState extends StateMVC {
 
   // ссылка на наш контроллер
   late PostController _controller;
 
   // передаем наш контроллер StateMVC конструктору и
   // получаем на него ссылку
-  _ListPostPageState() : super(PostController()) {
+  _ListAddressPageState() : super(PostController()) {
     _controller = controller as PostController;
   }
 
@@ -73,7 +76,7 @@ class _ListPostPageState extends StateMVC {
               {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ShowAddressPage(id: posts[index].id!, body: posts[index].body!)));
               },
-              child: ItemPostPage(posts[index]),
+              child: ItemAddressPage(posts[index]),
             );
           },
         ),
