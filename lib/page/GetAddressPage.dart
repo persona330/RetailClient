@@ -87,12 +87,20 @@ class _GetAddressPageState extends State<GetAddressPage>
                           return Text("${snapshot.error}");
                         } else {
                           return const Center(
+                            // Содержит результат ответа HTTP
                             child: CircularProgressIndicator(),
                           );
                         }
                       },
                     ),
                   ),
+                ),
+                OutlinedButton(
+                  onPressed: ()
+                  {
+                    _addressService.deleteAddress(int.parse(_idAddress));
+                  },
+                  child: const Text('Удалить'),
                 ),
               ],
             ),

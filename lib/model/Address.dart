@@ -53,3 +53,24 @@ class Address
   String? get getCity => city;
   String? get getNation => nation;
 }
+
+abstract class AddressResult {}
+
+// указывает на успешный запрос
+class AddressResultSuccess extends AddressResult
+{
+  List<Address> addressList = [];
+  AddressResultSuccess(this.addressList);
+}
+
+// произошла ошибка
+class AddressResultFailure extends AddressResult
+{
+  final String error;
+  AddressResultFailure(this.error);
+}
+
+// загрузка данных
+class AddressResultLoading extends AddressResult {
+  AddressResultLoading();
+}

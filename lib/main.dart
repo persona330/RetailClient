@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:retail/page/CresteAddressPage.dart';
+import 'package:retail/page/AddreessPage.dart';
 import 'package:retail/page/HomePage.dart';
 
 // Запускает главное окно приложения. Принимает виджет.
@@ -23,10 +24,11 @@ class MyApp extends StatelessWidget
         primarySwatch: Colors.blue,
       ),
       // home - задает базовый виджет, отображаемый при загрузке
-      home: const HomePage(title: 'Адреса'),
+      home: const HomePage(title: 'Главная'),
     );
   }
 }
+
 
 
 
