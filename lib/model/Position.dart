@@ -1,0 +1,59 @@
+class Position
+{
+  final int? idPosition;
+  final String? name;
+
+  Position({
+    required this.idPosition,
+    required this.name,
+  });
+
+  factory Position.fromJson(Map<String, dynamic> json) {
+    return Position(
+      name: json["name"],
+      idPosition: json["id_Position"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "id_Position": idPosition,
+  };
+
+  int? get getIdPosition => idPosition;
+  String? get getName => name;
+}
+
+abstract class PositionResult {}
+
+// указывает на успешный запрос
+class PositionGetListResultSuccess extends PositionResult
+{
+  List<Position> addressList = [];
+  PositionGetListResultSuccess(this.addressList);
+}
+
+class PositionGetItemResultSuccess extends PositionResult
+{
+  Position address;
+  PositionGetItemResultSuccess(this.address);
+}
+
+class PositionAddResultSuccess extends PositionResult {}
+
+class PositionPutResultSuccess extends PositionResult
+{
+  Position address;
+  PositionPutResultSuccess(this.address);
+}
+
+class PositionDeleteResultSuccess extends PositionResult {}
+
+class PositionResultFailure extends PositionResult
+{
+  final String error;
+  PositionResultFailure(this.error);
+}
+
+// загрузка данных
+class PositionResultLoading extends PositionResult { PositionResultLoading(); }
