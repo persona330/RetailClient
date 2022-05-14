@@ -12,15 +12,27 @@ class PostController extends ControllerMVC
 
   PostResult currentState = PostResultLoading();
 
-  void init() async
+  void getPosts() async
   {
     try {
       // получаем данные из репозитория
-      final postList = await postService.getPosts();
+      final result = await postService.getPosts();
       // если все ок то обновляем состояние на успешное
-      setState(() => currentState = PostResultSuccess(postList));
+      setState(() => currentState = PostGetListResultSuccess(result));
     } catch (error) {
       // в противном случае произошла ошибка
+      setState(() => currentState = PostResultFailure("Нет интернета"));
+    }
+  }
+
+  void addPost(Post post) async
+  {
+    try {
+      final result = await postService.addPost(post);
+      // сервер вернул результат
+      setState(() => currentState = PostAddResultSuccess());
+    } catch (error) {
+      // произошла ошибка
       setState(() => currentState = PostResultFailure("Нет интернета"));
     }
   }

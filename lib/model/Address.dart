@@ -29,7 +29,7 @@ class Address
       region: json["region"],
       city: json["city"],
       nation: json["nation"],
-      idAddress: json["id"],
+      idAddress: json["id_Address"],
   );
   }
 
@@ -41,7 +41,7 @@ class Address
     "region": region,
     "city": city,
     "nation": nation,
-    "id": idAddress,
+    "id_Address": idAddress,
   };
 
   int? get getIdAddress => idAddress;
@@ -57,13 +57,28 @@ class Address
 abstract class AddressResult {}
 
 // указывает на успешный запрос
-class AddressResultSuccess extends AddressResult
+class AddressGetListResultSuccess extends AddressResult
 {
   List<Address> addressList = [];
-  AddressResultSuccess(this.addressList);
+  AddressGetListResultSuccess(this.addressList);
 }
 
-// произошла ошибка
+class AddressGetItemResultSuccess extends AddressResult
+{
+  Address address;
+  AddressGetItemResultSuccess(this.address);
+}
+
+class AddressAddResultSuccess extends AddressResult {}
+
+class AddressPutResultSuccess extends AddressResult
+{
+  Address address;
+  AddressPutResultSuccess(this.address);
+}
+
+class AddressDeleteResultSuccess extends AddressResult {}
+
 class AddressResultFailure extends AddressResult
 {
   final String error;
@@ -71,6 +86,4 @@ class AddressResultFailure extends AddressResult
 }
 
 // загрузка данных
-class AddressResultLoading extends AddressResult {
-  AddressResultLoading();
-}
+class AddressResultLoading extends AddressResult { AddressResultLoading(); }

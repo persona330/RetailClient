@@ -6,7 +6,7 @@ import 'dart:convert';
 class AddressService
 {
   final String _url = 'http://localhost:8080/addresses';
-  final String _url1 = 'http://localhost:8080/addresses/1';
+
   Map<String, String> headers = {
     "content-type": "application/json; charset=UTF-8",
     "accept": "application/json",
@@ -49,10 +49,10 @@ class AddressService
     }
   }
 
-  Future<Address> putAddress(int id) async
+  Future<Address> putAddress(Address address, int id) async
   {
 
-    final response = await http.put(Uri.parse(_url1), headers: headers);
+    final response = await http.put(Uri.parse(_url + "/$id"), headers: headers, body: json.encode(address.toJson()));
 
     if (response.statusCode == 200)
     {

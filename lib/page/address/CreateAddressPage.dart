@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/service/AddressService.dart';
 
@@ -11,9 +13,13 @@ class CreateAddressPage extends StatefulWidget
   _CreateAddressPageState createState() => _CreateAddressPageState();
 }
 
-class _CreateAddressPageState extends State<CreateAddressPage>
+class _CreateAddressPageState extends StateMVC
 {
+  AddressController? _controller;
+
   final AddressService _addressService = AddressService();
+
+  _CreateAddressPageState() : super(AddressController()) {_controller = controller as AddressController;}
 
   final _apartmentController = TextEditingController();
   final _entranceController = TextEditingController();
@@ -23,35 +29,10 @@ class _CreateAddressPageState extends State<CreateAddressPage>
   final _cityController = TextEditingController();
   final _nationController = TextEditingController();
 
-  final int _idAddress = 3;
-  late String _apartment = "1";
-  late String _entrance = "0";
-  late String _house = "107а";
-  late String _street = "Карла Маркса";
-  late String _region = "Курганский";
-  late String _city = "Курган";
-  late String _nation = "Россия";
-
-
-  _changeApartment() { setState(() => _apartment = _apartmentController.text); }
-  _changeEntrance() {setState(() => _entrance = _entranceController.text);}
-  _changeHouse() {setState(() => _house = _houseController.text);}
-  _changeStreet() { setState(() => _street = _streetController.text); }
-  _changeRegion() { setState(() => _region = _regionController.text); }
-  _changeCity() { setState(() => _city = _cityController.text); }
-  _changeNation() { setState(() => _nation = _nationController.text); }
-
     @override
   void initState()
   {
     super.initState();
-    _apartmentController.addListener(_changeApartment);
-    _entranceController.addListener(_changeEntrance);
-    _houseController.addListener(_changeHouse);
-    _streetController.addListener(_changeStreet);
-    _regionController.addListener(_changeRegion);
-    _cityController.addListener(_changeCity);
-    _nationController.addListener(_changeNation);
   }
 
   @override
@@ -77,10 +58,9 @@ class _CreateAddressPageState extends State<CreateAddressPage>
       body:  Scrollbar(
           child: Container(
             // this.left, this.top, this.right, this.bottom
-            padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
+           padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
             child: Column (
               children: [
-                Text("Адрес: $_apartment, $_entrance, $_house, $_street, $_region, $_city, $_nation", style: TextStyle(fontSize: 14)),
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
@@ -141,20 +121,20 @@ class _CreateAddressPageState extends State<CreateAddressPage>
                 OutlinedButton(
                   onPressed: ()
                   {
-                    print("Адрес: $_apartment, $_entrance, $_house, $_street, $_region, $_city, $_nation");
-                    var _entInt = int.parse(_entrance);
-                    assert(_entInt is int);
-                    Address address = Address(idAddress: _idAddress, apartment: _apartment, entrance: _entInt, house: _house, street: _street, region: _region, city: _city, nation: _nation);
-                    //Address address = Address(idAddress: 3, apartment: "12a", entrance: 1, house: "12", street: "ghj", region: "gjg", city: "fhgfh", nation: "jhl");
-                    _addressService.addAddress(address);
-
-                    /*showDialog(context: context, builder: (BuildContext context)
+                    Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
+                    _controller?.addAddress(_address);
+                    Navigator.pop(context, true);
+                    final state = _controller?.currentState;
+                    if (state is AddressAddResultSuccess)
                     {
-                      return AlertDialog(
-                        title: Text("Сохранение"),
-                        content: Text("Адрес добавлен"),
-                      );
-                    });*/
+                      print("Все ок");
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
+                    }
+                    if (state is AddressResultLoading)
+                    {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
+                    }
+                    if (state is AddressResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

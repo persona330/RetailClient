@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/PostController.dart';
 import 'package:retail/model/Post.dart';
-import 'package:retail/page/ItemPostPage.dart';
-import 'package:retail/page/ShowAddressPage.dart';
+import 'package:retail/page/test/ItemPostPage.dart';
+import 'package:retail/page/address/GetAddressPage.dart';
 
 class ListPostPage extends StatefulWidget
 {
@@ -28,7 +28,7 @@ class _ListPostPageState extends StateMVC {
   @override
   void initState() {
     super.initState();
-    _controller.init();
+    _controller.getPosts();
   }
 
   @override
@@ -58,7 +58,7 @@ class _ListPostPageState extends StateMVC {
       );
     } else {
       // отображаем список постов
-      final posts = (state as PostResultSuccess).postList;
+      final posts = (state as PostGetListResultSuccess).postList;
       return Padding(
         padding: EdgeInsets.all(10),
         // ListView.builder создает элемент списка
@@ -71,7 +71,7 @@ class _ListPostPageState extends StateMVC {
             return GestureDetector(
               onTap: ()
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShowAddressPage(id: posts[index].id!, body: posts[index].body!)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: posts[index].id!)));
               },
               child: ItemPostPage(posts[index]),
             );

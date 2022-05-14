@@ -4,9 +4,9 @@ import 'package:retail/controller/AddressController.dart';
 import 'package:retail/controller/PostController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/model/Post.dart';
-import 'package:retail/page/ItemAddressPage.dart';
-import 'package:retail/page/ItemPostPage.dart';
-import 'package:retail/page/ShowAddressPage.dart';
+import 'package:retail/page/address/ItemAddressPage.dart';
+import 'package:retail/page/test/ItemPostPage.dart';
+import 'package:retail/page/address/GetAddressPage.dart';
 
 class ListAddressPage extends StatefulWidget
 {
@@ -15,30 +15,25 @@ class ListAddressPage extends StatefulWidget
 }
 
 // не забываем расширяться от StateMVC
-class _ListAddressPageState extends StateMVC {
+class _ListAddressPageState extends StateMVC
+{
+  late AddressController _controller;
 
-  // ссылка на наш контроллер
-  late PostController _controller;
+  _ListAddressPageState() : super(AddressController()) {_controller = controller as AddressController;}
 
-  // передаем наш контроллер StateMVC конструктору и
-  // получаем на него ссылку
-  _ListAddressPageState() : super(PostController()) {
-    _controller = controller as PostController;
-  }
-
-  // после инициализации состояние
-  // мы запрашивает данные у сервера
   @override
-  void initState() {
+  void initState()
+  {
     super.initState();
-    _controller.init();
+    _controller.getAddresses();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Post List Page"),
+          title: Text("Адреса"),
         ),
         body: _buildContent()
     );
@@ -47,11 +42,11 @@ class _ListAddressPageState extends StateMVC {
   Widget _buildContent() {
     // первым делом получаем текущее состояние
     final state = _controller.currentState;
-    if (state is PostResultLoading) {
-      // загрузка
+    if (state is AddressResultLoading)
+    {
       return const Center(child: CircularProgressIndicator());
-    } else if (state is PostResultFailure) {
-      // ошибка
+    } else if (state is AddressResultFailure)
+    {
       return Center(
         child: Text(
             state.error,
@@ -61,22 +56,22 @@ class _ListAddressPageState extends StateMVC {
       );
     } else {
       // отображаем список постов
-      final posts = (state as PostResultSuccess).postList;
+      final addressList = (state as AddressGetListResultSuccess).addressList;
       return Padding(
         padding: EdgeInsets.all(10),
         // ListView.builder создает элемент списка
         // только когда он видим на экране
         child: ListView.builder(
-          itemCount: posts.length,
+          itemCount: addressList.length,
           itemBuilder: (context, index) {
             // мы вынесли элемент списка в
             // отдельный виджет
             return GestureDetector(
               onTap: ()
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ShowAddressPage(id: posts[index].id!, body: posts[index].body!)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: addressList[index].getIdAddress!)));
               },
-              child: ItemAddressPage(posts[index]),
+              child: ItemAddressPage(addressList[index]),
             );
           },
         ),

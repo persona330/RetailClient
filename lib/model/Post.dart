@@ -37,11 +37,13 @@ class Post
 abstract class PostResult {}
 
 // указывает на успешный запрос
-class PostResultSuccess extends PostResult
+class PostGetListResultSuccess extends PostResult
 {
   List<Post> postList = [];
-  PostResultSuccess(this.postList);
+  PostGetListResultSuccess(this.postList);
 }
+
+class PostAddResultSuccess extends PostResult {}
 
 // произошла ошибка
 class PostResultFailure extends PostResult
@@ -51,6 +53,4 @@ class PostResultFailure extends PostResult
 }
 
 // загрузка данных
-class PostResultLoading extends PostResult {
-  PostResultLoading();
-}
+class PostResultLoading extends PostResult { PostResultLoading(); }

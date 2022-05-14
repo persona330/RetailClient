@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/page/AddreessPage.dart';
-import 'package:retail/page/CresteAddressPage.dart';
-import 'package:retail/page/GetAddressPage.dart';
-import 'package:retail/page/LIstPostPage.dart';
+import 'package:retail/page/address/CreateAddressPage.dart';
+import 'package:retail/page/SearchAddressPage.dart';
+import 'package:retail/page/address/GetAllAddreessPage.dart';
+import 'package:retail/page/test/LIstPostPage.dart';
 import 'package:retail/page/ListAddressPage.dart';
 import 'package:retail/service/AddressService.dart';
 import 'package:flutter/services.dart';
@@ -54,12 +54,12 @@ class _HomePageState extends State<HomePage>
               ListTile(
                 leading: Icon(Icons.location_on),
                 title: Text('Адреса'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddressPage())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllAddressPage())),
               ),
               ListTile(
                 leading: Icon(Icons.library_books),
                 title: Text('Связи'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListPostPage())),
+
               ),
               ListTile(
                 leading: Icon(Icons.account_circle),
@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage>
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListPostPage())),
               ),
             ],
           ),
