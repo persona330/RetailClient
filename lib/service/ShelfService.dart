@@ -51,7 +51,7 @@ class ShelfService
     }
   }
 
-  Future<Shelf> putAddress(Shelf shelf, int id) async
+  Future<Shelf> putShelf(Shelf shelf, int id) async
   {
 
     final response = await http.put(Uri.parse(_url + "/$id"), headers: headers, body: json.encode(shelf.toJson()));
