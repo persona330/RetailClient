@@ -5,7 +5,7 @@ class Stillage
 {
   final int? idStillage;
   final String? number;
-  final Decimal? size;
+  final double? size;
   final Area? area;
 
   Stillage({
@@ -19,7 +19,7 @@ class Stillage
     return Stillage(
       number: json["number"],
       size: json["size"],
-      area: json["area"],
+      area: json["areaDTO"] != null ? Area.fromJson(json["areaDTO"]) : null,
       idStillage: json["id_Stillage"],
     );
   }
@@ -27,14 +27,17 @@ class Stillage
   Map<String, dynamic> toJson() => {
     "number": number,
     "size": size,
-    "area": area,
+    "areaDTO": area == null ? null : area!.toJson(),
     "id_Stillage": idStillage,
   };
 
   int? get getIdStillage => idStillage;
   String? get getNumber => number;
-  Decimal? get getSize => size;
+  double? get getSize => size;
   Area? get getArea => area;
+
+  @override
+  String toString() {return 'Стеллаж $idStillage: номер $number, вместимость $size, зона $area}';}
 }
 
 abstract class StillageResult {}
@@ -42,8 +45,8 @@ abstract class StillageResult {}
 // указывает на успешный запрос
 class StillageGetListResultSuccess extends StillageResult
 {
-  List<Stillage> addressList = [];
-  StillageGetListResultSuccess(this.addressList);
+  List<Stillage> stillageList = [];
+  StillageGetListResultSuccess(this.stillageList);
 }
 
 class StillageGetItemResultSuccess extends StillageResult

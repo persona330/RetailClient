@@ -13,20 +13,23 @@ class Group
   factory Group.fromJson(Map<String, dynamic> json) {
     return Group(
       name: json["name"],
-      type: json["type"],
+      type: json["type"] != null ? Group.fromJson(json["type"]) : null,
       idGroup: json["id_Group"],
     );
   }
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "type": type,
+    "type": type == null ? null : type!.toJson(),
     "id_Group": idGroup,
   };
 
   int? get getIdGroup => idGroup;
   String? get getName => name;
   Group? get getType => type;
+
+  @override
+  String toString() {return 'Группа товаров $idGroup: название $name, тип $type';}
 }
 
 abstract class GroupResult {}
@@ -34,8 +37,8 @@ abstract class GroupResult {}
 // указывает на успешный запрос
 class GroupGetListResultSuccess extends GroupResult
 {
-  List<Group> addressList = [];
-  GroupGetListResultSuccess(this.addressList);
+  List<Group> groupList = [];
+  GroupGetListResultSuccess(this.groupList);
 }
 
 class GroupGetItemResultSuccess extends GroupResult

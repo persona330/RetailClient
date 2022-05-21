@@ -7,7 +7,7 @@ class Import
 {
   final int? idImport;
   final int? quantity;
-  final Decimal? cost;
+  final double? cost;
   final int? vat;
   final ConsignmentNote? consignmentNote;
   final Nomenclature? nomenclature;
@@ -26,8 +26,8 @@ class Import
       quantity: json["quantity"],
       cost: json["cost"],
       vat: json["vat"],
-      consignmentNote: json["consignmentNote"],
-      nomenclature: json["nomenclature"],
+      consignmentNote: json["consignmentNoteDTO"] != null ? ConsignmentNote.fromJson(json["consignmentNoteDTO"]) : null,
+      nomenclature: json["nomenclatureDTO"] != null ? Nomenclature.fromJson(json["nomenclatureDTO"]) : null,
       idImport: json["id_Import"],
     );
   }
@@ -36,17 +36,20 @@ class Import
     "quantity": quantity,
     "cost": cost,
     "vat": vat,
-    "consignmentNote": consignmentNote,
-    "nomenclature": nomenclature,
+    "consignmentNoteDTO": consignmentNote == null ? null : consignmentNote!.toJson(),
+    "nomenclatureDTO": nomenclature == null ? null : nomenclature!.toJson(),
     "id_Import": idImport,
   };
 
   int? get getIdImport => idImport;
   int? get getQuantity => quantity;
-  Decimal? get getCost => cost;
+  double? get getCost => cost;
   int? get getVat => vat;
   ConsignmentNote? get getConsignmentNote => consignmentNote;
   Nomenclature? get getNomenclature => nomenclature;
+
+  @override
+  String toString() {return 'Привоз $idImport: колличество $quantity, цены $cost, НДС $vat, накладная $consignmentNote, номенклатура $nomenclature';}
 }
 
 abstract class ImportResult {}

@@ -18,16 +18,16 @@ class Supplier
   factory Supplier.fromJson(Map<String, dynamic> json) {
     return Supplier(
       name: json["name"],
-      position: json["position"],
-      organization: json["organization"],
+      position: json["positionDTO"] != null ? Position.fromJson(json["positionDTO"]) : null,
+      organization: json["organizationDTO"] != null ? Organization.fromJson(json["organizationDTO"]) : null,
       idSupplier: json["id_Supplier"],
     );
   }
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "position": position,
-    "organization": organization,
+    "positionDTO": position == null ? null : position!.toJson(),
+    "organizationDTO": organization == null ? null : organization!.toJson(),
     "id_Supplier": idSupplier,
   };
 
@@ -35,6 +35,9 @@ class Supplier
   String? get getName => name;
   Position? get getPosition => position;
   Organization? get getOrganization => organization;
+
+  @override
+  String toString() {return 'Поставщик $idSupplier: имя $name, должность $position, организация $organization}';}
 }
 
 abstract class SupplierResult {}

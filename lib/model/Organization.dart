@@ -22,8 +22,8 @@ class Organization
   factory Organization.fromJson(Map<String, dynamic> json) {
     return Organization(
       name: json["name"],
-      address: json["address"],
-      communication: json["communication"],
+      address: json["addressDTO"] != null ? Address.fromJson(json["addressDTO"]) : null,
+      communication: json["communicationDTO"] != null ? Communication.fromJson(json['communicationDTO']) : null,
       inn: json["inn"],
       kpp: json["kpp"],
       idOrganization: json["id_Organization"],
@@ -32,8 +32,8 @@ class Organization
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "address": address,
-    "communication": communication,
+    "addressDTO": address == null ? null : address!.toJson(),
+    "communicationDTO": communication == null ? null : communication!.toJson(),
     "street": inn,
     "kpp": kpp,
     "id_Organization": idOrganization,
@@ -45,6 +45,9 @@ class Organization
   Communication? get getCommunication => communication;
   String? get getInn => inn;
   String? get getKpp => kpp;
+
+  @override
+  String toString() {return 'Организация $idOrganization: название $name, адрес $address, средства связи $communication, ИНН $inn, КПП $kpp';}
 }
 
 abstract class OrganizationResult {}

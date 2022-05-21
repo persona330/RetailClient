@@ -5,7 +5,7 @@ import 'package:retail/model/Stillage.dart';
 class Shelf
 {
   final int? idShelf;
-  final Decimal? size;
+  final double? size;
   final String? number;
   final Group? group;
   final Stillage? stillage;
@@ -22,8 +22,8 @@ class Shelf
     return Shelf(
       size: json["size"],
       number: json["number"],
-      group: json["group"],
-      stillage: json["stillage"],
+      group: json["groupDTO"] != null ? Group.fromJson(json["groupDTO"]) : null,
+      stillage: json["stillageDTO"] != null ? Stillage.fromJson(json["stillageDTO"]) : null,
       idShelf: json["id_Shelf"],
     );
   }
@@ -31,16 +31,19 @@ class Shelf
   Map<String, dynamic> toJson() => {
     "size": size,
     "number": number,
-    "group": group,
-    "stillage": stillage,
+    "groupDTO": group == null ? null : group!.toJson(),
+    "stillageDTO": stillage == null ? null : stillage!.toJson(),
     "id_Shelf": idShelf,
   };
 
   int? get getIdShelf => idShelf;
-  Decimal? get getSize => size;
+  double? get getSize => size;
   String? get getNumber => number;
   Group? get getGroup => group;
   Stillage? get getStillage => stillage;
+
+  @override
+  String toString() {return 'Полка $idShelf: вместимость $size, номер $number, группа товаров $group, стеллаж $stillage';}
 }
 
 abstract class ShelfResult {}

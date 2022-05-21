@@ -121,7 +121,7 @@ class _CreateAddressPageState extends StateMVC
                 OutlinedButton(
                   onPressed: ()
                   {
-                    Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
+                    Address _address = Address(idAddress: UniqueKey().hashCode, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
                     _controller?.addAddress(_address);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;

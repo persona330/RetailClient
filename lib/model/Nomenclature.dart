@@ -10,11 +10,11 @@ class Nomenclature
   final int? idNomenclature;
   final String? name;
   final String? brand;
-  final Decimal? cost;
+  final double? cost;
   final DateTime? productionDate;
   final DateTime? expirationDate;
-  final Decimal? weight;
-  final Decimal? size;
+  final double? weight;
+  final double? size;
   final Group? group;
   final Producer? producer;
   final Measurement? measurement;
@@ -47,11 +47,11 @@ class Nomenclature
       expirationDate: json["expirationDate"],
       weight: json["weight"],
       size: json["size"],
-      group: json["group"],
-      producer: json["producer"],
-      measurement: json["measurement"],
-      box: json["box"],
-      storageConditions: json["storageConditions"],
+      group: json["groupDTO"] != null ? Group.fromJson(json["groupDTO"]) : null,
+      producer: json["producerDTO"] != null ? Producer.fromJson(json["producerDTO"]) : null,
+      measurement: json["measurementDTO"] != null ? Measurement.fromJson(json["measurementDTO"]) : null,
+      box: json["boxDTO"] != null ? Box.fromJson(json["boxDTO"]) : null,
+      storageConditions: json["storageConditionsDTO"] != null ? StorageConditions.fromJson(json["storageConditionsDTO"]) : null,
       idNomenclature: json["id_Nomenclature"],
     );
   }
@@ -64,27 +64,30 @@ class Nomenclature
     "expirationDate": expirationDate,
     "weight": weight,
     "size": size,
-    "group": group,
-    "producer": producer,
-    "measurement": measurement,
-    "box": box,
-    "storageConditions": storageConditions,
+    "groupDTO": group == null ? null : group!.toJson(),
+    "producerDTO": producer == null ? null : producer!.toJson(),
+    "measurementDTO": measurement == null ? null : measurement!.toJson(),
+    "boxDTO": box == null ? null : box!.toJson(),
+    "storageConditionsDTO": storageConditions == null ? null : storageConditions!.toJson(),
     "id_Nomenclature": idNomenclature,
   };
 
   int? get getIdNomenclature => idNomenclature;
   String? get getName => name;
   String? get getBrand => brand;
-  Decimal? get getCost => cost;
+  double? get getCost => cost;
   DateTime? get getProductionDate => productionDate;
   DateTime? get getExpirationDate => expirationDate;
-  Decimal? get getWeight => weight;
-  Decimal? get getSize => size;
+  double? get getWeight => weight;
+  double? get getSize => size;
   Group? get getGroup => group;
   Producer? get getProducer => producer;
   Measurement? get getMeasurement => measurement;
   Box? get getBox => box;
   StorageConditions? get getStorageConditions => storageConditions;
+
+  @override
+  String toString() {return 'Номенкладная $idNomenclature: название $name, бренд $brand, цена $cost, дата производства $productionDate, срок годности $expirationDate, вес $weight, объем $size, группа $group, производитель $producer, единица измерения $measurement, ячейка $box, условия хранения $storageConditions}';}
 }
 
 abstract class NomenclatureResult {}

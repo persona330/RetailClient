@@ -6,7 +6,7 @@ class Store
 {
   final int? idStore;
   final String? name;
-  final Decimal? totalCapacity;
+  final double? totalCapacity;
   final Organization? organization;
   final Address? address;
 
@@ -22,8 +22,8 @@ class Store
     return Store(
       name: json["name"],
       totalCapacity: json["totalCapacity"],
-      organization: json["organization"],
-      address: json["address"],
+      organization: json["organizationDTO"] != null ? Organization.fromJson(json["organizationDTO"]) : null,
+      address: json["addressDTO"] != null ? Address.fromJson(json["addressDTO"]) : null,
       idStore: json["id_Store"],
     );
   }
@@ -31,16 +31,19 @@ class Store
   Map<String, dynamic> toJson() => {
     "name": name,
     "totalCapacity": totalCapacity,
-    "organization": organization,
-    "address": address,
+    "organizationDTO": organization == null ? null : organization!.toJson(),
+    "addressDTO": address == null ? null : address!.toJson(),
     "id_Store": idStore,
   };
 
   int? get getIdStore => idStore;
   String? get getName => name;
-  Decimal? get getTotalCapacity => totalCapacity;
+  double? get getTotalCapacity => totalCapacity;
   Organization? get getOrganization => organization;
   Address? get getAddress => address;
+
+  @override
+  String toString() {return 'Склад $idStore: название $name, полная вместимость $totalCapacity, организация $organization, адрес $address';}
 }
 
 abstract class StoreResult {}

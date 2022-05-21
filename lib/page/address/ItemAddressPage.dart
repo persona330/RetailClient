@@ -20,7 +20,6 @@ class ItemAddressPage extends StatelessWidget
           subtitle: Text(
           'Тело: ${address.getRegion}\n'
           ),
-          trailing: Text('${address.getIdAddress}'),
       ),
     );
   }

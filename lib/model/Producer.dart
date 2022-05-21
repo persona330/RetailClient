@@ -22,6 +22,9 @@ class Producer
 
   int? get getIdProducer => idProducer;
   String? get getName => name;
+
+  @override
+  String toString() {return 'Производитель $idProducer: название $name}';}
 }
 
 abstract class ProducerResult {}

@@ -52,6 +52,11 @@ class Address
   String? get getRegion => region;
   String? get getCity => city;
   String? get getNation => nation;
+
+  @override
+  String toString() {
+    return 'Адрес $idAddress: квартира $apartment, подъезд $entrance, дом $house, улица $street, регион $region, город $city, страна $nation';
+  }
 }
 
 abstract class AddressResult {}

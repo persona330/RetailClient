@@ -27,6 +27,11 @@ class Communication
   int? get getIdCommunication => idCommunication;
   String? get getPhone => phone;
   String? get getEmail => email;
+
+  @override
+  String toString() {
+    return 'Средство связи $idCommunication: телефон $phone, эл.адрес $email';
+  }
 }
 
 abstract class CommunicationResult {}

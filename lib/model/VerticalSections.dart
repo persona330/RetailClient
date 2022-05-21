@@ -5,7 +5,7 @@ class VerticalSections
 {
   final int? idVerticalSections;
   final String? number;
-  final Decimal? size;
+  final double? size;
   final Stillage? stillage;
 
   VerticalSections({
@@ -19,7 +19,7 @@ class VerticalSections
     return VerticalSections(
       number: json["number"],
       size: json["size"],
-      stillage: json["stillage"],
+      stillage: json["stillageDTO"] != null ? Stillage.fromJson(json["stillageDTO"]) : null,
       idVerticalSections: json["id_VerticalSections"],
     );
   }
@@ -27,14 +27,17 @@ class VerticalSections
   Map<String, dynamic> toJson() => {
     "number": number,
     "size": size,
-    "stillage": stillage,
+    "stillageDTO": stillage == null ? null : stillage!.toJson(),
     "id_VerticalSections": idVerticalSections,
   };
 
   int? get getIdVerticalSections => idVerticalSections;
   String? get getNumber => number;
-  Decimal? get getSize => size;
+  double? get getSize => size;
   Stillage? get getStillage => stillage;
+
+  @override
+  String toString() {return 'Вертикальная секция $idVerticalSections: номер $number, вместисмость $size, стеллаж $stillage';}
 }
 
 abstract class VerticalSectionsResult {}
@@ -42,22 +45,22 @@ abstract class VerticalSectionsResult {}
 // указывает на успешный запрос
 class VerticalSectionsGetListResultSuccess extends VerticalSectionsResult
 {
-  List<VerticalSections> addressList = [];
-  VerticalSectionsGetListResultSuccess(this.addressList);
+  List<VerticalSections> verticalSectionsList = [];
+  VerticalSectionsGetListResultSuccess(this.verticalSectionsList);
 }
 
 class VerticalSectionsGetItemResultSuccess extends VerticalSectionsResult
 {
-  VerticalSections address;
-  VerticalSectionsGetItemResultSuccess(this.address);
+  VerticalSections verticalSections;
+  VerticalSectionsGetItemResultSuccess(this.verticalSections);
 }
 
 class VerticalSectionsAddResultSuccess extends VerticalSectionsResult {}
 
 class VerticalSectionsPutResultSuccess extends VerticalSectionsResult
 {
-  VerticalSections address;
-  VerticalSectionsPutResultSuccess(this.address);
+  VerticalSections verticalSections;
+  VerticalSectionsPutResultSuccess(this.verticalSections);
 }
 
 class VerticalSectionsDeleteResultSuccess extends VerticalSectionsResult {}

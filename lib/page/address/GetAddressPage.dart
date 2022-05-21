@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
+import 'package:retail/page/address/DeleteAddressPage.dart';
 import 'package:retail/page/test/CreatePostPage.dart';
 import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
@@ -30,19 +31,23 @@ class GetAddressPageState extends StateMVC
     _controller?.getAddress(_id);
   }
 
-  void _handleClick(String value)
+  void _handleClick(String value) async
   {
     switch (value)
     {
-      case 'Создать':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePostPage()));
-        break;
       case 'Изменить':
         Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
         break;
       case 'Удалить':
-        _controller?.deleteAddress(_id);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удален")));
+        bool value = await Navigator.push(context, PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, _, __)=> DeleteAddressPage(_id)));
+        if (value == true)
+        {
+          _controller?.deleteAddress(_id);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удален")));
+          Navigator.of(context).pop();
+        }
         break;
     }
   }
@@ -73,7 +78,7 @@ class GetAddressPageState extends StateMVC
                 onSelected: _handleClick, // функция при нажатии
                 itemBuilder: (BuildContext context)
                 {
-                  return {'Создать', 'Изменить', 'Найти', 'Удалить'}.map((String choice)
+                  return {'Изменить', 'Удалить'}.map((String choice)
                   {
                     return PopupMenuItem<String>(
                       value: choice,

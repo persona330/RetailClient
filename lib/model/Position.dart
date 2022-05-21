@@ -22,6 +22,11 @@ class Position
 
   int? get getIdPosition => idPosition;
   String? get getName => name;
+
+  @override
+  String toString() {
+    return 'Должность $idPosition: название $name}';
+  }
 }
 
 abstract class PositionResult {}
@@ -29,22 +34,22 @@ abstract class PositionResult {}
 // указывает на успешный запрос
 class PositionGetListResultSuccess extends PositionResult
 {
-  List<Position> addressList = [];
-  PositionGetListResultSuccess(this.addressList);
+  List<Position> positionList = [];
+  PositionGetListResultSuccess(this.positionList);
 }
 
 class PositionGetItemResultSuccess extends PositionResult
 {
-  Position address;
-  PositionGetItemResultSuccess(this.address);
+  Position position;
+  PositionGetItemResultSuccess(this.position);
 }
 
 class PositionAddResultSuccess extends PositionResult {}
 
 class PositionPutResultSuccess extends PositionResult
 {
-  Position address;
-  PositionPutResultSuccess(this.address);
+  Position position;
+  PositionPutResultSuccess(this.position);
 }
 
 class PositionDeleteResultSuccess extends PositionResult {}

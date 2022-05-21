@@ -11,12 +11,12 @@ import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/service/PostService.dart';
 
+import 'DeleteAddressPage.dart';
+
 // StatefulWidget - для изменяемых виджетов
 class GetAllAddressPage extends StatefulWidget
 {
   const GetAllAddressPage({Key? key}) : super(key: key);
-
-  //final String title;
 
   @override
   _GetAllAddressPageState createState() => _GetAllAddressPageState();
@@ -87,9 +87,7 @@ class _GetAllAddressPageState extends StateMVC
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
+                onPressed: () { print("Click on settings button"); }
                 ),
         ],
       ),

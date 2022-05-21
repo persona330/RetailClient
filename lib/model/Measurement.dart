@@ -21,12 +21,15 @@ class Measurement
   Map<String, dynamic> toJson() => {
     "name": name,
     "fullName": fullName,
-    "id_easurement": idMeasurement,
+    "id_Measurement": idMeasurement,
   };
 
   int? get getIdMeasurement => idMeasurement;
   String? get getName => name;
   String? get getFullName => fullName;
+
+  @override
+  String toString() {return 'Единица измерения $idMeasurement: сокращение $name, полное название $fullName}';}
 }
 
 abstract class MeasurementResult {}

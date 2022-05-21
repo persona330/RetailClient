@@ -5,12 +5,12 @@ class StorageConditions
 {
   final int? idStorageConditions;
   final String? name;
-  final Decimal? temperature;
-  final Decimal? humidity;
-  final Decimal? illumination;
-  final Measurement? measuremenTemperature;
-  final Measurement? measuremenHumidity;
-  final Measurement? measuremenIllumination;
+  final double? temperature;
+  final double? humidity;
+  final double? illumination;
+  final Measurement? measurementTemperature;
+  final Measurement? measurementHumidity;
+  final Measurement? measurementIllumination;
 
   StorageConditions({
     required this.idStorageConditions,
@@ -18,9 +18,9 @@ class StorageConditions
     required this.temperature,
     required this.humidity,
     required this.illumination,
-    required this.measuremenTemperature,
-    required this.measuremenHumidity,
-    required this.measuremenIllumination,
+    required this.measurementTemperature,
+    required this.measurementHumidity,
+    required this.measurementIllumination,
   });
 
   factory StorageConditions.fromJson(Map<String, dynamic> json) {
@@ -29,9 +29,9 @@ class StorageConditions
       temperature: json["temperature"],
       humidity: json["humidity"],
       illumination: json["illumination"],
-      measuremenTemperature: json["measuremenTemperature"],
-      measuremenHumidity: json["measuremenHumidity"],
-      measuremenIllumination: json["measuremenIllumination"],
+      measurementTemperature: json["measurementTemperatureDTO"] != null ? Measurement.fromJson(json["measurementTemperatureDTO"]) : null,
+      measurementHumidity: json["measurementHumidityDTO"] != null ? Measurement.fromJson(json["measurementHumidityDTO"]) : null,
+      measurementIllumination: json["measurementIlluminationDTO"] != null ? Measurement.fromJson(json["measurementIlluminationDTO"]) : null,
       idStorageConditions: json["id_StorageConditions"],
     );
   }
@@ -41,20 +41,23 @@ class StorageConditions
     "temperature": temperature,
     "humidity": humidity,
     "illumination": illumination,
-    "measuremenTemperature": measuremenTemperature,
-    "measuremenHumidity": measuremenHumidity,
-    "measuremenIllumination": measuremenIllumination,
+    "measurementTemperatureDTO": measurementTemperature == null ? null : measurementTemperature!.toJson(),
+    "measurementHumidityDTO": measurementHumidity == null ? null : measurementHumidity!.toJson(),
+    "measurementIlluminationDTO": measurementIllumination == null ? null : measurementIllumination!.toJson(),
     "id_StorageConditions": idStorageConditions,
   };
 
   int? get getIdStorageConditions => idStorageConditions;
   String? get getName => name;
-  Decimal? get getTemperature=> temperature;
-  Decimal? get getHumidity => humidity;
-  Decimal? get getIllumination=> illumination;
-  Measurement? get getMeasuremenTemperature => measuremenTemperature;
-  Measurement? get getMeasuremenHumidity => measuremenHumidity;
-  Measurement? get getMeasuremenIllumination => measuremenIllumination;
+  double? get getTemperature=> temperature;
+  double? get getHumidity => humidity;
+  double? get getIllumination=> illumination;
+  Measurement? get getMeasurementTemperature => measurementTemperature;
+  Measurement? get getMeasurementHumidity => measurementHumidity;
+  Measurement? get getMeasurementIllumination => measurementIllumination;
+
+  @override
+  String toString() {return 'Условия хранения $idStorageConditions: название $name, температура $temperature, влажность $humidity, освещенность $illumination, ед. измерения температуры $measurementTemperature, ед. измерения влажности $measurementHumidity, ед. измерения освещения $measurementIllumination';}
 }
 
 abstract class StorageConditionsResult {}
