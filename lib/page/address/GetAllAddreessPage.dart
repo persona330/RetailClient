@@ -119,6 +119,7 @@ class _GetAllAddressPageState extends StateMVC
     } else {
       // отображаем список постов
       final addressList = (state as AddressGetListResultSuccess).addressList;
+
       return Column(
         children: [
           Container(

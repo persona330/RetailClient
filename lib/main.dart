@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget
     // MaterialApp - для создания графического интерфейса, навигации
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Приложение',
+      title: 'Подсистема "Склад"',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

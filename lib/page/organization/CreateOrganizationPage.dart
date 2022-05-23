@@ -24,12 +24,14 @@ class _CreateOrganizationPageState extends StateMVC
   final _nameController = TextEditingController();
   final _innController = TextEditingController();
   final _kppController = TextEditingController();
+  AddressController _addressController = AddressController();
 
   Address address1 = Address(idAddress: 1, apartment: "5", entrance: 1, house: "107a", street: "Карла Маркса", region: "Курганский", city: "Курган", nation: "Россия");
   Address address2 = Address(idAddress: 2, apartment: "1", entrance: 0, house: "30", street: "Гоголя", region: "Курганский", city: "Юргамыш", nation: "Россия");
   Communication communication1 = Communication(idCommunication: 1, phone: "89128377496", email: "email@gmail.com");
   Communication communication2 = Communication(idCommunication: 2, phone: "89128377496", email: "email@ya.ru");
-  late List<Address> addressList = [address1, address2];
+  //late List<Address> addressList = [address1, address2];
+  late List<Address> addressList = (_addressController.state as AddressGetListResultSuccess).addressList;
   late List<Communication> communicationList = [communication1, communication2];
   late Address address = addressList[0];
   late Communication communication = communicationList[0];
@@ -37,6 +39,7 @@ class _CreateOrganizationPageState extends StateMVC
   @override
   void initState()
   {
+    //_addressController.getAddresses();
     super.initState();
   }
 
