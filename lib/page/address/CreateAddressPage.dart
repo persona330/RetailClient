@@ -17,8 +17,6 @@ class _CreateAddressPageState extends StateMVC
 {
   AddressController? _controller;
 
-  final AddressService _addressService = AddressService();
-
   _CreateAddressPageState() : super(AddressController()) {_controller = controller as AddressController;}
 
   final _apartmentController = TextEditingController();
@@ -29,7 +27,7 @@ class _CreateAddressPageState extends StateMVC
   final _cityController = TextEditingController();
   final _nationController = TextEditingController();
 
-    @override
+  @override
   void initState()
   {
     super.initState();

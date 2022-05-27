@@ -6,6 +6,7 @@ import 'package:retail/model/Post.dart';
 import 'package:retail/page/address/CreateAddressPage.dart';
 import 'package:retail/page/address/ItemAddressPage.dart';
 import 'package:retail/page/address/GetAddressPage.dart';
+import 'package:retail/page/organization/CreateOrganizationPage.dart';
 import 'package:retail/service/AddressService.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -29,17 +30,9 @@ class _GetAllAddressPageState extends StateMVC
 
   _GetAllAddressPageState() : super(AddressController()) {_controller = controller as AddressController;}
 
-  final AddressService _addressService = AddressService();
-
-  late Future <List<Address>> _futureAddresses;
-  late Future <Address> _futureAddress;
-
   final _idAddressController = TextEditingController();
 
   late String _idAddress = "0";
-  late String _idPost = "0";
-  late int _idPost1 = 0;
-  late String _bodyPost = "";
   var items = <int>[];
 
   _changeIdAddress() { setState(() => _idAddress = _idAddressController.text); }
@@ -49,9 +42,6 @@ class _GetAllAddressPageState extends StateMVC
   {
     super.initState();
     _controller.getAddresses();
-    //items.add(_idPost1);
-    //_futureAddress = _addressService.getAddress(int.parse(_idAddress));
-    //_futureAddresses = _addressService.getAddresses();
     _idAddressController.addListener(_changeIdAddress);
   }
 
@@ -119,7 +109,7 @@ class _GetAllAddressPageState extends StateMVC
     } else {
       // отображаем список постов
       final addressList = (state as AddressGetListResultSuccess).addressList;
-
+      //print(addressList);
       return Column(
         children: [
           Container(
