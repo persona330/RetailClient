@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import '../../controller/OrganizationController.dart';
 import '../../model/Communication.dart';
 import '../../model/Organization.dart';
-import '../address/AddressState.dart';
 import '../address/ListAddressWidget.dart';
 import '../communication/ListCommunicationWidget.dart';
 
@@ -75,10 +73,7 @@ class _CreateOrganizationPageState extends StateMVC
               children: [
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(
-                        RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                  ],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Название"),
                   style: TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
@@ -86,9 +81,7 @@ class _CreateOrganizationPageState extends StateMVC
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Номер ИНН"),
                   style: TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _innController,
@@ -96,32 +89,36 @@ class _CreateOrganizationPageState extends StateMVC
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Номер КПП"),
                   style: TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _kppController,
                   textInputAction: TextInputAction.next,
                 ),
-                Expanded( child: ListAddressWidget()),
-                Expanded( child: ListCommunicationWidget()),
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    child: ListAddressWidget()
+                  ),
+                ),
+                Flexible(
+                    flex: 2,
+                    child: ListCommunicationWidget()
+                ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: () {
                     print(getAddress());
-                    if (getAddress() != null)
-                    {
+                    print(getCommunication());
                       Organization organization = Organization(
                         idOrganization: UniqueKey().hashCode,
                         name: _nameController.text,
-                        address: address,
-                        communication: communication,
+                        address: getAddress(),
+                        communication: getCommunication(),
                         inn: _innController.text,
                         kpp: _kppController.text);
                       print(organization.toString());
-                      //_controller?.addOrganization(organization);
-                    }
+                      _controller?.addOrganization(organization);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is OrganizationAddResultSuccess) {

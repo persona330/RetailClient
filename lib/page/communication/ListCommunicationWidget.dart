@@ -59,6 +59,7 @@ class _ListCommunicationWidgetState extends StateMVC
             setState(() {
               _communication = item!;
             });
+            print(_communication);
             CreateOrganizationPage.of(context)?.setCommunication(_communication);
           }
       );

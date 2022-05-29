@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/group/ListGroupWidget.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
 
@@ -10,6 +11,16 @@ class CreateGroupPage extends StatefulWidget
 
   @override
   _CreateGroupPageState createState() => _CreateGroupPageState();
+
+  static _CreateGroupPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateGroupPageState? result =
+    context.findAncestorStateOfType<_CreateGroupPageState>();
+    return result;
+  }
 }
 
 class _CreateGroupPageState extends StateMVC
@@ -19,8 +30,10 @@ class _CreateGroupPageState extends StateMVC
   _CreateGroupPageState() : super(GroupController()) {_controller = controller as GroupController;}
 
   final _nameController = TextEditingController();
-  List<String> _typeList = ["Нет", "Молочка"];
-  late String _type = _typeList[0];
+  late Group _type = Group(idGroup: 1, name: "Молочные", type: null);
+
+  Group getType() {return _type;}
+  void setType(Group type){ this._type = type; }
 
     @override
   void initState()
@@ -56,23 +69,19 @@ class _CreateGroupPageState extends StateMVC
                   controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Дочерняя группа",),
-                    items: _typeList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item) { setState(() { _type = item!;}); }
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                      child: ListGroupWidget()
+                  ),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    print(getType());
+                    Group _group = Group(idGroup: UniqueKey().hashCode, name: _nameController.text, type: getType());
+                    _controller?.addGroup(_group);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is GroupAddResultSuccess)

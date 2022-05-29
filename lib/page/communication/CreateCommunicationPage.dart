@@ -70,7 +70,7 @@ class _CreateCommunicationPageState extends StateMVC
                 OutlinedButton(
                   onPressed: ()
                   {
-                    Communication _communication = Communication(idCommunication: 1, phone: _phoneController.text, email: _emailController.text);
+                    Communication _communication = Communication(idCommunication: UniqueKey().hashCode, phone: _phoneController.text, email: _emailController.text);
                     _controller?.addCommunication(_communication);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
