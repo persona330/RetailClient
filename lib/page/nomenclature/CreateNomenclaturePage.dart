@@ -2,15 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/model/Group.dart';
+import 'package:retail/model/Producer.dart';
+import 'package:retail/page/group/ListGroupWidget.dart';
+import 'package:retail/page/producer/ListProducerWidget.dart';
 import '../../controller/NomenclatureController.dart';
 import '../../model/Nomenclature.dart';
 
 class CreateNomenclaturePage extends StatefulWidget
 {
-  CreateNomenclaturePage({Key? key}) : super(key: key);
+  const CreateNomenclaturePage({Key? key}) : super(key: key);
 
   @override
   _CreateNomenclaturePageState createState() => _CreateNomenclaturePageState();
+
+  static _CreateNomenclaturePageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateNomenclaturePageState? result =
+    context.findAncestorStateOfType<_CreateNomenclaturePageState>();
+    return result;
+  }
 }
 
 class _CreateNomenclaturePageState extends StateMVC
@@ -26,18 +40,16 @@ class _CreateNomenclaturePageState extends StateMVC
   final _expirationDateController = TextEditingController();
   final _weightController = TextEditingController();
   final _sizeController = TextEditingController();
-  List<String> _groupList = [];
-  List<String> _producerList = [];
-  List<String> _measurementList = [];
-  List<String> _boxList = [];
-  List<String> _storageConditionsList = [];
-  late String _group = _groupList[0];
-  late String _producer = _producerList[0];
-  late String _measurement = _measurementList[0];
-  late String _box = _boxList[0];
-  late String _storageConditions = _storageConditionsList[0];
   late String? _productionDate = "Введите дату";
   late String? _expirationDate = "Введите дату";
+  late Producer _producer;
+  late Group _group;
+
+  Producer getProducer(){return _producer;}
+  void setProducer(Producer producer){_producer = producer;}
+
+  Group getGroup(){return _group;}
+  void setGroup(Group group){_group = group;}
 
   Future<void> _selectProductionDate(BuildContext context) async
   {
@@ -96,7 +108,7 @@ class _CreateNomenclaturePageState extends StateMVC
                   keyboardType: TextInputType.name,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Название"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -104,7 +116,7 @@ class _CreateNomenclaturePageState extends StateMVC
                   keyboardType: TextInputType.name,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
                   decoration: const InputDecoration(labelText: "Бренд"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _brandController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -112,7 +124,7 @@ class _CreateNomenclaturePageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Вес"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _weightController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -120,7 +132,7 @@ class _CreateNomenclaturePageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Объем"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _sizeController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -131,7 +143,7 @@ class _CreateNomenclaturePageState extends StateMVC
                       keyboardType: TextInputType.datetime,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9\-:]")),],
                       decoration: const InputDecoration(labelText: "Дата прибытия"),
-                      style: TextStyle(fontSize: 14, color: Colors.blue),
+                      style: const TextStyle(fontSize: 14, color: Colors.blue),
                       controller: _productionDateController,
                       textInputAction: TextInputAction.next,
                     ),
@@ -142,7 +154,7 @@ class _CreateNomenclaturePageState extends StateMVC
                           _selectProductionDate(context);
                           _productionDateController.text = _productionDate!;
                         },
-                        icon: Icon(Icons.calendar_today)
+                        icon: const Icon(Icons.calendar_today)
                     ),
                   ],
                 ),
@@ -153,7 +165,7 @@ class _CreateNomenclaturePageState extends StateMVC
                       keyboardType: TextInputType.datetime,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9\-:]")),],
                       decoration: const InputDecoration(labelText: "Срок годности"),
-                      style: TextStyle(fontSize: 14, color: Colors.blue),
+                      style: const TextStyle(fontSize: 14, color: Colors.blue),
                       controller: _expirationDateController,
                       textInputAction: TextInputAction.next,
                     ),
@@ -164,64 +176,17 @@ class _CreateNomenclaturePageState extends StateMVC
                           _selectExpirationDate(context);
                           _expirationDateController.text = _expirationDate!;
                         },
-                        icon: Icon(Icons.calendar_today)
+                        icon: const Icon(Icons.calendar_today)
                     ),
                   ],
                 ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Группа товара",),
-                    items: _groupList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item) { setState(() {_group = item!;});}
+                const Flexible(
+                  flex: 1,
+                  child: ListProducerWidget(),
                 ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Производитель",),
-                    items: _producerList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item) { setState(() {_producer = item!;}); }
-                ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Единица измерения",),
-                    items: _measurementList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item) { setState(() {_measurement = item!;}); }
-                ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Ячейка",),
-                    items: _boxList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item) { setState(() {_box = item!;}); }
-                ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Условия хранения",),
-                    items: _storageConditionsList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item) { setState(() {_storageConditions = item!;}); }
+                const Flexible(
+                    flex: 2,
+                    child: ListGroupWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -231,16 +196,9 @@ class _CreateNomenclaturePageState extends StateMVC
                     //_controller?.addAddress(_address);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is NomenclatureAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is NomenclatureResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is NomenclatureResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is NomenclatureAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is NomenclatureResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is NomenclatureResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

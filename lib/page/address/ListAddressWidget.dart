@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/page/organization/CreateOrganizationPage.dart';
+import 'package:retail/page/store/CreateStorePage.dart';
 
 class ListAddressWidget extends StatefulWidget
 {
-  ListAddressWidget({Key? key}) : super(key: key);
+  const ListAddressWidget({Key? key}) : super(key: key);
 
   @override
   _ListAddressWidgetState createState() => _ListAddressWidgetState();
@@ -46,7 +46,7 @@ class _ListAddressWidgetState extends StateMVC
 
       return DropdownButtonFormField(
           isExpanded: true,
-          decoration: InputDecoration(labelText: "Адрес",),
+          decoration: const InputDecoration(labelText: "Адрес",),
           items: addressList.map((Address items) {
             return DropdownMenuItem(
               child: Text(items.toString()),
@@ -58,6 +58,7 @@ class _ListAddressWidgetState extends StateMVC
               _address = item!;
             });
             CreateOrganizationPage.of(context)?.setAddress(_address);
+            CreateStorePage.of(context)?.setAddress(_address);
           }
       );
   }

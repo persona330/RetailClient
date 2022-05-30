@@ -10,7 +10,7 @@ import '../../model/Communication.dart';
 
 class ListCommunicationWidget extends StatefulWidget
 {
-  ListCommunicationWidget({Key? key}) : super(key: key);
+  const ListCommunicationWidget({Key? key}) : super(key: key);
 
   @override
   _ListCommunicationWidgetState createState() => _ListCommunicationWidgetState();

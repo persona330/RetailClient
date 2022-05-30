@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/measurement/ListMeasurementWidget.dart';
 import '../../controller/StorageConditionsController.dart';
+import '../../model/Measurement.dart';
 import '../../model/StorageConditions.dart';
 
 class CreateStorageConditionsPage extends StatefulWidget
 {
-  CreateStorageConditionsPage({Key? key}) : super(key: key);
+  const CreateStorageConditionsPage({Key? key}) : super(key: key);
 
   @override
   _CreateStorageConditionsPageState createState() => _CreateStorageConditionsPageState();
+
+  static _CreateStorageConditionsPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateStorageConditionsPageState? result =
+    context.findAncestorStateOfType<_CreateStorageConditionsPageState>();
+    return result;
+  }
 }
 
 class _CreateStorageConditionsPageState extends StateMVC
@@ -22,6 +34,19 @@ class _CreateStorageConditionsPageState extends StateMVC
   final _temperatureController = TextEditingController();
   final _humidityController = TextEditingController();
   final _illuminationController = TextEditingController();
+  late Measurement _measurementTemperature;
+  late Measurement _measurementHumidity;
+  late Measurement _measurementIllumination;
+
+  Measurement getMeasurementTemperature(){return _measurementTemperature;}
+  void setMeasurementTemperature(Measurement measurement){_measurementTemperature = measurement;}
+
+  Measurement getMeasurementHumidity(){return _measurementHumidity;}
+  void setMeasurementHumidity(Measurement measurement){_measurementHumidity = measurement;}
+
+  Measurement getMeasurementIllumination(){return _measurementIllumination;}
+  void setMeasurementIllumination(Measurement measurement){_measurementIllumination = measurement;}
+
 
     @override
   void initState()
@@ -56,7 +81,7 @@ class _CreateStorageConditionsPageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Название"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -64,44 +89,49 @@ class _CreateStorageConditionsPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Температура"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _temperatureController,
                   textInputAction: TextInputAction.next,
+                ),
+                const Flexible(
+                  flex: 1,
+                  child: ListMeasurementWidget(),
                 ),
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Влажность"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _humidityController,
                   textInputAction: TextInputAction.next,
+                ),
+                const Flexible(
+                    flex: 2,
+                    child: ListMeasurementWidget()
                 ),
                 TextFormField(
                   keyboardType: TextInputType.name,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Освещение"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _illuminationController,
                   textInputAction: TextInputAction.next,
+                ),
+                const Flexible(
+                    flex: 3,
+                    child: ListMeasurementWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    StorageConditions _storageConditions = StorageConditions(idStorageConditions: UniqueKey().hashCode, name: _nameController.text, temperature: double.parse(_temperatureController.text), humidity: double.parse(_humidityController.text), illumination: double.parse(_illuminationController.text), measurementTemperature: getMeasurementTemperature(), measurementHumidity: getMeasurementHumidity(), measurementIllumination: getMeasurementIllumination());
+                    _controller?.addStorageConditions(_storageConditions);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is StorageConditionsAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is StorageConditionsResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is StorageConditionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is StorageConditionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is StorageConditionsResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is StorageConditionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

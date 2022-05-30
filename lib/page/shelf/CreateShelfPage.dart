@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/model/Group.dart';
+import 'package:retail/model/Stillage.dart';
+import 'package:retail/page/group/ListGroupWidget.dart';
+import 'package:retail/page/stillage/ListStillageWidget.dart';
 import '../../controller/ShelfController.dart';
 import '../../model/Shelf.dart';
 
 class CreateShelfPage extends StatefulWidget
 {
-  CreateShelfPage({Key? key}) : super(key: key);
+  const CreateShelfPage({Key? key}) : super(key: key);
 
   @override
   _CreateShelfPageState createState() => _CreateShelfPageState();
+
+  static _CreateShelfPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateShelfPageState? result =
+    context.findAncestorStateOfType<_CreateShelfPageState>();
+    return result;
+  }
 }
 
 class _CreateShelfPageState extends StateMVC
@@ -20,6 +34,15 @@ class _CreateShelfPageState extends StateMVC
 
   final _numberController = TextEditingController();
   final _sizeController = TextEditingController();
+
+  late Group _group;
+  late Stillage _stillage;
+
+  Group getGroup(){return _group;}
+  void setGroup(Group group){_group = group;}
+
+  Stillage getStillage(){return _stillage;}
+  void setStillage(Stillage stillage){_stillage = stillage;}
 
   @override
   void initState()
@@ -50,7 +73,7 @@ class _CreateShelfPageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Номер"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _numberController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -58,28 +81,29 @@ class _CreateShelfPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Объем"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _sizeController,
                   textInputAction: TextInputAction.next,
+                ),
+                const Flexible(
+                  flex: 1,
+                  child: ListGroupWidget(),
+                ),
+                const Flexible(
+                    flex: 2,
+                    child: ListStillageWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    Shelf _shelf = Shelf(idShelf: UniqueKey().hashCode, size: double.parse(_sizeController.text), number: _numberController.text, group: getGroup(), stillage: getStillage());
+                    _controller?.addShelf(_shelf);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is ShelfAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is ShelfResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is ShelfResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is ShelfAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is ShelfResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is ShelfResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

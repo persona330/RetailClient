@@ -10,7 +10,7 @@ import '../communication/ListCommunicationWidget.dart';
 
 class CreateOrganizationPage extends StatefulWidget
 {
-  CreateOrganizationPage({Key? key}) : super(key: key);
+  const CreateOrganizationPage({Key? key}) : super(key: key);
 
   @override
   _CreateOrganizationPageState createState() => _CreateOrganizationPageState();
@@ -75,7 +75,7 @@ class _CreateOrganizationPageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Название"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -83,7 +83,7 @@ class _CreateOrganizationPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Номер ИНН"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _innController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -91,25 +91,22 @@ class _CreateOrganizationPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Номер КПП"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _kppController,
                   textInputAction: TextInputAction.next,
                 ),
-                Flexible(
+                const Flexible(
                   flex: 1,
-                  child: Container(
-                    child: ListAddressWidget()
-                  ),
+                  child: ListAddressWidget(),
                 ),
-                Flexible(
+                const Flexible(
                     flex: 2,
                     child: ListCommunicationWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
-                  onPressed: () {
-                    print(getAddress());
-                    print(getCommunication());
+                  onPressed: ()
+                  {
                       Organization organization = Organization(
                         idOrganization: UniqueKey().hashCode,
                         name: _nameController.text,
@@ -117,20 +114,12 @@ class _CreateOrganizationPageState extends StateMVC
                         communication: getCommunication(),
                         inn: _innController.text,
                         kpp: _kppController.text);
-                      print(organization.toString());
                       _controller?.addOrganization(organization);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is OrganizationAddResultSuccess) {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is OrganizationResultLoading) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is OrganizationResultFailure) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));
-                    }
+                    if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is OrganizationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

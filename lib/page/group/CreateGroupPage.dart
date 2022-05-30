@@ -7,7 +7,7 @@ import '../../model/Group.dart';
 
 class CreateGroupPage extends StatefulWidget
 {
-  CreateGroupPage({Key? key}) : super(key: key);
+  const CreateGroupPage({Key? key}) : super(key: key);
 
   @override
   _CreateGroupPageState createState() => _CreateGroupPageState();
@@ -33,7 +33,7 @@ class _CreateGroupPageState extends StateMVC
   late Group _type = Group(idGroup: 1, name: "Молочные", type: null);
 
   Group getType() {return _type;}
-  void setType(Group type){ this._type = type; }
+  void setType(Group type){ _type = type; }
 
     @override
   void initState()
@@ -65,15 +65,13 @@ class _CreateGroupPageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Название"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
-                Flexible(
+                const Flexible(
                   flex: 1,
-                  child: Container(
-                      child: ListGroupWidget()
-                  ),
+                  child: ListGroupWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -87,13 +85,10 @@ class _CreateGroupPageState extends StateMVC
                     if (state is GroupAddResultSuccess)
                     {
                       print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));
                     }
-                    if (state is GroupResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is GroupResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is GroupResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is GroupResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

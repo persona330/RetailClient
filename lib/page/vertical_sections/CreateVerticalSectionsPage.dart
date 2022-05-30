@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
-
+import 'package:retail/page/stillage/ListStillageWidget.dart';
 import '../../controller/VerticalSectionsController.dart';
+import '../../model/Stillage.dart';
 import '../../model/VerticalSections.dart';
 
 class CreateVerticalSectionsPage extends StatefulWidget
 {
-  CreateVerticalSectionsPage({Key? key}) : super(key: key);
+  const CreateVerticalSectionsPage({Key? key}) : super(key: key);
 
   @override
   _CreateVerticalSectionsPageState createState() => _CreateVerticalSectionsPageState();
+
+  static _CreateVerticalSectionsPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateVerticalSectionsPageState? result =
+    context.findAncestorStateOfType<_CreateVerticalSectionsPageState>();
+    return result;
+  }
 }
 
 class _CreateVerticalSectionsPageState extends StateMVC
@@ -24,6 +32,11 @@ class _CreateVerticalSectionsPageState extends StateMVC
 
   final _numberController = TextEditingController();
   final _sizeController = TextEditingController();
+
+  late Stillage _stillage;
+
+  Stillage getStillage(){return _stillage;}
+  void setStillage(Stillage stillage){_stillage = stillage;}
 
     @override
   void initState()
@@ -54,7 +67,7 @@ class _CreateVerticalSectionsPageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Номер"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _numberController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -62,28 +75,25 @@ class _CreateVerticalSectionsPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Вместимость"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _sizeController,
                   textInputAction: TextInputAction.next,
+                ),
+                const Flexible(
+                  flex: 1,
+                  child: ListStillageWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    VerticalSections _verticalSections = VerticalSections(idVerticalSections: UniqueKey().hashCode, number: _numberController.text, size: double.parse(_sizeController.text), stillage: getStillage());
+                    _controller?.addVerticalSections(_verticalSections);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is VerticalSectionsAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is VerticalSectionsResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is VerticalSectionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is VerticalSectionsResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is VerticalSectionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

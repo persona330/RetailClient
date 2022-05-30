@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
-
+import 'package:retail/model/Organization.dart';
 import '../../controller/StoreController.dart';
 import '../../model/Store.dart';
+import '../address/ListAddressWidget.dart';
+import '../organization/ListOrganizationWidget.dart';
 
 class CreateStorePage extends StatefulWidget
 {
-  CreateStorePage({Key? key}) : super(key: key);
+  const CreateStorePage({Key? key}) : super(key: key);
 
   @override
   _CreateStorePageState createState() => _CreateStorePageState();
+
+  static _CreateStorePageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateStorePageState? result =
+    context.findAncestorStateOfType<_CreateStorePageState>();
+    return result;
+  }
 }
 
 class _CreateStorePageState extends StateMVC
 {
   StoreController? _controller;
 
-
   _CreateStorePageState() : super(StoreController()) {_controller = controller as StoreController;}
 
-  final _apartmentController = TextEditingController();
-  final _entranceController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _totalCapacityController = TextEditingController();
 
-  var items1 = ["Организация 1", "Организация 2", "Организация 3"];
-  var items2 = ["Адрес 1", "Адрес 2", "Адрес 3"];
-  String organization = "Организация 1";
-  String address = "Адрес 1";
+  late Organization _organization;
+  late Address _address;
+
+  Organization getOrganization(){return _organization;}
+  void setOrganization(Organization organization){_organization = organization;}
+
+  Address getAddress(){ return _address;}
+  void setAddress(Address address){_address = address; }
 
     @override
   void initState()
@@ -40,8 +53,8 @@ class _CreateStorePageState extends StateMVC
   @override
   void dispose()
   {
-    _apartmentController.dispose();
-    _entranceController.dispose();
+    _nameController.dispose();
+    _totalCapacityController.dispose();
     super.dispose();
   }
 
@@ -62,68 +75,37 @@ class _CreateStorePageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Номер склада"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
-                  controller: _apartmentController,
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
+                  controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Полная вместимость"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
-                  controller: _entranceController,
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
+                  controller: _totalCapacityController,
                   textInputAction: TextInputAction.next,
                 ),
-                DropdownButton(
-                    isExpanded: true,
-                    disabledHint: Text("Организация"),
-                    value: organization,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: items1.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item)
-                    {
-                      setState(() {organization = item!;});
-                    }
+                const Flexible(
+                  flex: 1,
+                  child: ListAddressWidget(),
                 ),
-                DropdownButton(
-                    isExpanded: true,
-                    disabledHint: Text("Адрес"),
-                    value: address,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: items2.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item)
-                    {
-                      setState(() {address = item!;});
-                    }
+                const Flexible(
+                    flex: 2,
+                    child: ListOrganizationWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    Store _store = Store(idStore: UniqueKey().hashCode, name: _nameController.text, totalCapacity: double.parse(_totalCapacityController.text), organization: getOrganization(), address: getAddress());
+                    _controller?.addStore(_store);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is StoreAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is StoreResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is StoreResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is StoreAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is StoreResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is StoreResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

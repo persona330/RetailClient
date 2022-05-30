@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
-
+import 'package:retail/model/ConsignmentNote.dart';
+import 'package:retail/model/Nomenclature.dart';
+import 'package:retail/page/nomenclature/ListNomenclatureWidget.dart';
 import '../../controller/ImportController.dart';
 import '../../model/Import.dart';
+import '../consignment_note/ListConsignmentNoteWidget.dart';
 
 class CreateImportPage extends StatefulWidget
 {
-  CreateImportPage({Key? key}) : super(key: key);
+  const CreateImportPage({Key? key}) : super(key: key);
 
   @override
   _CreateImportPageState createState() => _CreateImportPageState();
+
+  static _CreateImportPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateImportPageState? result =
+    context.findAncestorStateOfType<_CreateImportPageState>();
+    return result;
+  }
 }
 
 class _CreateImportPageState extends StateMVC
@@ -25,10 +35,15 @@ class _CreateImportPageState extends StateMVC
   final _quantityController = TextEditingController();
   final _costController = TextEditingController();
   final _vatController = TextEditingController();
-  List<String> _consignmentNotelist = ["Накладная 1", "Накладная 2"];
-  List<String> _nomenclatureList = ["Номенклатура 1", "Номенклатура 2"];
-  late String _nomenclature = _nomenclatureList[0];
-  late String _consignmentNote = _consignmentNotelist[0];
+
+  late Nomenclature _nomenclature;
+  late ConsignmentNote _consignmentNote;
+
+  Nomenclature getNomenclature(){return _nomenclature;}
+  void setNomenclature(Nomenclature nomenclature){_nomenclature = nomenclature;}
+
+  ConsignmentNote getConsignmentNote(){return _consignmentNote;}
+  void setConsignmentNote(ConsignmentNote consignmentNote){_consignmentNote = consignmentNote;}
 
     @override
   void initState()
@@ -62,7 +77,7 @@ class _CreateImportPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Количество"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _quantityController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -70,7 +85,7 @@ class _CreateImportPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Цена"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _costController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -78,56 +93,29 @@ class _CreateImportPageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "НДС"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _vatController,
                   textInputAction: TextInputAction.next,
                 ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Накладная",),
-                    items: _consignmentNotelist.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item)
-                    {
-                      setState(() {_consignmentNote = item!;});
-                    }
+                const Flexible(
+                  flex: 1,
+                  child: ListConsignmentNoteWidget(),
                 ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Номенклатура",),
-                    items: _nomenclatureList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item)
-                    {
-                      setState(() {_nomenclature = item!;});
-                    }
+                const Flexible(
+                    flex: 2,
+                    child: ListNomenclatureWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    Import _import = Import(idImport: UniqueKey().hashCode, quantity: int.parse(_quantityController.text), cost: double.parse(_costController.text), vat: int.parse(_vatController.text), consignmentNote: getConsignmentNote(), nomenclature: getNomenclature());
+                    _controller?.addImport(_import);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is ImportAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is ImportResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is ImportResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is ImportAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is ImportResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is ImportResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

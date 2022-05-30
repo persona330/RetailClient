@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
-
+import 'package:retail/model/Supplier.dart';
+import 'package:retail/page/supplier/ListSupplierWidget.dart';
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
-import '../../service/ConsignmentNoteService.dart';
 
 class CreateConsignmentNotePage extends StatefulWidget
 {
-  CreateConsignmentNotePage({Key? key}) : super(key: key);
+  const CreateConsignmentNotePage({Key? key}) : super(key: key);
 
   @override
   _CreateConsignmentNotePageState createState() => _CreateConsignmentNotePageState();
+
+  static _CreateConsignmentNotePageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateConsignmentNotePageState? result =
+    context.findAncestorStateOfType<_CreateConsignmentNotePageState>();
+    return result;
+  }
 }
 
 class _CreateConsignmentNotePageState extends StateMVC
@@ -27,10 +35,10 @@ class _CreateConsignmentNotePageState extends StateMVC
   final _arrivalDateController = TextEditingController();
   late String? _arrivalDate = "Введите дату";
   late bool _forReturn = false;
-  List<String> _supplerList = ["Поставщик 1", "Поставщик 2", "Поставщик 3"];
-  List<String> _employeeStoreList = ["Сотрудник склада 1", "Сотрудник склада 2", "Сотрудник склада 3"];
-  late String _suppler = _supplerList[0];
-  late String _employeeStore = _employeeStoreList[0];
+  late Supplier _supplier;
+
+  Supplier getSupplier(){return _supplier;}
+  void setSupplier(Supplier supplier){_supplier = supplier;}
 
   Future<void> _selectDate(BuildContext context) async
   {
@@ -74,7 +82,7 @@ class _CreateConsignmentNotePageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Номер"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _numberController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -85,7 +93,7 @@ class _CreateConsignmentNotePageState extends StateMVC
                             keyboardType: TextInputType.datetime,
                             inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9\-:]")),],
                             decoration: const InputDecoration(labelText: "Дата прибытия"),
-                            style: TextStyle(fontSize: 14, color: Colors.blue),
+                            style: const TextStyle(fontSize: 14, color: Colors.blue),
                             controller: _arrivalDateController,
                             textInputAction: TextInputAction.next,
                       ),
@@ -95,47 +103,23 @@ class _CreateConsignmentNotePageState extends StateMVC
                           _selectDate(context);
                           _arrivalDateController.text = _arrivalDate!;
                           },
-                        icon: Icon(Icons.calendar_today)
+                        icon: const Icon(Icons.calendar_today)
                     ),
                   ],
                 ),
                 //const SizedBox(height: 20),
                 Row(
                   children: [
-                    Text("На возврат", style: TextStyle(fontSize: 14, color: Colors.blue)),
+                    const Text("На возврат", style: TextStyle(fontSize: 14, color: Colors.blue)),
                     Checkbox(
                         value: _forReturn,
                         onChanged: (value) async { setState(() {_forReturn = value!;});}
                         ),
                   ],
                 ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Поставщик",),
-                    items: _supplerList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item)
-                    {
-                      setState(() {_suppler = item!;});
-                    }
-                ),
-                DropdownButtonFormField(
-                    isExpanded: true,
-                    decoration: InputDecoration(labelText: "Сотрудник склада",),
-                    items: _employeeStoreList.map((String items){
-                      return DropdownMenuItem(
-                        child: Text(items.toString()),
-                        value: items,
-                      );
-                    }).toList(),
-                    onChanged: (String? item)
-                    {
-                      setState(() {_employeeStore = item!;});
-                    }
+                const Flexible(
+                  flex: 1,
+                  child: ListSupplierWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -143,18 +127,11 @@ class _CreateConsignmentNotePageState extends StateMVC
                   {
                     //ConsignmentNote _consignmentNote = ConsignmentNote(idConsignmentNote: 1, number: "2", arrivalDate: DateTime.parse(arrivalDate!), );
                     //_controller?.addConsignmentNote(_address);
-                    //Navigator.pop(context, true);
+                    Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is ConsignmentNoteAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is ConsignmentNoteResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is ConsignmentNoteResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is ConsignmentNoteAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is ConsignmentNoteResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is ConsignmentNoteResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),

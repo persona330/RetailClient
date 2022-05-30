@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
-
+import 'package:retail/page/area/ListAreaWidget.dart';
 import '../../controller/StillageController.dart';
+import '../../model/Area.dart';
 import '../../model/Stillage.dart';
 
 class CreateStillagePage extends StatefulWidget
 {
-  CreateStillagePage({Key? key}) : super(key: key);
+  const CreateStillagePage({Key? key}) : super(key: key);
 
   @override
   _CreateStillagePageState createState() => _CreateStillagePageState();
+
+  static _CreateStillagePageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _CreateStillagePageState? result =
+    context.findAncestorStateOfType<_CreateStillagePageState>();
+    return result;
+  }
 }
 
 class _CreateStillagePageState extends StateMVC
@@ -24,6 +32,11 @@ class _CreateStillagePageState extends StateMVC
 
   final _numberController = TextEditingController();
   final _sizeController = TextEditingController();
+
+  late Area _area;
+
+  Area getArea(){return _area;}
+  void setArea(Area area){ _area = area;}
 
     @override
   void initState()
@@ -42,8 +55,6 @@ class _CreateStillagePageState extends StateMVC
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       appBar: AppBar(title: const Text('Создание сттелажа')),
       body:  Scrollbar(
@@ -56,7 +67,7 @@ class _CreateStillagePageState extends StateMVC
                   keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Номер"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _numberController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -64,28 +75,25 @@ class _CreateStillagePageState extends StateMVC
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   decoration: const InputDecoration(labelText: "Вместимость"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _sizeController,
                   textInputAction: TextInputAction.next,
+                ),
+                const Flexible(
+                  flex: 1,
+                  child: ListAreaWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    Stillage _stillage = Stillage(idStillage: UniqueKey().hashCode, number: _numberController.text, size: double.parse(_sizeController.text), area: getArea());
+                    _controller?.addStillage(_stillage);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is StillageAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is StillageResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is StillageResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is StillageAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is StillageResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is StillageResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
                   child: const Text('Отправить'),
                 ),
