@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Area.dart';
 
-import '../../model/Area.dart';
-
-class ItemAreaPage extends StatelessWidget
+class ItemAreaWidget extends StatelessWidget
 {
   final Area area;
 
-  ItemAreaPage(this.area);
+  ItemAreaWidget(this.area);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,10 +18,7 @@ class ItemAreaPage extends StatelessWidget
         child: ListTile(
           leading: Text("${area.getIdArea}"),
           title: Text('${area.getName}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
-          trailing: Text('${area.getIdArea}'),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

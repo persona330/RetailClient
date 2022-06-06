@@ -3,8 +3,6 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/page/address/DeleteAddressPage.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
 
 class GetAddressPage extends StatefulWidget
@@ -45,7 +43,7 @@ class GetAddressPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteAddress(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удален")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Адрес удален")));
           Navigator.of(context).pop();
         }
         break;
@@ -72,7 +70,7 @@ class GetAddressPageState extends StateMVC
       final _address = (state as AddressGetItemResultSuccess).address;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о адресе №${_id}"),
+            title: Text("Информация о адресе №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -102,7 +100,7 @@ class GetAddressPageState extends StateMVC
                       "Регион: ${_address.getRegion} \n"
                       "Город: ${_address.getCity} \n"
                       "Страна: ${_address.getNation} "
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
 
                 ],
               ),

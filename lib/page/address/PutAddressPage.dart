@@ -83,83 +83,57 @@ class PutAddressPageState extends StateMVC
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер квартиры"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                    decoration: const InputDecoration(labelText: "Номер квартиры"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _apartmentController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер подъезда"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    decoration: const InputDecoration(labelText: "Номер подъезда"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _entranceController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                     decoration: const InputDecoration(labelText: "Номер дома"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _houseController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название улицы"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                    decoration: const InputDecoration(labelText: "Название улицы"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _streetController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование региона"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                    decoration: const InputDecoration(labelText: "Наименование региона"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _regionController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название населенного пункта"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                    decoration: const InputDecoration(labelText: "Название населенного пункта"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _cityController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование страны"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                    decoration: const InputDecoration(labelText: "Наименование страны"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _nationController,
                     textInputAction: TextInputAction.done,
                   ),
@@ -176,22 +150,11 @@ class PutAddressPageState extends StateMVC
                           nation: _nationController.text);
                       _controller?.putAddress(_address1, _id);
                       Navigator.pop(context, true);
-                      if (state is AddressAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is AddressResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is AddressResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      if (state is AddressPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Адрес изменен")));}
+                      if (state is AddressResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is AddressResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

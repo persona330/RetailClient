@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/address/CreateAddressPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/GetAllAddreessPage.dart';
 import 'package:retail/page/communication/GetAllCommunicationPage.dart';
 import 'package:retail/page/store/GetAllStorePage.dart';
-import 'package:retail/page/test/LIstPostPage.dart';
-import 'package:retail/page/ListAddressPage.dart';
-import 'package:retail/service/AddressService.dart';
-import 'package:flutter/services.dart';
 import 'consignment_note/GetAllConsignmentNotePage.dart';
 import 'group/GetAllGroupPage.dart';
 import 'nomenclature/GetAllNomenclaturePage.dart';
@@ -36,12 +29,16 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       // AppBar - верхняя панель
         appBar: AppBar(
             title: Text(widget.title),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () => {print("Click on settings button")}
+            ),
+          ],
         ),
         drawer: Drawer(
           child: ListView(
@@ -58,39 +55,39 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Накладная'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllConsignmentNotePage())),
+                leading: const Icon(Icons.account_circle),
+                title: const Text('Накладная'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllConsignmentNotePage())),
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Каталог товаров'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllGroupPage())),
+                leading: const Icon(Icons.account_circle),
+                title: const Text('Каталог товаров'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllGroupPage())),
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Номенклатура'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllNomenclaturePage())),
+                leading: const Icon(Icons.account_circle),
+                title: const Text('Номенклатура'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllNomenclaturePage())),
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Организация'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllOrganizationPage())),
+                leading: const Icon(Icons.account_circle),
+                title: const Text('Организация'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllOrganizationPage())),
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Склады'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllStorePage())),
+                leading: const Icon(Icons.account_circle),
+                title: const Text('Склады'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllStorePage())),
               ),
               ListTile(
-                leading: Icon(Icons.location_on),
-                title: Text('Адреса'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllAddressPage())),
+                leading: const Icon(Icons.location_on),
+                title: const Text('Адреса'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllAddressPage())),
               ),
               ListTile(
-                leading: Icon(Icons.location_on),
-                title: Text('Средства связи'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => GetAllCommunicationPage())),
+                leading: const Icon(Icons.location_on),
+                title: const Text('Средства связи'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllCommunicationPage())),
               ),
             ],
           ),

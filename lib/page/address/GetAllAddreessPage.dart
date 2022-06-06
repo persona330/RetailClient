@@ -3,7 +3,6 @@ import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/page/address/CreateAddressPage.dart';
 import 'package:retail/page/address/GetAddressPage.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/address/widget/ItemAddressWidget.dart';
 
@@ -22,38 +21,20 @@ class _GetAllAddressPageState extends StateMVC
 
   _GetAllAddressPageState() : super(AddressController()) {_controller = controller as AddressController;}
 
-  final _idAddressController = TextEditingController();
-
-  late String _idAddress = "0";
-  var items = <int>[];
-
-  _changeIdAddress() { setState(() => _idAddress = _idAddressController.text); }
+  Widget appBarTitle = const Text("Адреса");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
   {
     super.initState();
     _controller.getAddresses();
-    _idAddressController.addListener(_changeIdAddress);
   }
 
   @override
   void dispose()
   {
-    _idAddressController.dispose();
     super.dispose();
-  }
-
-  // Вызывает перестроение виджета при изменении состояния через функцию build() в классе состояния
-  void _f1() {setState(() {});}
-
-  void _searchItem(int id)
-  {
-    if(id != 0)
-    {
-      return;
-    }
-
   }
 
   @override
@@ -62,22 +43,37 @@ class _GetAllAddressPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: const Text("Адреса"),
+        title: appBarTitle,
         leading: IconButton(icon: const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.settings),
-                onPressed: () { print("Click on settings button"); }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Адреса");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAddressPage())); },
-        tooltip: 'Создать адрес',
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAddressPage())); },
+        tooltip: 'Добавить адрес',
         child: const Icon(Icons.add),
       ),
     );
@@ -100,31 +96,9 @@ class _GetAllAddressPageState extends StateMVC
       );
     } else {
       // отображаем список постов
-      final addressList = (state as AddressGetListResultSuccess).addressList;
-      //print(addressList);
+      final _addressList = (state as AddressGetListResultSuccess).addressList;
       return Column(
         children: [
-          Container(
-            // this.left, this.top, this.right, this.bottom
-            padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              onChanged: (value) {
-                _searchItem(int.parse(value));
-              },
-              controller: _idAddressController,
-              decoration: const InputDecoration(
-                  labelText: "Search",
-                  hintText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(25.0)))
-              ),
-            ),
-          ),
           Expanded(
             child:
             Center(
@@ -133,15 +107,15 @@ class _GetAllAddressPageState extends StateMVC
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
-                  itemCount: addressList.length,
+                  itemCount: _addressList.length,
                   itemBuilder: (context, index)
                   {
                     return GestureDetector(
                       onTap: ()
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: addressList[index].getIdAddress!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: _addressList[index].getIdAddress!)));
                       },
-                      child: ItemAddressWidget(addressList[index]),
+                      child: ItemAddressWidget(_addressList[index]),
                     );
                   },
                 ),

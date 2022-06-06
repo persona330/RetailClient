@@ -42,7 +42,7 @@ class GetAreaPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteArea(_id);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Зона удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -94,6 +94,8 @@ class GetAreaPageState extends StateMVC
                 children: [
                   Text("Название: ${_area.getName} \n"
                       "Вместимость: ${_area.getCapacity} \n"
+                      "Условия хранения: ${_area.getStorageConditions} \n"
+                      "Склад: ${_area.getStore} \n"
                       , style: const TextStyle(fontSize: 22)),
                 ],
               ),

@@ -18,9 +18,7 @@ class ItemAddressWidget extends StatelessWidget
         child: ListTile(
           leading: Text("${address.getIdAddress}"),
           title: Text('${address.getNation}'),
-          subtitle: Text(
-          'Тело: ${address.getRegion}\n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

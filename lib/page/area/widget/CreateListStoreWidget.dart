@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import '../../controller/StoreController.dart';
-import '../../model/Store.dart';
-import '../area/CreateAreaPage.dart';
+import 'package:retail/model/Store.dart';
+import '../../../controller/StoreController.dart';
+import '../CreateAreaPage.dart';
 
-class ListStoreWidget extends StatefulWidget
+class CreateListStoreWidget extends StatefulWidget
 {
-  const ListStoreWidget({Key? key}) : super(key: key);
+  const CreateListStoreWidget({Key? key}) : super(key: key);
 
   @override
-  _ListStoreWidgetState createState() => _ListStoreWidgetState();
+  _CreateListStoreWidgetState createState() => _CreateListStoreWidgetState();
 }
 
-class _ListStoreWidgetState extends StateMVC
+class _CreateListStoreWidgetState extends StateMVC
 {
   late StoreController _controller;
   late Store _store;
 
-  _ListStoreWidgetState() : super(StoreController()) {_controller = controller as StoreController;}
+  _CreateListStoreWidgetState() : super(StoreController()) {_controller = controller as StoreController;}
 
   @override
   void initState()

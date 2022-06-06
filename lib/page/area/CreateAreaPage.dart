@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/StorageConditions.dart';
-import 'package:retail/page/stillage/ListStillageWidget.dart';
-import 'package:retail/page/store/ListStoreWidget.dart';
+import 'package:retail/page/area/widget/CreateListStorageConditionsWidget.dart';
+import 'package:retail/page/area/widget/CreateListStoreWidget.dart';
 import '../../controller/AreaController.dart';
 import '../../model/Area.dart';
 import '../../model/Store.dart';
-import '../storage_conditions/ListStorageConditionsWidget.dart';
 
 class CreateAreaPage extends StatefulWidget
 {
@@ -90,11 +89,11 @@ class _CreateAreaPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListStorageConditionsWidget(),
+                  child: CreateListStorageConditionsWidget(),
                 ),
                 const Flexible(
                     flex: 2,
-                    child: ListStoreWidget()
+                    child: CreateListStoreWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -104,11 +103,11 @@ class _CreateAreaPageState extends StateMVC
                     _controller?.addArea(_area);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is AreaAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is AreaAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Зона создана")));}
                     if (state is AreaResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is AreaResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),
