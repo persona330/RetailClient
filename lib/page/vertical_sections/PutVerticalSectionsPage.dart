@@ -1,51 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
+import 'package:retail/page/vertical_sections/widget/PutListStillageWidget.dart';
+import '../../controller/VerticalSectionsController.dart';
+import '../../model/Stillage.dart';
+import '../../model/VerticalSections.dart';
 
-class PutAddressPage extends StatefulWidget
+class PutVerticalSectionsPage extends StatefulWidget
 {
   final int id;
-  const PutAddressPage({Key? key, required this.id}) : super(key: key);
+  const PutVerticalSectionsPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  PutAddressPageState createState() => PutAddressPageState(id);
+  PutVerticalSectionsPageState createState() => PutVerticalSectionsPageState(id);
+
+  static PutVerticalSectionsPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final PutVerticalSectionsPageState? result =
+    context.findAncestorStateOfType<PutVerticalSectionsPageState>();
+    return result;
+  }
 }
 
-class PutAddressPageState extends StateMVC
+class PutVerticalSectionsPageState extends StateMVC
 {
-  AddressController? _controller;
+  VerticalSectionsController? _controller;
   final int _id;
 
-  PutAddressPageState(this._id) : super(AddressController()) {_controller = controller as AddressController;}
+  PutVerticalSectionsPageState(this._id) : super(VerticalSectionsController()) {_controller = controller as VerticalSectionsController;}
 
-  final _apartmentController = TextEditingController();
-  final _entranceController = TextEditingController();
-  final _houseController = TextEditingController();
-  final _streetController = TextEditingController();
-  final _regionController = TextEditingController();
-  final _cityController = TextEditingController();
-  final _nationController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _sizeController = TextEditingController();
 
+  late Stillage _stillage;
+
+  Stillage getStillage(){return _stillage;}
+  void setStillage(Stillage stillage){_stillage = stillage;}
 
   @override
   void initState()
   {
     super.initState();
-    _controller?.getAddress(_id);
+    _controller?.getVerticalSections(_id);
   }
 
   @override
   void dispose()
   {
-    _apartmentController.dispose();
-    _entranceController.dispose();
-    _houseController.dispose();
-    _streetController.dispose();
-    _regionController.dispose();
-    _cityController.dispose();
-    _nationController.dispose();
+    _numberController.dispose();
+    _sizeController.dispose();
     super.dispose();
   }
 
@@ -53,10 +59,10 @@ class PutAddressPageState extends StateMVC
   Widget build(BuildContext context)
   {
     final state = _controller?.currentState;
-    if (state is AddressResultLoading)
+    if (state is VerticalSectionsResultLoading)
     {
       return const Center(child: CircularProgressIndicator());
-    } else if (state is AddressResultFailure)
+    } else if (state is VerticalSectionsResultFailure)
     {
       return Center(
         child: Text(
@@ -66,14 +72,9 @@ class PutAddressPageState extends StateMVC
         ),
       );
     } else {
-      final _address = (state as AddressGetItemResultSuccess).address;
-      _apartmentController.text = _address.getApartment!;
-      _entranceController.text = _address.getEntrance!.toString();
-      _houseController.text = _address.getHouse!;
-      _streetController.text = _address.getStreet!;
-      _regionController.text = _address.getRegion!;
-      _cityController.text = _address.getCity!;
-      _nationController.text = _address.getNation!;
+      final _verticalSections = (state as VerticalSectionsGetItemResultSuccess).verticalSections;
+      _numberController.text = _verticalSections.getNumber!;
+      _sizeController.text = _verticalSections.getSize!.toString();
       return Scaffold(
         appBar: AppBar(title: const Text('Изменение адреса')),
         body: Scrollbar(
@@ -83,113 +84,35 @@ class PutAddressPageState extends StateMVC
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер квартиры"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _apartmentController,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                    decoration: const InputDecoration(labelText: "Номер"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
+                    controller: _numberController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер подъезда"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _entranceController,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    decoration: const InputDecoration(labelText: "Вместимость"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
+                    controller: _sizeController,
                     textInputAction: TextInputAction.next,
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(labelText: "Номер дома"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _houseController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название улицы"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _streetController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование региона"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _regionController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название населенного пункта"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _cityController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование страны"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _nationController,
-                    textInputAction: TextInputAction.done,
+                  const Flexible(
+                    flex: 1,
+                    child: PutListStillageWidget(),
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(
                     onPressed: () {
-                      Address _address1 = Address(idAddress: _id,
-                          apartment: _apartmentController.text,
-                          entrance: int.parse(_entranceController.text),
-                          house: _houseController.text,
-                          street: _streetController.text,
-                          region: _regionController.text,
-                          city: _cityController.text,
-                          nation: _nationController.text);
-                      _controller?.putAddress(_address1, _id);
+                      VerticalSections _verticalSections = VerticalSections(idVerticalSections: _id, number: _numberController.text, size: double.parse(_sizeController.text), stillage: getStillage());
+                      _controller?.putVerticalSections(_verticalSections, _id);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция изменена")));
                       Navigator.pop(context, true);
-                      if (state is AddressAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is AddressResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is AddressResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      final state = _controller?.currentState;
+                      if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                      if (state is VerticalSectionsResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is VerticalSectionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
                     child: const Text('Отправить'),
                   ),

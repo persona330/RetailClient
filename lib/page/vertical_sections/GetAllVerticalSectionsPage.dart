@@ -1,33 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/controller/PostController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/model/Post.dart';
 import 'package:retail/page/address/CreateAddressPage.dart';
-import 'package:retail/page/address/ItemAddressPage.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
-import 'package:retail/service/AddressService.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/service/PostService.dart';
-
 import '../../controller/VerticalSectionsController.dart';
 import '../../model/VerticalSections.dart';
 import 'GetVerticalSectionsPage.dart';
-import 'ItemVerticalSectionsPage.dart';
+import 'widget/ItemVerticalSectionsWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllVerticalSectionsPage extends StatefulWidget
 {
   const GetAllVerticalSectionsPage({Key? key}) : super(key: key);
-
-  //final String title;
 
   @override
   _GetAllVerticalSectionsPageState createState() => _GetAllVerticalSectionsPageState();
 }
 
-// Домашняя страница
 class _GetAllVerticalSectionsPageState extends StateMVC
 {
   late VerticalSectionsController _controller;
@@ -45,22 +31,20 @@ class _GetAllVerticalSectionsPageState extends StateMVC
   Widget build(BuildContext context)
   {
     return Scaffold(
-      // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Вертикальные секции"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: const Text("Вертикальные секции"),
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
                 onPressed: () => {
                   print("Click on settings button")
                 }
                 ),
         ],
       ),
-      // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
         onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAddressPage())); },
@@ -86,7 +70,6 @@ class _GetAllVerticalSectionsPageState extends StateMVC
         ),
       );
     } else {
-      // отображаем список постов
       final _verticalSectionsList = (state as VerticalSectionsGetListResultSuccess).verticalSectionsList;
       return Column(
         children: [
@@ -94,7 +77,7 @@ class _GetAllVerticalSectionsPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -107,7 +90,7 @@ class _GetAllVerticalSectionsPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetVerticalSectionsPage(id: _verticalSectionsList[index].getIdVerticalSections!)));
                       },
-                      child: ItemVerticalSectionsPage(_verticalSectionsList[index]),
+                      child: ItemVerticalSectionsWidget(_verticalSectionsList[index]),
                     );
                   },
                 ),

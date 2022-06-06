@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/stillage/ListStillageWidget.dart';
+import 'package:retail/page/vertical_sections/widget/CreateListStillageWidget.dart';
 import '../../controller/VerticalSectionsController.dart';
 import '../../model/Stillage.dart';
 import '../../model/VerticalSections.dart';
@@ -81,7 +81,7 @@ class _CreateVerticalSectionsPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListStillageWidget(),
+                  child: CreateListStillageWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -89,6 +89,7 @@ class _CreateVerticalSectionsPageState extends StateMVC
                   {
                     VerticalSections _verticalSections = VerticalSections(idVerticalSections: UniqueKey().hashCode, number: _numberController.text, size: double.parse(_sizeController.text), stillage: getStillage());
                     _controller?.addVerticalSections(_verticalSections);
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция создана")));
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}

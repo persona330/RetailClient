@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/controller/PostController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/model/Post.dart';
-import 'package:retail/page/address/CreateAddressPage.dart';
-import 'package:retail/page/address/ItemAddressPage.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
-import 'package:retail/service/AddressService.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/service/PostService.dart';
-
 import '../../controller/MeasurementController.dart';
 import '../../model/Measurement.dart';
 import 'CreateMeasurementPage.dart';
+import 'GetMeasurementPage.dart';
 import 'ItemMeasurementPage.dart';
 
 // StatefulWidget - для изменяемых виджетов
@@ -92,7 +82,7 @@ class _GetAllMeasurementPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -103,7 +93,7 @@ class _GetAllMeasurementPageState extends StateMVC
                     return GestureDetector(
                       onTap: ()
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: _measurementList[index].getIdMeasurement!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetMeasurementPage(id: _measurementList[index].getIdMeasurement!)));
                       },
                       child: ItemMeasurementPage(_measurementList[index]),
                     );

@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:retail/controller/AddressController.dart';
-import 'package:retail/controller/PostController.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/model/Post.dart';
 import 'package:retail/page/address/CreateAddressPage.dart';
-import 'package:retail/page/address/ItemAddressPage.dart';
 import 'package:retail/page/address/GetAddressPage.dart';
-import 'package:retail/page/organization/CreateOrganizationPage.dart';
-import 'package:retail/service/AddressService.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/service/PostService.dart';
+import 'package:retail/page/address/widget/ItemAddressWidget.dart';
 
-import 'DeleteAddressPage.dart';
-
-// StatefulWidget - для изменяемых виджетов
 class GetAllAddressPage extends StatefulWidget
 {
   const GetAllAddressPage({Key? key}) : super(key: key);
@@ -70,13 +62,13 @@ class _GetAllAddressPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Адреса"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: const Text("Адреса"),
+        leading: IconButton(icon: const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
                 onPressed: () { print("Click on settings button"); }
                 ),
         ],
@@ -137,20 +129,19 @@ class _GetAllAddressPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
                   itemCount: addressList.length,
-                  itemBuilder: (context, index) {
-                    // мы вынесли элемент списка в
-                    // отдельный виджет
+                  itemBuilder: (context, index)
+                  {
                     return GestureDetector(
                       onTap: ()
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: addressList[index].getIdAddress!)));
                       },
-                      child: ItemAddressPage(addressList[index]),
+                      child: ItemAddressWidget(addressList[index]),
                     );
                   },
                 ),

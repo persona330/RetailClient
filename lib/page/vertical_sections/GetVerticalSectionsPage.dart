@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/VerticalSectionsController.dart';
 import '../../model/VerticalSections.dart';
 import 'DeleteVerticalSectionsPage.dart';
@@ -14,7 +9,6 @@ class GetVerticalSectionsPage extends StatefulWidget
 {
   final int id;
   const GetVerticalSectionsPage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetVerticalSectionsPageState createState() => GetVerticalSectionsPageState(id);
@@ -48,7 +42,7 @@ class GetVerticalSectionsPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteVerticalSections(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -75,7 +69,7 @@ class GetVerticalSectionsPageState extends StateMVC
       final _verticalSections = (state as VerticalSectionsGetItemResultSuccess).verticalSections;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о вертикальной секции №${_id}"),
+            title: Text("Информация о вертикальной секции №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -101,7 +95,7 @@ class GetVerticalSectionsPageState extends StateMVC
                   Text("Номер: ${_verticalSections.getNumber} \n"
                       "Вместимость: ${_verticalSections.getSize} \n"
                       "Стеллаж: ${_verticalSections.getStillage.toString()}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

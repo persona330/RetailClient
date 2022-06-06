@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:retail/model/Address.dart';
 
-import '../../model/VerticalSections.dart';
-
-class ItemVerticalSectionsPage extends StatelessWidget
+class ItemAddressWidget extends StatelessWidget
 {
-  final VerticalSections verticalSections;
+  final Address address;
 
-  ItemVerticalSectionsPage(this.verticalSections);
+  ItemAddressWidget(this.address);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -17,10 +16,10 @@ class ItemVerticalSectionsPage extends StatelessWidget
         borderRadius: BorderRadius.circular(15.0),
       ),
         child: ListTile(
-          leading: Text("${verticalSections.getIdVerticalSections}"),
-          title: Text('${verticalSections.getNumber}'),
+          leading: Text("${address.getIdAddress}"),
+          title: Text('${address.getNation}'),
           subtitle: Text(
-          'Тело: \n'
+          'Тело: ${address.getRegion}\n'
           ),
       ),
     );
