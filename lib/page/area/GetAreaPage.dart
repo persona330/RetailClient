@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/AreaController.dart';
 import '../../model/Area.dart';
 import 'DeleteAreaPage.dart';
@@ -47,7 +42,7 @@ class GetAreaPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteArea(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -74,7 +69,7 @@ class GetAreaPageState extends StateMVC
       final _area = (state as AreaGetItemResultSuccess).area;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о зоне хранения №${_id}"),
+            title: Text("Информация о зоне хранения №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -99,7 +94,7 @@ class GetAreaPageState extends StateMVC
                 children: [
                   Text("Название: ${_area.getName} \n"
                       "Вместимость: ${_area.getCapacity} \n"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

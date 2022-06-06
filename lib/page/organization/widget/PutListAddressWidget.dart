@@ -2,25 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/page/organization/CreateOrganizationPage.dart';
 import 'package:retail/page/store/CreateStorePage.dart';
+import '../PutOrganizationPage.dart';
 
-import '../organization/PutOrganizationPage.dart';
-
-class ListAddressWidget extends StatefulWidget
+class PutListAddressWidget extends StatefulWidget
 {
-  const ListAddressWidget({Key? key}) : super(key: key);
+  const PutListAddressWidget({Key? key}) : super(key: key);
 
   @override
-  _ListAddressWidgetState createState() => _ListAddressWidgetState();
+  _PutListAddressWidgetState createState() => _PutListAddressWidgetState();
 }
 
-class _ListAddressWidgetState extends StateMVC
+class _PutListAddressWidgetState extends StateMVC
 {
   late AddressController _controller;
   late Address _address;
 
-  _ListAddressWidgetState() : super(AddressController()) {_controller = controller as AddressController;}
+  _PutListAddressWidgetState() : super(AddressController()) {_controller = controller as AddressController;}
 
   @override
   void initState()
@@ -59,8 +57,7 @@ class _ListAddressWidgetState extends StateMVC
             setState(() {
               _address = item!;
             });
-            //CreateOrganizationPage.of(context)?.setAddress(_address);
-            //PutOrganizationPage.of(context)?.setAddress(_address);
+            PutOrganizationPage.of(context)?.setAddress(_address);
             CreateStorePage.of(context)?.setAddress(_address);
           }
       );

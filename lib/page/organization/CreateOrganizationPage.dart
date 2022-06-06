@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Address.dart';
+import 'package:retail/page/organization/widget/CreateListAddressWidget.dart';
 import '../../controller/OrganizationController.dart';
 import '../../model/Communication.dart';
 import '../../model/Organization.dart';
 import '../address/ListAddressWidget.dart';
-import '../communication/ListCommunicationWidget.dart';
+import 'widget/CreateListCommunicationWidget.dart';
 
 class CreateOrganizationPage extends StatefulWidget
 {
@@ -97,11 +98,11 @@ class _CreateOrganizationPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListAddressWidget(),
+                  child: CreateListAddressWidget(),
                 ),
                 const Flexible(
                     flex: 2,
-                    child: ListCommunicationWidget()
+                    child: CreateListCommunicationWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -119,7 +120,7 @@ class _CreateOrganizationPageState extends StateMVC
                     final state = _controller?.currentState;
                     if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
                     if (state is OrganizationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
-                    if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении организации")));}
                   },
                   child: const Text('Отправить'),
                 ),

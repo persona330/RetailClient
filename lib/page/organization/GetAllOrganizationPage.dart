@@ -1,21 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/controller/PostController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/model/Post.dart';
-import 'package:retail/page/address/CreateAddressPage.dart';
-import 'package:retail/page/address/ItemAddressPage.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
 import 'package:retail/page/organization/CreateOrganizationPage.dart';
-import 'package:retail/service/AddressService.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/service/PostService.dart';
-
 import '../../controller/OrganizationController.dart';
 import '../../model/Organization.dart';
 import 'GetOrganizationPage.dart';
-import 'ItemOrganizationPage.dart';
+import 'widget/ItemOrganizationWidget.dart';
 
 // StatefulWidget - для изменяемых виджетов
 class GetAllOrganizationPage extends StatefulWidget
@@ -46,23 +35,21 @@ class _GetAllOrganizationPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Организация"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: const Text("Организация"),
+        leading:  IconButton(icon: const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
+              icon: const Icon(Icons.settings),
+                onPressed: () => { print("Click on settings button") }
                 ),
         ],
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateOrganizationPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateOrganizationPage())); },
         tooltip: 'Добавить организацию',
         child: const Icon(Icons.add),
       ),
@@ -93,7 +80,7 @@ class _GetAllOrganizationPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -106,7 +93,7 @@ class _GetAllOrganizationPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetOrganizationPage(id: organizationList[index].getIdOrganization!)));
                       },
-                      child: ItemOrganizationPage(organizationList[index]),
+                      child: ItemOrganizationWidget(organizationList[index]),
                     );
                   },
                 ),

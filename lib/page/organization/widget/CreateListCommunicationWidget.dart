@@ -5,23 +5,24 @@ import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/page/organization/CreateOrganizationPage.dart';
 
-import '../../controller/CommunicationController.dart';
-import '../../model/Communication.dart';
+import '../../../controller/CommunicationController.dart';
+import '../../../model/Communication.dart';
+import '../PutOrganizationPage.dart';
 
-class ListCommunicationWidget extends StatefulWidget
+class CreateListCommunicationWidget extends StatefulWidget
 {
-  const ListCommunicationWidget({Key? key}) : super(key: key);
+  const CreateListCommunicationWidget({Key? key}) : super(key: key);
 
   @override
-  _ListCommunicationWidgetState createState() => _ListCommunicationWidgetState();
+  _CreateListCommunicationWidgetState createState() => _CreateListCommunicationWidgetState();
 }
 
-class _ListCommunicationWidgetState extends StateMVC
+class _CreateListCommunicationWidgetState extends StateMVC
 {
   late CommunicationController _controller;
   late Communication _communication;
 
-  _ListCommunicationWidgetState() : super(CommunicationController()) {_controller = controller as CommunicationController;}
+  _CreateListCommunicationWidgetState() : super(CommunicationController()) {_controller = controller as CommunicationController;}
 
   @override
   void initState()
@@ -48,7 +49,7 @@ class _ListCommunicationWidgetState extends StateMVC
       _communication = communicationList[0];
       return DropdownButtonFormField(
           isExpanded: true,
-          decoration: InputDecoration(labelText: "Средство связи",),
+          decoration: const InputDecoration(labelText: "Средство связи",),
           items: communicationList.map((Communication items) {
             return DropdownMenuItem(
               child: Text(items.toString()),
@@ -61,6 +62,7 @@ class _ListCommunicationWidgetState extends StateMVC
             });
             print(_communication);
             CreateOrganizationPage.of(context)?.setCommunication(_communication);
+            PutOrganizationPage.of(context)?.setCommunication(_communication);
           }
       );
   }

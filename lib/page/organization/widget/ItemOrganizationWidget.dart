@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Organization.dart';
 
-import '../../model/Organization.dart';
-
-class ItemOrganizationPage extends StatelessWidget
+class ItemOrganizationWidget extends StatelessWidget
 {
   final Organization organization;
 
-  ItemOrganizationPage(this.organization);
+  ItemOrganizationWidget(this.organization);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -18,10 +17,8 @@ class ItemOrganizationPage extends StatelessWidget
       ),
         child: ListTile(
           leading: Text("${organization.getIdOrganization}"),
-          title: Text('${organization.getName}'),
-          subtitle: Text(
-          'Тело:}\n'
-          ),
+          title: Text('Организация ${organization.getName}'),
+          subtitle: const Text('Описание'),
           trailing: Text('${organization.getIdOrganization}'),
       ),
     );
