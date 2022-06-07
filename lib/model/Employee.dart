@@ -75,3 +75,37 @@ class Employee extends Person
   @override
   String toString() { return 'Сотрудник №$id: фамилия $surname, имя $name, отчество $patronymic, организация $organization'; }
 }
+
+abstract class EmployeeResult {}
+
+// указывает на успешный запрос
+class EmployeeGetListResultSuccess extends EmployeeResult
+{
+  List<Employee> employeeList = [];
+  EmployeeGetListResultSuccess(this.employeeList);
+}
+
+class EmployeeGetItemResultSuccess extends EmployeeResult
+{
+  Employee employee;
+  EmployeeGetItemResultSuccess(this.employee);
+}
+
+class EmployeeAddResultSuccess extends EmployeeResult {}
+
+class EmployeePutResultSuccess extends EmployeeResult
+{
+  Employee employee;
+  EmployeePutResultSuccess(this.employee);
+}
+
+class EmployeeDeleteResultSuccess extends EmployeeResult {}
+
+class EmployeeResultFailure extends EmployeeResult
+{
+  final String error;
+  EmployeeResultFailure(this.error);
+}
+
+// загрузка данных
+class EmployeeResultLoading extends EmployeeResult { EmployeeResultLoading(); }

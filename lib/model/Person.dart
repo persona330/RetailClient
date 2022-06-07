@@ -49,3 +49,37 @@ class Person
   @override
   String toString() { return 'Пользователь №$id: фамилия $surname, имя $name, отчество $patronymic'; }
 }
+
+abstract class PersonResult {}
+
+// указывает на успешный запрос
+class PersonGetListResultSuccess extends PersonResult
+{
+  List<Person> personList = [];
+  PersonGetListResultSuccess(this.personList);
+}
+
+class PersonGetItemResultSuccess extends PersonResult
+{
+  Person person;
+  PersonGetItemResultSuccess(this.person);
+}
+
+class PersonAddResultSuccess extends PersonResult {}
+
+class PersonPutResultSuccess extends PersonResult
+{
+  Person person;
+  PersonPutResultSuccess(this.person);
+}
+
+class PersonDeleteResultSuccess extends PersonResult {}
+
+class PersonResultFailure extends PersonResult
+{
+  final String error;
+  PersonResultFailure(this.error);
+}
+
+// загрузка данных
+class PersonResultLoading extends PersonResult { PersonResultLoading(); }
