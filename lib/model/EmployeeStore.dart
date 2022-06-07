@@ -1,40 +1,88 @@
+import 'Address.dart';
+import 'Communication.dart';
+import 'Employee.dart';
 import 'Organization.dart';
 import 'Position.dart';
 
-class EmployeeStore
+class EmployeeStore extends Employee
 {
-  final int? idEmployeeStore;
-  final Position? position;
+  @override
+  final int? id;
+  @override
+  final String? surname;
+  @override
+  final String? name;
+  @override
+  final String? patronymic;
+  @override
+  final Address? address;
+  @override
+  final Communication? communication;
+  @override
+  final bool? free;
+  @override
   final Organization? organization;
+  final Position? position;
 
   EmployeeStore({
-    required this.idEmployeeStore,
-    required this.position,
+    required this.id,
+    required this.surname,
+    required this.name,
+    required this.patronymic,
+    required this.address,
+    required this.communication,
+    required this.free,
     required this.organization,
-  });
+    required this.position,
+  }) : super(id: id, surname: surname, name: name, patronymic: patronymic, address: address, communication: communication, free: free, organization: organization);
 
   factory EmployeeStore.fromJson(Map<String, dynamic> json) {
     return EmployeeStore(
-      position: json["positionDTO"] != null ? Position.fromJson(json["positionDTO"]) : null,
+      surname: json["surname"],
+      name: json["name"],
+      patronymic: json["patronymic"],
+      address: json["addressDTO"] != null ? Address.fromJson(json["storageConditionsDTO"]) : null,
+      communication: json["communicationDTO"] != null ? Communication.fromJson(json["communicationDTO"]) : null,
+      free: json["free"],
       organization: json["organizationDTO"] != null ? Organization.fromJson(json["organizationDTO"]) : null,
-      idEmployeeStore: json["id_EmployeeStore"],
+      position: json["positionDTO"] != null ? Position.fromJson(json["positionDTO"]) : null,
+      id: json["id"],
     );
   }
 
+  @override
   Map<String, dynamic> toJson() => {
-    "positionDTO": position == null ? null : position!.toJson(),
+    "surname": surname,
+    "name": name,
+    "patronymic": patronymic,
+    "addressDTO": address == null ? null : address!.toJson(),
+    "communicationDTO": communication == null ? null : communication!.toJson(),
+    "free": free,
     "organizationDTO": organization == null ? null : organization!.toJson(),
-    "id_EmployeeStore": idEmployeeStore,
+    "positionDTO": position == null ? null : position!.toJson(),
+    "id": id,
   };
 
-  int? get getIdEmployeeStore=> idEmployeeStore;
-  Position? get getPosition => position;
+  @override
+  int? get getId => id;
+  @override
+  String? get getSurname => name;
+  @override
+  String? get getName => name;
+  @override
+  String? get getPatronymic => patronymic;
+  @override
+  Address? get getAddress => address;
+  @override
+  Communication? get getCommunication => communication;
+  @override
+  bool? get getFree => free;
+  @override
   Organization? get getOrganization => organization;
+  Position? get getPosition => position;
 
   @override
-  String toString() {
-    return 'Сотрудник склада $idEmployeeStore: должность $position, организация $organization}';
-  }
+  String toString() { return 'Сотрудник склада №$id: фамилия $surname, имя $name, отчество $patronymic, организация $organization, должность $position'; }
 }
 
 abstract class EmployeeStoreResult {}
