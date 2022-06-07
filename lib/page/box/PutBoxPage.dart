@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-
+import 'package:retail/page/box/widget/PutListShelfWidget.dart';
+import 'package:retail/page/box/widget/PutListVerticalSectionsWidget.dart';
 import '../../controller/BoxController.dart';
 import '../../model/Box.dart';
+import '../../model/Shelf.dart';
+import '../../model/VerticalSections.dart';
 
 class PutBoxPage extends StatefulWidget
 {
@@ -14,6 +15,16 @@ class PutBoxPage extends StatefulWidget
 
   @override
   PutBoxPageState createState() => PutBoxPageState(id);
+
+  static PutBoxPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final PutBoxPageState? result =
+    context.findAncestorStateOfType<PutBoxPageState>();
+    return result;
+  }
 }
 
 class PutBoxPageState extends StateMVC
@@ -25,10 +36,15 @@ class PutBoxPageState extends StateMVC
 
   final _numberController = TextEditingController();
   final _sizeController = TextEditingController();
-  List<String> _shelfList = ["Полка 1", "Полка 2"];
-  List<String> _verticalSectionsList = ["Вертикальная секция 1", "Вертикальная секция 2"];
-  late String _shelf = _shelfList[0].toString();
-  late String _verticalSections = _verticalSectionsList[0].toString();
+
+  late Shelf _shelf;
+  late VerticalSections _verticalSections;
+
+  Shelf getShelf(){return _shelf;}
+  void setShelf(Shelf shelf){_shelf = shelf;}
+
+  VerticalSections getVerticalSections(){return _verticalSections;}
+  void setVerticalSections(VerticalSections verticalSections){ _verticalSections = verticalSections; }
 
   @override
   void initState()
@@ -80,7 +96,7 @@ class PutBoxPageState extends StateMVC
                     ],
                     decoration: const InputDecoration(
                         labelText: "Номер"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _numberController,
                     textInputAction: TextInputAction.next,
                   ),
@@ -91,67 +107,30 @@ class PutBoxPageState extends StateMVC
                     ],
                     decoration: const InputDecoration(
                         labelText: "Вместимость"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _sizeController,
                     textInputAction: TextInputAction.next,
                   ),
-                  DropdownButtonFormField(
-                      isExpanded: true,
-                      decoration: InputDecoration(labelText: "Полка",),
-                      items: _shelfList.map((String items){
-                        return DropdownMenuItem(
-                          child: Text(items),
-                          value: items,
-                        );
-                      }).toList(),
-                      onChanged: (String? item)
-                      {
-                        setState(() {_shelf = item!;});
-                      }
+                  const Flexible(
+                    flex: 1,
+                    child: PutListShelfWidget(),
                   ),
-                  DropdownButtonFormField(
-                      isExpanded: true,
-                      decoration: InputDecoration(labelText: "Полка",),
-                      items: _verticalSectionsList.map((String items){
-                        return DropdownMenuItem(
-                          child: Text(items),
-                          value: items,
-                        );
-                      }).toList(),
-                      onChanged: (String? item)
-                      {
-                        setState(() {_verticalSections = item!;});
-                      }
+                  const Flexible(
+                      flex: 2,
+                      child: PutListVerticalSectionsWidget()
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(
                     onPressed: () {
-                      /*Address _address1 = Address(idAddress: _id,
-                          apartment: _apartmentController.text,
-                          entrance: int.parse(_entranceController.text),
-                          house: _houseController.text,
-                          street: _streetController.text,
-                          region: _regionController.text,
-                          city: _cityController.text,
-                          nation: _nationController.text);*/
-                      //_controller?.putAddress(_address1, _id);
+                      Box _box = Box(idBox: _id, number: _numberController.text, size: double.parse(_sizeController.text), shelf: getShelf(), verticalSections: getVerticalSections());
+                      _controller?.putBox(_box, _id);
                       Navigator.pop(context, true);
-                      if (state is BoxAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is BoxResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is BoxResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      final state = _controller?.currentState;
+                      if (state is BoxPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Ячейка изменена")));}
+                      if (state is BoxResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is BoxResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

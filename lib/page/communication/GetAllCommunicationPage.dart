@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:retail/controller/AddressController.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/service/PostService.dart';
-
 import '../../controller/CommunicationController.dart';
 import '../../model/Communication.dart';
 import 'CreateCommunicationPage.dart';
 import 'GetCommunicationPage.dart';
-import 'ItemCommunicationPage.dart';
+import 'widget/ItemCommunicationWidget.dart';
 
 // StatefulWidget - для изменяемых виджетов
 class GetAllCommunicationPage extends StatefulWidget
@@ -18,12 +15,14 @@ class GetAllCommunicationPage extends StatefulWidget
   _GetAllCommunicationPageState createState() => _GetAllCommunicationPageState();
 }
 
-// Домашняя страница
 class _GetAllCommunicationPageState extends StateMVC
 {
   late CommunicationController _controller;
 
   _GetAllCommunicationPageState() : super(CommunicationController()) {_controller = controller as CommunicationController;}
+
+  Widget appBarTitle = const Text("Средства связи");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -36,25 +35,37 @@ class _GetAllCommunicationPageState extends StateMVC
   Widget build(BuildContext context)
   {
     return Scaffold(
-      // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Средства связи"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Средства связи");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateCommunicationPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateCommunicationPage())); },
         tooltip: 'Добавить средство связи',
         child: const Icon(Icons.add),
       ),
@@ -85,9 +96,7 @@ class _GetAllCommunicationPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
-                // ListView.builder создает элемент списка
-                // только когда он видим на экране
+                padding: const EdgeInsets.all(10),
                 child: ListView.builder(
                   itemCount: _communicationList.length,
                   itemBuilder: (context, index) {
@@ -98,7 +107,7 @@ class _GetAllCommunicationPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetCommunicationPage(id: _communicationList[index].getIdCommunication!)));
                       },
-                      child: ItemCommunicationPage(_communicationList[index]),
+                      child: ItemCommunicationWidget(_communicationList[index]),
                     );
                   },
                 ),

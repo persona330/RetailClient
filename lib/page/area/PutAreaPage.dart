@@ -119,7 +119,7 @@ class PutAreaPageState extends StateMVC
                       _controller?.putArea(_area1, _id);
                       Navigator.pop(context, true);
                       final state = _controller?.currentState;
-                      if (state is AreaAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Зона изменена")));}
+                      if (state is AreaPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Зона изменена")));}
                       if (state is AreaResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is AreaResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/CommunicationController.dart';
 import '../../model/Communication.dart';
 import 'DeleteCommunicationPage.dart';
@@ -14,7 +9,6 @@ class GetCommunicationPage extends StatefulWidget
 {
   final int id;
   const GetCommunicationPage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetCommunicationPageState createState() => GetCommunicationPageState(id);
@@ -48,7 +42,7 @@ class GetCommunicationPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteCommunication(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалено")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Средство связи")));
           Navigator.of(context).pop();
         }
         break;
@@ -75,7 +69,7 @@ class GetCommunicationPageState extends StateMVC
       final _communication = (state as CommunicationGetItemResultSuccess).communication;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о средстве связи №${_id}"),
+            title: Text("Информация о средстве связи №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -100,7 +94,7 @@ class GetCommunicationPageState extends StateMVC
                 children: [
                   Text("Электронный адрес: ${_communication.getEmail} \n"
                       "Номер телефона: ${_communication.getPhone}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

@@ -10,7 +10,6 @@ class GetBoxPage extends StatefulWidget
   final int id;
   const GetBoxPage({Key? key, required this.id}) : super(key: key);
 
-
   @override
   GetBoxPageState createState() => GetBoxPageState(id);
 }
@@ -43,7 +42,7 @@ class GetBoxPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteBox(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Ячейка удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -70,7 +69,7 @@ class GetBoxPageState extends StateMVC
       final _box = (state as BoxGetItemResultSuccess).box;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация об ячейки №${_id}"),
+            title: Text("Информация об ячейки №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -97,7 +96,7 @@ class GetBoxPageState extends StateMVC
                       "Вместимость: ${_box.getSize} \n"
                       "Полка: ${_box.getShelf.toString()} \n"
                       "Вертикальная секция: ${_box.getVerticalSections.toString()} \n"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

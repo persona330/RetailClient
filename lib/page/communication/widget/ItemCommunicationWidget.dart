@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Communication.dart';
 
-import '../../model/Communication.dart';
-
-class ItemCommunicationPage extends StatelessWidget
+class ItemCommunicationWidget extends StatelessWidget
 {
   final Communication communication;
 
-  ItemCommunicationPage(this.communication);
+  ItemCommunicationWidget(this.communication);
 
   Widget build(BuildContext context)
   {
@@ -18,10 +16,8 @@ class ItemCommunicationPage extends StatelessWidget
       ),
         child: ListTile(
           leading: Text("${communication.getIdCommunication}"),
-          title: Text('Средство связи'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          title: const Text('Средство связи'),
+          subtitle: const Text('Описание \n'),
           //trailing: Text('${address.getIdAddress}'),
       ),
     );

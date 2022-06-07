@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Box.dart';
 
-import '../../model/Box.dart';
-
-class ItemBoxPage extends StatelessWidget
+class ItemBoxWidget extends StatelessWidget
 {
   final Box box;
 
-  ItemBoxPage(this.box);
+  ItemBoxWidget(this.box);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemBoxPage extends StatelessWidget
         child: ListTile(
           leading: Text("${box.getIdBox}"),
           title: Text('${box.getNumber}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

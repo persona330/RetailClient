@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-
 import '../../controller/CommunicationController.dart';
 import '../../model/Communication.dart';
 
@@ -25,7 +22,6 @@ class PutCommunicationPageState extends StateMVC
 
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
-
 
   @override
   void initState()
@@ -70,50 +66,33 @@ class PutCommunicationPageState extends StateMVC
             child: Column(
                 children: [
                   TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер телефона"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9+]")),],
+                    decoration: const InputDecoration(labelText: "Номер телефона"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _phoneController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Электронный адрес"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    keyboardType: TextInputType.emailAddress,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9@._\-]"))],
+                    decoration: const InputDecoration(labelText: "Электронный адрес"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _emailController,
                     textInputAction: TextInputAction.next,
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(
                     onPressed: () {
-                      Communication _communication1 = Communication(idCommunication: 1, phone: _phoneController.text, email: _emailController.text);
+                      Communication _communication1 = Communication(idCommunication: _id, phone: _phoneController.text, email: _emailController.text);
                       _controller?.putCommunication(_communication1, _id);
                       Navigator.pop(context, true);
-                      if (state is CommunicationAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is CommunicationResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is CommunicationResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      final state = _controller?.currentState;
+                      if (state is CommunicationPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Средство связи изменено")));}
+                      if (state is CommunicationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is CommunicationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

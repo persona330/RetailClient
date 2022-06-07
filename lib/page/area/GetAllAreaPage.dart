@@ -7,12 +7,9 @@ import 'CreateAreaPage.dart';
 import 'GetAreaPage.dart';
 import 'widget/ItemAreaWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllAreaPage extends StatefulWidget
 {
   const GetAllAreaPage({Key? key}) : super(key: key);
-
-  //final String title;
 
   @override
   _GetAllAreaPageState createState() => _GetAllAreaPageState();

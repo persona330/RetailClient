@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
 import 'package:retail/model/Communication.dart';
-import 'package:retail/service/AddressService.dart';
-
 import '../../controller/CommunicationController.dart';
 
 class CreateCommunicationPage extends StatefulWidget
 {
-  CreateCommunicationPage({Key? key}) : super(key: key);
+  const CreateCommunicationPage({Key? key}) : super(key: key);
 
   @override
   _CreateCommunicationPageState createState() => _CreateCommunicationPageState();
@@ -54,15 +50,15 @@ class _CreateCommunicationPageState extends StateMVC
                   keyboardType: TextInputType.phone,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9+]")),],
                   decoration: const InputDecoration(labelText: "Номер телефона"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _phoneController,
                   textInputAction: TextInputAction.next,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9@]"))],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Z0-9@._\-]"))],
                   decoration: const InputDecoration(labelText: "Электронный адрес"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _emailController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -74,18 +70,11 @@ class _CreateCommunicationPageState extends StateMVC
                     _controller?.addCommunication(_communication);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is CommunicationAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is CommunicationResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is CommunicationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is CommunicationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Средство связи создано")));}
+                    if (state is CommunicationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is CommunicationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Shelf.dart';
 import 'package:retail/model/VerticalSections.dart';
-import 'package:retail/page/shelf/ListShelfWidget.dart';
-import 'package:retail/page/vertical_sections/ListVerticalSectionsWidget.dart';
+import 'package:retail/page/box/widget/CreateListShelfWidget.dart';
+import 'package:retail/page/box/widget/CreateListVerticalSectionsWidget.dart';
 import '../../controller/BoxController.dart';
 import '../../model/Box.dart';
 
@@ -61,13 +61,10 @@ class _CreateBoxPageState extends StateMVC
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       appBar: AppBar(title: const Text('Создание ячейки')),
       body:  Scrollbar(
           child: Container(
-            // this.left, this.top, this.right, this.bottom
            padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
             child: Column (
               children: [
@@ -89,11 +86,11 @@ class _CreateBoxPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListShelfWidget(),
+                  child: CreateListShelfWidget(),
                 ),
                 const Flexible(
                     flex: 2,
-                    child: ListVerticalSectionsWidget()
+                    child: CreateListVerticalSectionsWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -103,11 +100,11 @@ class _CreateBoxPageState extends StateMVC
                     _controller?.addBox(_box);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is BoxAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is BoxAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Ячейка создана")));}
                     if (state is BoxResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is BoxResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),
