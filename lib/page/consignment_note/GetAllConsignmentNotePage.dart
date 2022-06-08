@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
-import '../../service/ConsignmentNoteService.dart';
 import 'CreateConsignmentNotePage.dart';
 import 'GetConsignmentNotePage.dart';
-import 'ItemConsignmentNotePage.dart';
+import 'widget/ItemConsignmentNoteWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllConsignmentNotePage extends StatefulWidget
 {
   const GetAllConsignmentNotePage({Key? key}) : super(key: key);
@@ -16,12 +14,14 @@ class GetAllConsignmentNotePage extends StatefulWidget
   _GetAllConsignmentNotePageState createState() => _GetAllConsignmentNotePageState();
 }
 
-// Домашняя страница
 class _GetAllConsignmentNotePageState extends StateMVC
 {
   late ConsignmentNoteController _controller;
 
   _GetAllConsignmentNotePageState() : super(ConsignmentNoteController()) {_controller = controller as ConsignmentNoteController;}
+
+  Widget appBarTitle = const Text("Накладные");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -36,23 +36,35 @@ class _GetAllConsignmentNotePageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Накладная"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon: const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Накладные");
+              }
+            });
+          } ,),]
       ),
-      // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateConsignmentNotePage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateConsignmentNotePage())); },
         tooltip: 'Добавить накладную',
         child: const Icon(Icons.add),
       ),
@@ -83,7 +95,7 @@ class _GetAllConsignmentNotePageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -96,7 +108,7 @@ class _GetAllConsignmentNotePageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetConsignmentNotePage(id: _consignmentNoteList[index].getIdConsignmentNote!)));
                       },
-                      child: ItemConsignmentNotePage(_consignmentNoteList[index]),
+                      child: ItemConsignmentNoteWidget(_consignmentNoteList[index]),
                     );
                   },
                 ),

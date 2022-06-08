@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/ConsignmentNote.dart';
 
-import '../../model/ConsignmentNote.dart';
-
-class ItemConsignmentNotePage extends StatelessWidget
+class ItemConsignmentNoteWidget extends StatelessWidget
 {
   final ConsignmentNote consignmentNote;
 
-  ItemConsignmentNotePage(this.consignmentNote);
+  ItemConsignmentNoteWidget(this.consignmentNote);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemConsignmentNotePage extends StatelessWidget
         child: ListTile(
           leading: Text("${consignmentNote.getIdConsignmentNote}"),
           title: Text('${consignmentNote.getNumber}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

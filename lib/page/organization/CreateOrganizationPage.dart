@@ -6,7 +6,6 @@ import 'package:retail/page/organization/widget/CreateListAddressWidget.dart';
 import '../../controller/OrganizationController.dart';
 import '../../model/Communication.dart';
 import '../../model/Organization.dart';
-import '../address/ListAddressWidget.dart';
 import 'widget/CreateListCommunicationWidget.dart';
 
 class CreateOrganizationPage extends StatefulWidget

@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/organization/CreateOrganizationPage.dart';
 import 'package:retail/page/supplier/CreateSupplierPage.dart';
+import '../../../controller/PositionController.dart';
+import '../../../model/Position.dart';
 
-import '../../controller/PositionController.dart';
-import '../../model/Position.dart';
-
-class ListPositionWidget extends StatefulWidget
+class PutListPositionWidget extends StatefulWidget
 {
-  const ListPositionWidget({Key? key}) : super(key: key);
+  const PutListPositionWidget({Key? key}) : super(key: key);
 
   @override
-  _ListPositionWidgetState createState() => _ListPositionWidgetState();
+  _PutListPositionWidgetState createState() => _PutListPositionWidgetState();
 }
 
-class _ListPositionWidgetState extends StateMVC
+class _PutListPositionWidgetState extends StateMVC
 {
   late PositionController _controller;
   late Position _position;
 
-  _ListPositionWidgetState() : super(PositionController()) {_controller = controller as PositionController;}
+  _PutListPositionWidgetState() : super(PositionController()) {_controller = controller as PositionController;}
 
   @override
   void initState()
@@ -60,7 +56,7 @@ class _ListPositionWidgetState extends StateMVC
             setState(() {
               _position = item!;
             });
-            CreateSupplierPage.of(context)?.setPosition(_position);
+            //CreateSupplierPage.of(context)?.setPosition(_position);
           }
       );
   }

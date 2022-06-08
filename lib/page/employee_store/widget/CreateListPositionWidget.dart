@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/organization/CreateOrganizationPage.dart';
 import 'package:retail/page/supplier/CreateSupplierPage.dart';
+import '../../../controller/PositionController.dart';
+import '../../../model/Position.dart';
 
-import '../../controller/PositionController.dart';
-import '../../model/Position.dart';
-
-class ListPositionWidget extends StatefulWidget
+class CreateListPositionWidget extends StatefulWidget
 {
-  const ListPositionWidget({Key? key}) : super(key: key);
+  const CreateListPositionWidget({Key? key}) : super(key: key);
 
   @override
-  _ListPositionWidgetState createState() => _ListPositionWidgetState();
+  _CreateListPositionWidgetState createState() => _CreateListPositionWidgetState();
 }
 
-class _ListPositionWidgetState extends StateMVC
+class _CreateListPositionWidgetState extends StateMVC
 {
   late PositionController _controller;
   late Position _position;
 
-  _ListPositionWidgetState() : super(PositionController()) {_controller = controller as PositionController;}
+  _CreateListPositionWidgetState() : super(PositionController()) {_controller = controller as PositionController;}
 
   @override
   void initState()
@@ -32,9 +28,11 @@ class _ListPositionWidgetState extends StateMVC
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     final state = _controller.currentState;
-    if (state is PositionResultLoading) {
+    if (state is PositionResultLoading)
+    {
       return const Center(child: CircularProgressIndicator());
     } else if (state is PositionResultFailure) {
       return Center(

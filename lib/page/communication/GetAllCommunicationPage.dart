@@ -62,7 +62,6 @@ class _GetAllCommunicationPageState extends StateMVC
             });
           } ,),]
       ),
-      // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
         onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateCommunicationPage())); },

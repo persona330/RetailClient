@@ -3,6 +3,7 @@ import 'package:retail/page/address/GetAllAddreessPage.dart';
 import 'package:retail/page/communication/GetAllCommunicationPage.dart';
 import 'package:retail/page/store/GetAllStorePage.dart';
 import 'consignment_note/GetAllConsignmentNotePage.dart';
+import 'employee_store/GetAllEmployeeStorePage.dart';
 import 'group/GetAllGroupPage.dart';
 import 'nomenclature/GetAllNomenclaturePage.dart';
 import 'organization/GetAllOrganizationPage.dart';
@@ -73,6 +74,11 @@ class _HomePageState extends State<HomePage>
                 leading: const Icon(Icons.account_circle),
                 title: const Text('Организация'),
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllOrganizationPage())),
+              ),
+              ListTile(
+                leading: const Icon(Icons.account_circle),
+                title: const Text('Сотрудники'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllEmployeeStorePage())),
               ),
               ListTile(
                 leading: const Icon(Icons.account_circle),

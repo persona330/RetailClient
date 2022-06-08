@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Supplier.dart';
-import 'package:retail/page/supplier/ListSupplierWidget.dart';
+import 'package:retail/page/consignment_note/widget/CreateListSupplierWidget.dart';
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
+import '../../model/EmployeeStore.dart';
 
 class CreateConsignmentNotePage extends StatefulWidget
 {
@@ -36,9 +37,13 @@ class _CreateConsignmentNotePageState extends StateMVC
   late String? _arrivalDate = "Введите дату";
   late bool _forReturn = false;
   late Supplier _supplier;
+  late EmployeeStore _employeeStore;
 
   Supplier getSupplier(){return _supplier;}
   void setSupplier(Supplier supplier){_supplier = supplier;}
+
+  Supplier getEmployeeStore(){return _supplier;}
+  void setEmployeeStore(EmployeeStore employeeStore){_employeeStore = employeeStore;}
 
   Future<void> _selectDate(BuildContext context) async
   {
@@ -68,8 +73,6 @@ class _CreateConsignmentNotePageState extends StateMVC
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       appBar: AppBar(title: const Text('Создание накладной')),
       body:  Scrollbar(
@@ -79,7 +82,7 @@ class _CreateConsignmentNotePageState extends StateMVC
             child: Column (
               children: [
                 TextFormField(
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.streetAddress,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
                   decoration: const InputDecoration(labelText: "Номер"),
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
@@ -119,7 +122,7 @@ class _CreateConsignmentNotePageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListSupplierWidget(),
+                  child: CreateListSupplierWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -129,11 +132,11 @@ class _CreateConsignmentNotePageState extends StateMVC
                     //_controller?.addConsignmentNote(_address);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is ConsignmentNoteAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is ConsignmentNoteAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Накладная создана")));}
                     if (state is ConsignmentNoteResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is ConsignmentNoteResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),
