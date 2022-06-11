@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/NomenclatureController.dart';
 import '../../model/Nomenclature.dart';
 import 'DeleteNomenclaturePage.dart';
@@ -14,7 +9,6 @@ class GetNomenclaturePage extends StatefulWidget
 {
   final int id;
   const GetNomenclaturePage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetNomenclaturePageState createState() => GetNomenclaturePageState(id);
@@ -48,7 +42,7 @@ class GetNomenclaturePageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteNomenclature(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -75,7 +69,7 @@ class GetNomenclaturePageState extends StateMVC
       final _nomenclature = (state as NomenclatureGetItemResultSuccess).nomenclature;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация об номенклатуре №${_id}"),
+            title: Text("Информация об номенклатуре №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -106,12 +100,12 @@ class GetNomenclaturePageState extends StateMVC
                       "Вес: ${_nomenclature.getWeight} \n"
                       "Объем: ${_nomenclature.getSize} \n"
                       "Группа: ${_nomenclature.getGroup.toString()} \n"
-                      "Производител: ${_nomenclature.getProducer.toString()} \n"
+                      "Производител: ${_nomenclature.getOrganization.toString()} \n"
                       "Единица измерения: ${_nomenclature.getMeasurement.toString()} \n"
                       "Ячейка: ${_nomenclature.getBox.toString()} \n"
                       "Условия хранения: ${_nomenclature.getStorageConditions.toString()} \n"
                       //"Объем: ${_address.getNation} "
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

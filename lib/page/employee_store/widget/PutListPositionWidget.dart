@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/page/supplier/CreateSupplierPage.dart';
+import 'package:retail/page/employee_store/PutEmployeeStorePage.dart';
 import '../../../controller/PositionController.dart';
 import '../../../model/Position.dart';
 
@@ -56,7 +55,7 @@ class _PutListPositionWidgetState extends StateMVC
             setState(() {
               _position = item!;
             });
-            //CreateSupplierPage.of(context)?.setPosition(_position);
+            PutEmployeeStorePage.of(context)?.setPosition(_position);
           }
       );
   }

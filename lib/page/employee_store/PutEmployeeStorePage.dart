@@ -162,7 +162,6 @@ class PutEmployeeStorePageState extends StateMVC
                       if (state is EmployeeStorePutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Сотрудник склада изменен")));}
                       if (state is EmployeeStoreResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is EmployeeStoreResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
-
                     },
                     child: const Text('Изменить'),
                   ),
@@ -173,5 +172,4 @@ class PutEmployeeStorePageState extends StateMVC
       );
     }
   }
-
 }

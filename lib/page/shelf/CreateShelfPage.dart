@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Group.dart';
 import 'package:retail/model/Stillage.dart';
-import 'package:retail/page/group/ListGroupWidget.dart';
 import 'package:retail/page/stillage/ListStillageWidget.dart';
 import '../../controller/ShelfController.dart';
 import '../../model/Shelf.dart';
@@ -85,10 +84,10 @@ class _CreateShelfPageState extends StateMVC
                   controller: _sizeController,
                   textInputAction: TextInputAction.next,
                 ),
-                const Flexible(
+                /*const Flexible(
                   flex: 1,
                   child: ListGroupWidget(),
-                ),
+                ),*/
                 const Flexible(
                     flex: 2,
                     child: ListStillageWidget()

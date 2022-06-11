@@ -4,25 +4,24 @@ import '../../controller/NomenclatureController.dart';
 import '../../model/Nomenclature.dart';
 import 'CreateNomenclaturePage.dart';
 import 'GetNomenclaturePage.dart';
-import 'ItemNomenclaturePage.dart';
+import 'widget/ItemNomenclatureWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllNomenclaturePage extends StatefulWidget
 {
   const GetAllNomenclaturePage({Key? key}) : super(key: key);
-
-  //final String title;
 
   @override
   _GetAllNomenclaturePageState createState() => _GetAllNomenclaturePageState();
 }
 
-// Домашняя страница
 class _GetAllNomenclaturePageState extends StateMVC
 {
   late NomenclatureController _controller;
 
   _GetAllNomenclaturePageState() : super(NomenclatureController()) {_controller = controller as NomenclatureController;}
+
+  Widget appBarTitle = const Text("Номенклатура");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -37,23 +36,36 @@ class _GetAllNomenclaturePageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Номенклатура"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Номенклатура");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNomenclaturePage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateNomenclaturePage())); },
         tooltip: 'Добавить номенклатуру',
         child: const Icon(Icons.add),
       ),
@@ -84,7 +96,7 @@ class _GetAllNomenclaturePageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -97,7 +109,7 @@ class _GetAllNomenclaturePageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetNomenclaturePage(id: nomenclatureList[index].getIdNomenclature!)));
                       },
-                      child: ItemNomenclaturePage(nomenclatureList[index]),
+                      child: ItemNomenclatureWidget(nomenclatureList[index]),
                     );
                   },
                 ),

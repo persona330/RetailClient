@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Measurement.dart';
 
-import '../../model/Measurement.dart';
-
-class ItemMeasurementPage extends StatelessWidget
+class ItemMeasurementWidget extends StatelessWidget
 {
   final Measurement measurement;
 
-  ItemMeasurementPage(this.measurement);
+  ItemMeasurementWidget(this.measurement);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemMeasurementPage extends StatelessWidget
         child: ListTile(
           leading: Text("${measurement.getIdMeasurement}"),
           title: Text('${measurement.getFullName}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание'),
           //trailing: Text('${address.getIdAddress}'),
       ),
     );

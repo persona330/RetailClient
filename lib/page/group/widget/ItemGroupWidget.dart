@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Group.dart';
 
-import '../../model/Group.dart';
-
-class ItemGroupPage extends StatelessWidget
+class ItemGroupWidget extends StatelessWidget
 {
   final Group group;
 
-  ItemGroupPage(this.group);
+  ItemGroupWidget(this.group);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemGroupPage extends StatelessWidget
         child: ListTile(
           leading: Text("${group.getIdGroup}"),
           title: Text('${group.getName}'),
-          subtitle: Text(
-          'Описание \n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

@@ -5,7 +5,7 @@ class DeleteConsignmentNotePage extends StatelessWidget
 {
   int id = 0;
 
-  DeleteConsignmentNotePage(this.id);
+  DeleteConsignmentNotePage(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context)

@@ -1,9 +1,9 @@
-import 'package:decimal/decimal.dart';
 import 'package:retail/model/Box.dart';
 import 'package:retail/model/Group.dart';
 import 'package:retail/model/Measurement.dart';
-import 'package:retail/model/Producer.dart';
 import 'package:retail/model/StorageConditions.dart';
+
+import 'Organization.dart';
 
 class Nomenclature
 {
@@ -16,7 +16,7 @@ class Nomenclature
   final double? weight;
   final double? size;
   final Group? group;
-  final Producer? producer;
+  final Organization? organization;
   final Measurement? measurement;
   final Box? box;
   final StorageConditions? storageConditions;
@@ -32,7 +32,7 @@ class Nomenclature
     required this.weight,
     required this.size,
     required this.group,
-    required this.producer,
+    required this.organization,
     required this.measurement,
     required this.box,
     required this.storageConditions,
@@ -48,7 +48,7 @@ class Nomenclature
       weight: json["weight"],
       size: json["size"],
       group: json["groupDTO"] != null ? Group.fromJson(json["groupDTO"]) : null,
-      producer: json["producerDTO"] != null ? Producer.fromJson(json["producerDTO"]) : null,
+      organization: json["organizationDTO"] != null ? Organization.fromJson(json["organizationDTO"]) : null,
       measurement: json["measurementDTO"] != null ? Measurement.fromJson(json["measurementDTO"]) : null,
       box: json["boxDTO"] != null ? Box.fromJson(json["boxDTO"]) : null,
       storageConditions: json["storageConditionsDTO"] != null ? StorageConditions.fromJson(json["storageConditionsDTO"]) : null,
@@ -65,7 +65,7 @@ class Nomenclature
     "weight": weight,
     "size": size,
     "groupDTO": group == null ? null : group!.toJson(),
-    "producerDTO": producer == null ? null : producer!.toJson(),
+    "organizationDTO": organization == null ? null : organization!.toJson(),
     "measurementDTO": measurement == null ? null : measurement!.toJson(),
     "boxDTO": box == null ? null : box!.toJson(),
     "storageConditionsDTO": storageConditions == null ? null : storageConditions!.toJson(),
@@ -81,13 +81,13 @@ class Nomenclature
   double? get getWeight => weight;
   double? get getSize => size;
   Group? get getGroup => group;
-  Producer? get getProducer => producer;
+  Organization? get getOrganization => organization;
   Measurement? get getMeasurement => measurement;
   Box? get getBox => box;
   StorageConditions? get getStorageConditions => storageConditions;
 
   @override
-  String toString() {return 'Номенкладная $idNomenclature: название $name, бренд $brand, цена $cost, дата производства $productionDate, срок годности $expirationDate, вес $weight, объем $size, группа $group, производитель $producer, единица измерения $measurement, ячейка $box, условия хранения $storageConditions}';}
+  String toString() {return 'Номенкладная $idNomenclature: название $name, бренд $brand, цена $cost, дата производства $productionDate, срок годности $expirationDate, вес $weight, объем $size, группа $group, производитель $organization, единица измерения $measurement, ячейка $box, условия хранения $storageConditions}';}
 }
 
 abstract class NomenclatureResult {}

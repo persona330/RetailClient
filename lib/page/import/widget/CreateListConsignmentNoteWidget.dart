@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/import/CreateImportPage.dart';
-import '../../controller/ConsignmentNoteController.dart';
-import '../../model/ConsignmentNote.dart';
+import '../../../controller/ConsignmentNoteController.dart';
+import '../../../model/ConsignmentNote.dart';
 
-class ListConsignmentNoteWidget extends StatefulWidget
+class CreateListConsignmentNoteWidget extends StatefulWidget
 {
-  const ListConsignmentNoteWidget({Key? key}) : super(key: key);
+  const CreateListConsignmentNoteWidget({Key? key}) : super(key: key);
 
   @override
-  _ListConsignmentNoteWidgetState createState() => _ListConsignmentNoteWidgetState();
+  _CreateListConsignmentNoteWidgetState createState() => _CreateListConsignmentNoteWidgetState();
 }
 
-class _ListConsignmentNoteWidgetState extends StateMVC
+class _CreateListConsignmentNoteWidgetState extends StateMVC
 {
   late ConsignmentNoteController _controller;
   late ConsignmentNote _consignmentNote;
 
-  _ListConsignmentNoteWidgetState() : super(ConsignmentNoteController()) {_controller = controller as ConsignmentNoteController;}
+  _CreateListConsignmentNoteWidgetState() : super(ConsignmentNoteController()) {_controller = controller as ConsignmentNoteController;}
 
   @override
   void initState()
@@ -44,7 +44,7 @@ class _ListConsignmentNoteWidgetState extends StateMVC
       _consignmentNote = _consignmentNoteList[0];
       return DropdownButtonFormField(
           isExpanded: true,
-          decoration: InputDecoration(labelText: "Накладная",),
+          decoration: const InputDecoration(labelText: "Накладная",),
           items: _consignmentNoteList.map((ConsignmentNote items) {
             return DropdownMenuItem(
               child: Text(items.toString()),

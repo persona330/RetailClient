@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Supplier.dart';
 import 'package:retail/page/consignment_note/widget/CreateListSupplierWidget.dart';
+import 'package:retail/page/import/widget/CreateListConsignmentNoteWidget.dart';
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
 import '../../model/EmployeeStore.dart';
@@ -42,7 +43,7 @@ class _CreateConsignmentNotePageState extends StateMVC
   Supplier getSupplier(){return _supplier;}
   void setSupplier(Supplier supplier){_supplier = supplier;}
 
-  Supplier getEmployeeStore(){return _supplier;}
+  EmployeeStore getEmployeeStore(){return _employeeStore;}
   void setEmployeeStore(EmployeeStore employeeStore){_employeeStore = employeeStore;}
 
   Future<void> _selectDate(BuildContext context) async
@@ -124,12 +125,16 @@ class _CreateConsignmentNotePageState extends StateMVC
                   flex: 1,
                   child: CreateListSupplierWidget(),
                 ),
+                const Flexible(
+                  flex: 1,
+                  child: CreateListConsignmentNoteWidget(),
+                ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //ConsignmentNote _consignmentNote = ConsignmentNote(idConsignmentNote: 1, number: "2", arrivalDate: DateTime.parse(arrivalDate!), );
-                    //_controller?.addConsignmentNote(_address);
+                    ConsignmentNote _consignmentNote = ConsignmentNote(idConsignmentNote: UniqueKey().hashCode, number: _numberController.text, arrivalDate: DateTime.parse(_arrivalDate!), supplier: getSupplier(), employeeStore: getEmployeeStore(), forReturn: _forReturn);
+                    _controller?.addConsignmentNote(_consignmentNote);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is ConsignmentNoteAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Накладная создана")));}

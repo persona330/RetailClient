@@ -3,23 +3,24 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Group.dart';
 import 'package:retail/page/nomenclature/CreateNomenclaturePage.dart';
 import 'package:retail/page/shelf/CreateShelfPage.dart';
-import '../../controller/GroupController.dart';
-import 'CreateGroupPage.dart';
+import '../../../controller/GroupController.dart';
+import '../CreateGroupPage.dart';
+import '../PutGroupPage.dart';
 
-class ListGroupWidget extends StatefulWidget
+class PutListGroupWidget extends StatefulWidget
 {
-  const ListGroupWidget({Key? key}) : super(key: key);
+  const PutListGroupWidget({Key? key}) : super(key: key);
 
   @override
-  _ListGroupWidgetState createState() => _ListGroupWidgetState();
+  _PutListGroupWidgetState createState() => _PutListGroupWidgetState();
 }
 
-class _ListGroupWidgetState extends StateMVC
+class _PutListGroupWidgetState extends StateMVC
 {
   late GroupController _controller;
   late Group _group;
 
-  _ListGroupWidgetState() : super(GroupController()) {_controller = controller as GroupController;}
+  _PutListGroupWidgetState() : super(GroupController()) {_controller = controller as GroupController;}
 
   @override
   void initState()
@@ -48,7 +49,7 @@ class _ListGroupWidgetState extends StateMVC
 
       return DropdownButtonFormField(
           isExpanded: true,
-          decoration: const InputDecoration(labelText: "Адрес",),
+          decoration: const InputDecoration(labelText: "Тип",),
           items: _groupList.map((Group items) {
             return DropdownMenuItem(
               child: Text(items.toString()),
@@ -57,9 +58,7 @@ class _ListGroupWidgetState extends StateMVC
           }).toList(),
           onChanged: (Group? item) {
             setState(() {_group = item!;});
-            CreateGroupPage.of(context)?.setType(_group);
-            CreateNomenclaturePage.of(context)?.setGroup(_group);
-            CreateShelfPage.of(context)?.setGroup(_group);
+            PutGroupPage.of(context)?.setType(_group);
           }
       );
   }

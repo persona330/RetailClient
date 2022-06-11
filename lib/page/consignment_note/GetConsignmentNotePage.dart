@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
 import 'DeleteConsignmentNotePage.dart';
@@ -47,7 +42,7 @@ class GetConsignmentNotePageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteConsignmentNote(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -74,7 +69,7 @@ class GetConsignmentNotePageState extends StateMVC
       final _consignmentNote = (state as ConsignmentNoteGetItemResultSuccess).consignmentNote;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация об накладной №${_id}"),
+            title: Text("Информация об накладной №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -102,7 +97,7 @@ class GetConsignmentNotePageState extends StateMVC
                       "Поставщик: ${_consignmentNote.getSupplier.toString()} \n"
                       "Сотрудник склада: ${_consignmentNote.getEmployeeStore.toString()} \n"
                       "На возврат: ${_consignmentNote.getForReturn}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
 
                 ],
               ),

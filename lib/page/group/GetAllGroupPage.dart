@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:retail/page/address/GetAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/service/PostService.dart';
-
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
 import 'CreateGroupPage.dart';
-import 'ItemGroupPage.dart';
+import 'widget/ItemGroupWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllGroupPage extends StatefulWidget
 {
   const GetAllGroupPage({Key? key}) : super(key: key);
-
-  //final String title;
 
   @override
   _GetAllGroupPageState createState() => _GetAllGroupPageState();
@@ -26,6 +21,9 @@ class _GetAllGroupPageState extends StateMVC
 
   _GetAllGroupPageState() : super(GroupController()) {_controller = controller as GroupController;}
 
+  Widget appBarTitle = const Text("Группы");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
   @override
   void initState()
   {
@@ -37,25 +35,37 @@ class _GetAllGroupPageState extends StateMVC
   Widget build(BuildContext context)
   {
     return Scaffold(
-      // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Группы товаров"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Группы");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroupPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateGroupPage())); },
         tooltip: 'Добавить группу товара',
         child: const Icon(Icons.add),
       ),
@@ -86,7 +96,7 @@ class _GetAllGroupPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -99,7 +109,7 @@ class _GetAllGroupPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: groupList[index].getIdGroup!)));
                       },
-                      child: ItemGroupPage(groupList[index]),
+                      child: ItemGroupWidget(groupList[index]),
                     );
                   },
                 ),

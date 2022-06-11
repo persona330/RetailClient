@@ -1,6 +1,4 @@
-import 'package:decimal/decimal.dart';
 import 'package:retail/model/ConsignmentNote.dart';
-
 import 'Nomenclature.dart';
 
 class Import

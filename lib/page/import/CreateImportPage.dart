@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/ConsignmentNote.dart';
 import 'package:retail/model/Nomenclature.dart';
-import 'package:retail/page/nomenclature/ListNomenclatureWidget.dart';
+import 'package:retail/page/import/widget/CreateListConsignmentNoteWidget.dart';
+import 'package:retail/page/import/widget/CreateListNomenclatureWidget.dart';
 import '../../controller/ImportController.dart';
 import '../../model/Import.dart';
-import '../consignment_note/ListConsignmentNoteWidget.dart';
 
 class CreateImportPage extends StatefulWidget
 {
@@ -45,7 +45,7 @@ class _CreateImportPageState extends StateMVC
   ConsignmentNote getConsignmentNote(){return _consignmentNote;}
   void setConsignmentNote(ConsignmentNote consignmentNote){_consignmentNote = consignmentNote;}
 
-    @override
+  @override
   void initState()
   {
     super.initState();
@@ -63,8 +63,6 @@ class _CreateImportPageState extends StateMVC
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       appBar: AppBar(title: const Text('Создание привоза')),
       body:  Scrollbar(
@@ -99,11 +97,11 @@ class _CreateImportPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListConsignmentNoteWidget(),
+                  child: CreateListConsignmentNoteWidget(),
                 ),
                 const Flexible(
                     flex: 2,
-                    child: ListNomenclatureWidget()
+                    child: CreateListNomenclatureWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -113,11 +111,11 @@ class _CreateImportPageState extends StateMVC
                     _controller?.addImport(_import);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is ImportAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is ImportAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Привоз создан")));}
                     if (state is ImportResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is ImportResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

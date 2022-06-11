@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/employee_store/PutEmployeeStorePage.dart';
+
 import '../../../controller/OrganizationController.dart';
 import '../../../model/Organization.dart';
 
@@ -52,8 +52,11 @@ class _PutListOrganizationWidgetState extends StateMVC
             );
           }).toList(),
           onChanged: (Organization? item) {
-            setState(() { _organization = item!;});
-            PutEmployeeStorePage.of(context)?.setOrganization(_organization);
+            setState(() {
+              _organization = item!;
+            });
+            //CreateStorePage.of(context)?.setOrganization(_organization);
+            //CreateSupplierPage.of(context)?.setOrganization(_organization);
           }
       );
   }

@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/import/CreateImportPage.dart';
-import '../../controller/ConsignmentNoteController.dart';
-import '../../model/ConsignmentNote.dart';
 
-class ListConsignmentNoteWidget extends StatefulWidget
+import '../../../controller/ConsignmentNoteController.dart';
+import '../../../model/ConsignmentNote.dart';
+
+class PutListConsignmentNoteWidget extends StatefulWidget
 {
-  const ListConsignmentNoteWidget({Key? key}) : super(key: key);
+  const PutListConsignmentNoteWidget({Key? key}) : super(key: key);
 
   @override
-  _ListConsignmentNoteWidgetState createState() => _ListConsignmentNoteWidgetState();
+  _PutListConsignmentNoteWidgetState createState() => _PutListConsignmentNoteWidgetState();
 }
 
-class _ListConsignmentNoteWidgetState extends StateMVC
+class _PutListConsignmentNoteWidgetState extends StateMVC
 {
   late ConsignmentNoteController _controller;
   late ConsignmentNote _consignmentNote;
 
-  _ListConsignmentNoteWidgetState() : super(ConsignmentNoteController()) {_controller = controller as ConsignmentNoteController;}
+  _PutListConsignmentNoteWidgetState() : super(ConsignmentNoteController()) {_controller = controller as ConsignmentNoteController;}
 
   @override
   void initState()
@@ -44,7 +45,7 @@ class _ListConsignmentNoteWidgetState extends StateMVC
       _consignmentNote = _consignmentNoteList[0];
       return DropdownButtonFormField(
           isExpanded: true,
-          decoration: InputDecoration(labelText: "Накладная",),
+          decoration: const InputDecoration(labelText: "Накладная",),
           items: _consignmentNoteList.map((ConsignmentNote items) {
             return DropdownMenuItem(
               child: Text(items.toString()),
@@ -55,7 +56,7 @@ class _ListConsignmentNoteWidgetState extends StateMVC
             setState(() {
               _consignmentNote = item!;
             });
-            CreateImportPage.of(context)?.setConsignmentNote(_consignmentNote);
+            //CreateImportPage.of(context)?.setConsignmentNote(_consignmentNote);
           }
       );
   }

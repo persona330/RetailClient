@@ -1,51 +1,65 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
+import 'package:retail/page/import/widget/PutListConsignmentNoteWidget.dart';
+import 'package:retail/page/import/widget/PutListNomenclatureWidget.dart';
+import '../../controller/ImportController.dart';
+import '../../model/ConsignmentNote.dart';
+import '../../model/Import.dart';
+import '../../model/Nomenclature.dart';
 
-class PutAddressPage extends StatefulWidget
+class PutImportPage extends StatefulWidget
 {
   final int id;
-  const PutAddressPage({Key? key, required this.id}) : super(key: key);
+  const PutImportPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  PutAddressPageState createState() => PutAddressPageState(id);
+  PutImportPageState createState() => PutImportPageState(id);
+
+  static PutImportPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final PutImportPageState? result =
+    context.findAncestorStateOfType<PutImportPageState>();
+    return result;
+  }
 }
 
-class PutAddressPageState extends StateMVC
+class PutImportPageState extends StateMVC
 {
-  AddressController? _controller;
+  ImportController? _controller;
   final int _id;
 
-  PutAddressPageState(this._id) : super(AddressController()) {_controller = controller as AddressController;}
+  PutImportPageState(this._id) : super(ImportController()) {_controller = controller as ImportController;}
 
-  final _apartmentController = TextEditingController();
-  final _entranceController = TextEditingController();
-  final _houseController = TextEditingController();
-  final _streetController = TextEditingController();
-  final _regionController = TextEditingController();
-  final _cityController = TextEditingController();
-  final _nationController = TextEditingController();
+  final _quantityController = TextEditingController();
+  final _costController = TextEditingController();
+  final _vatController = TextEditingController();
 
+  late Nomenclature _nomenclature;
+  late ConsignmentNote _consignmentNote;
+
+  Nomenclature getNomenclature(){return _nomenclature;}
+  void setNomenclature(Nomenclature nomenclature){_nomenclature = nomenclature;}
+
+  ConsignmentNote getConsignmentNote(){return _consignmentNote;}
+  void setConsignmentNote(ConsignmentNote consignmentNote){_consignmentNote = consignmentNote;}
 
   @override
   void initState()
   {
     super.initState();
-    _controller?.getAddress(_id);
+    _controller?.getImport(_id);
   }
 
   @override
   void dispose()
   {
-    _apartmentController.dispose();
-    _entranceController.dispose();
-    _houseController.dispose();
-    _streetController.dispose();
-    _regionController.dispose();
-    _cityController.dispose();
-    _nationController.dispose();
+    _quantityController.dispose();
+    _costController.dispose();
+    _vatController.dispose();
     super.dispose();
   }
 
@@ -53,10 +67,10 @@ class PutAddressPageState extends StateMVC
   Widget build(BuildContext context)
   {
     final state = _controller?.currentState;
-    if (state is AddressResultLoading)
+    if (state is ImportResultLoading)
     {
       return const Center(child: CircularProgressIndicator());
-    } else if (state is AddressResultFailure)
+    } else if (state is ImportResultFailure)
     {
       return Center(
         child: Text(
@@ -66,132 +80,61 @@ class PutAddressPageState extends StateMVC
         ),
       );
     } else {
-      final _address = (state as AddressGetItemResultSuccess).address;
-      _apartmentController.text = _address.getApartment!;
-      _entranceController.text = _address.getEntrance!.toString();
-      _houseController.text = _address.getHouse!;
-      _streetController.text = _address.getStreet!;
-      _regionController.text = _address.getRegion!;
-      _cityController.text = _address.getCity!;
-      _nationController.text = _address.getNation!;
+      final _import = (state as ImportGetItemResultSuccess).import;
+      _quantityController.text = _import.getQuantity!.toString();
+      _costController.text = _import.getCost!.toString();
+      _vatController.text = _import.getVat!.toString();
       return Scaffold(
-        appBar: AppBar(title: const Text('Изменение адреса')),
+        appBar: AppBar(title: const Text('Изменение привоза')),
         body: Scrollbar(
           child: Container(
             padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
             child: Column(
                 children: [
                   TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер квартиры"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _apartmentController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    decoration: const InputDecoration(labelText: "Количество"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
+                    controller: _quantityController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер подъезда"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _entranceController,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    decoration: const InputDecoration(labelText: "Цена"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
+                    controller: _costController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(labelText: "Номер дома"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _houseController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    decoration: const InputDecoration(labelText: "НДС"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
+                    controller: _vatController,
                     textInputAction: TextInputAction.next,
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название улицы"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _streetController,
-                    textInputAction: TextInputAction.next,
+                  const Flexible(
+                    flex: 1,
+                    child: PutListConsignmentNoteWidget(),
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование региона"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _regionController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название населенного пункта"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _cityController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование страны"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _nationController,
-                    textInputAction: TextInputAction.done,
+                  const Flexible(
+                      flex: 2,
+                      child: PutListNomenclatureWidget()
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(
                     onPressed: () {
-                      Address _address1 = Address(idAddress: _id,
-                          apartment: _apartmentController.text,
-                          entrance: int.parse(_entranceController.text),
-                          house: _houseController.text,
-                          street: _streetController.text,
-                          region: _regionController.text,
-                          city: _cityController.text,
-                          nation: _nationController.text);
-                      _controller?.putAddress(_address1, _id);
+                      Import _import1 = Import(idImport: _id, quantity: int.parse(_quantityController.text), cost: double.parse(_costController.text), vat: int.parse(_vatController.text), consignmentNote: getConsignmentNote(), nomenclature: getNomenclature());
+                      _controller?.putImport(_import1, _id);
                       Navigator.pop(context, true);
-                      if (state is AddressAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is AddressResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is AddressResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      final state = _controller?.currentState;
+                      if (state is ImportAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Привоз изменен")));}
+                      if (state is ImportResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is ImportResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/MeasurementController.dart';
 import '../../model/Measurement.dart';
 import 'DeleteMeasurementPage.dart';
@@ -15,7 +9,6 @@ class GetMeasurementPage extends StatefulWidget
 {
   final int id;
   const GetMeasurementPage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetMeasurementPageState createState() => GetMeasurementPageState(id);
@@ -49,7 +42,7 @@ class GetMeasurementPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteMeasurement(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Единица измерения удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -76,7 +69,7 @@ class GetMeasurementPageState extends StateMVC
       final _measurement = (state as MeasurementGetItemResultSuccess).measurement;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация об единице измерения №${_id}"),
+            title: Text("Информация об единице измерения №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -101,7 +94,7 @@ class GetMeasurementPageState extends StateMVC
                 children: [
                   Text("Сокращение: ${_measurement.getName} \n"
                       "Полное название: ${_measurement.getFullName}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

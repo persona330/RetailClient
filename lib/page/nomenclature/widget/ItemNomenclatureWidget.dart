@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Nomenclature.dart';
 
-import '../../model/Nomenclature.dart';
-
-class ItemNomenclaturePage extends StatelessWidget
+class ItemNomenclatureWidget extends StatelessWidget
 {
   final Nomenclature nomenclature;
 
-  ItemNomenclaturePage(this.nomenclature);
+  ItemNomenclatureWidget(this.nomenclature);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemNomenclaturePage extends StatelessWidget
         child: ListTile(
           leading: Text("${nomenclature.getIdNomenclature}"),
           title: Text('${nomenclature.getName}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

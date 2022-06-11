@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/group/ListGroupWidget.dart';
+import 'package:retail/page/group/widget/CreateListGroupWidget.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
 
@@ -30,7 +30,7 @@ class _CreateGroupPageState extends StateMVC
   _CreateGroupPageState() : super(GroupController()) {_controller = controller as GroupController;}
 
   final _nameController = TextEditingController();
-  late Group _type = Group(idGroup: 1, name: "Молочные", type: null);
+  late Group _type;
 
   Group getType() {return _type;}
   void setType(Group type){ _type = type; }
@@ -54,7 +54,7 @@ class _CreateGroupPageState extends StateMVC
     // Scaffold - заполняет все свободное пространство
     // Нужен для отображения основных виджетов
     return Scaffold(
-      appBar: AppBar(title: const Text('Создание адреса')),
+      appBar: AppBar(title: const Text('Создание группы')),
       body:  Scrollbar(
           child: Container(
             // this.left, this.top, this.right, this.bottom
@@ -71,26 +71,21 @@ class _CreateGroupPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListGroupWidget(),
+                  child: CreateListGroupWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    print(getType());
                     Group _group = Group(idGroup: UniqueKey().hashCode, name: _nameController.text, type: getType());
                     _controller?.addGroup(_group);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is GroupAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));
-                    }
+                    if (state is GroupAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Группа добавлена")));}
                     if (state is GroupResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is GroupResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создание'),
                 ),
               ],
             ),

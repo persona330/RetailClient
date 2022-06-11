@@ -4,9 +4,8 @@ import '../../controller/MeasurementController.dart';
 import '../../model/Measurement.dart';
 import 'CreateMeasurementPage.dart';
 import 'GetMeasurementPage.dart';
-import 'ItemMeasurementPage.dart';
+import 'widget/ItemMeasurementWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllMeasurementPage extends StatefulWidget
 {
   const GetAllMeasurementPage({Key? key}) : super(key: key);
@@ -22,6 +21,9 @@ class _GetAllMeasurementPageState extends StateMVC
 
   _GetAllMeasurementPageState() : super(MeasurementController()) {_controller = controller as MeasurementController;}
 
+  Widget appBarTitle = const Text("Единицы измерения");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
   @override
   void initState()
   {
@@ -35,24 +37,37 @@ class _GetAllMeasurementPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Единицы измерения"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+        actions:  <Widget>[
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Единицы измерения");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateMeasurementPage())); },
-        tooltip: 'Создать единицу измерения',
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateMeasurementPage())); },
+        tooltip: 'Добавить единицу измерения',
         child: const Icon(Icons.add),
       ),
     );
@@ -95,7 +110,7 @@ class _GetAllMeasurementPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetMeasurementPage(id: _measurementList[index].getIdMeasurement!)));
                       },
-                      child: ItemMeasurementPage(_measurementList[index]),
+                      child: ItemMeasurementWidget(_measurementList[index]),
                     );
                   },
                 ),

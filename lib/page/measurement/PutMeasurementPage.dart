@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-
 import '../../controller/MeasurementController.dart';
 import '../../model/Measurement.dart';
 
@@ -70,24 +67,17 @@ class PutMeasurementPageState extends StateMVC
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Сокращенное название"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9%$]")),],
+                    decoration: const InputDecoration(labelText: "Сокращенное название"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _nameController,
                     textInputAction: TextInputAction.next,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Полное название"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                    decoration: const InputDecoration(labelText: "Полное название"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _fullNameController,
                     textInputAction: TextInputAction.next,
                   ),
@@ -99,22 +89,11 @@ class PutMeasurementPageState extends StateMVC
                           fullName: _fullNameController.text,);
                       _controller?.putMeasurement(_measurement1, _id);
                       Navigator.pop(context, true);
-                      if (state is MeasurementAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is MeasurementResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is MeasurementResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      if (state is MeasurementAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Единица измерения изменена")));}
+                      if (state is MeasurementResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is MeasurementResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text( "Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

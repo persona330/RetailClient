@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/employee_store/PutEmployeeStorePage.dart';
+
 import '../../../controller/OrganizationController.dart';
 import '../../../model/Organization.dart';
+import '../CreateNomenclaturePage.dart';
 
-class PutListOrganizationWidget extends StatefulWidget
+class CreateListOrganizationWidget extends StatefulWidget
 {
-  const PutListOrganizationWidget({Key? key}) : super(key: key);
+  const CreateListOrganizationWidget({Key? key}) : super(key: key);
 
   @override
-  _PutListOrganizationWidgetState createState() => _PutListOrganizationWidgetState();
+  _CreateListOrganizationWidgetState createState() => _CreateListOrganizationWidgetState();
 }
 
-class _PutListOrganizationWidgetState extends StateMVC
+class _CreateListOrganizationWidgetState extends StateMVC
 {
   late OrganizationController _controller;
   late Organization _organization;
 
-  _PutListOrganizationWidgetState() : super(OrganizationController()) {_controller = controller as OrganizationController;}
+  _CreateListOrganizationWidgetState() : super(OrganizationController()) {_controller = controller as OrganizationController;}
 
   @override
   void initState()
@@ -52,8 +53,10 @@ class _PutListOrganizationWidgetState extends StateMVC
             );
           }).toList(),
           onChanged: (Organization? item) {
-            setState(() { _organization = item!;});
-            PutEmployeeStorePage.of(context)?.setOrganization(_organization);
+            setState(() {
+              _organization = item!;
+            });
+            CreateNomenclaturePage.of(context)?.setOrganization(_organization);
           }
       );
   }

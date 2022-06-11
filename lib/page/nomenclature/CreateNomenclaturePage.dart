@@ -3,10 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Group.dart';
-import 'package:retail/model/Producer.dart';
-import 'package:retail/page/group/ListGroupWidget.dart';
-import 'package:retail/page/producer/ListProducerWidget.dart';
+import 'package:retail/model/Measurement.dart';
+import 'package:retail/model/Organization.dart';
+import 'package:retail/model/StorageConditions.dart';
+import 'package:retail/page/nomenclature/widget/CreateListStorageConditionsWidget.dart';
+import 'package:retail/page/employee_store/widget/CreateListOrganizationWidget.dart';
+import 'package:retail/page/group/widget/CreateListGroupWidget.dart';
+import 'package:retail/page/nomenclature/widget/CreateListBoxWidget.dart';
+import 'package:retail/page/nomenclature/widget/CreateListMeasurementWidget.dart';
 import '../../controller/NomenclatureController.dart';
+import '../../model/Box.dart';
 import '../../model/Nomenclature.dart';
 
 class CreateNomenclaturePage extends StatefulWidget
@@ -42,14 +48,26 @@ class _CreateNomenclaturePageState extends StateMVC
   final _sizeController = TextEditingController();
   late String? _productionDate = "Введите дату";
   late String? _expirationDate = "Введите дату";
-  late Producer _producer;
+  late Measurement _measurement;
+  late Organization _organization;
   late Group _group;
+  late Box _box;
+  late StorageConditions _storageConditions;
 
-  Producer getProducer(){return _producer;}
-  void setProducer(Producer producer){_producer = producer;}
+  Organization getOrganization(){return _organization;}
+  void setOrganization(Organization organization){_organization = organization;}
+
+  Measurement getMeasurement(){return _measurement;}
+  void setMeasurement(Measurement measurement){_measurement = measurement;}
 
   Group getGroup(){return _group;}
   void setGroup(Group group){_group = group;}
+
+  Box getBox(){return _box;}
+  void setBox(Box box){_box = box;}
+
+  StorageConditions getStorageConditions(){return _storageConditions;}
+  void setStorageConditions(StorageConditions storageConditions){_storageConditions = storageConditions;}
 
   Future<void> _selectProductionDate(BuildContext context) async
   {
@@ -100,8 +118,9 @@ class _CreateNomenclaturePageState extends StateMVC
       body: SingleChildScrollView(
           child:
           Container(
+            height: MediaQuery.of(context).size.height,
             // this.left, this.top, this.right, this.bottom
-           padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
+            padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
             child: Column (
               children: [
                 TextFormField(
@@ -182,25 +201,38 @@ class _CreateNomenclaturePageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListProducerWidget(),
+                  child: CreateListMeasurementWidget(),
                 ),
                 const Flexible(
-                    flex: 2,
-                    child: ListGroupWidget()
+                    fit: FlexFit.loose,
+                    flex: 1,
+                    child: CreateListGroupWidget(),
+                ),
+                const Flexible(
+                  flex: 3,
+                  child: CreateListOrganizationWidget(),
+                ),
+                const Flexible(
+                  flex: 4,
+                  child: CreateListStorageConditionsWidget(),
+                ),
+                const Flexible(
+                  flex: 5,
+                  child: CreateListBoxWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    //Address _address = Address(idAddress: 1, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
-                    //_controller?.addAddress(_address);
+                    Nomenclature _nomenclature = Nomenclature(idNomenclature: UniqueKey().hashCode, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions());
+                    print(_nomenclature);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is NomenclatureAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is NomenclatureAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Номенклатура создана")));}
                     if (state is NomenclatureResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is NomenclatureResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
                 const SizedBox(height: 50),
               ],

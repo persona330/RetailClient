@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/ImportController.dart';
 import '../../model/Import.dart';
 import 'DeleteImportPage.dart';
@@ -47,7 +42,7 @@ class GetImportPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteImport(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удален")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удален")));
           Navigator.of(context).pop();
         }
         break;
@@ -74,7 +69,7 @@ class GetImportPageState extends StateMVC
       final _import = (state as ImportGetItemResultSuccess).import;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о привозе №${_id}"),
+            title: Text("Информация о привозе №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -102,7 +97,7 @@ class GetImportPageState extends StateMVC
                       "НДС: ${_import.getVat} \n"
                       "Накладная: ${_import.getConsignmentNote.toString()} \n"
                       "Номенклатура: ${_import.getNomenclature.toString()} "
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

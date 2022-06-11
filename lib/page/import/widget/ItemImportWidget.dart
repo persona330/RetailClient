@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Import.dart';
 
-import '../../model/Import.dart';
-
-class ItemImportPage extends StatelessWidget
+class ItemImportWidget extends StatelessWidget
 {
   final Import import;
 
-  ItemImportPage(this.import);
+  ItemImportWidget(this.import);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemImportPage extends StatelessWidget
         child: ListTile(
           leading: Text("${import.getIdImport}"),
           title: Text('${import.getQuantity}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }
