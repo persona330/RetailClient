@@ -20,7 +20,7 @@ class _GetAllBoxPageState extends StateMVC
 
   _GetAllBoxPageState() : super(BoxController()) {_controller = controller as BoxController;}
 
-  Widget appBarTitle = const Text("Ячейки");
+  Widget appBarTitle = const Text("Ячейка");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllBoxPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Ячейки");
+                appBarTitle = const Text("Ячейка");
               }
             });
           } ,),]
@@ -65,7 +65,7 @@ class _GetAllBoxPageState extends StateMVC
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAddressPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAddressPage())); },
         tooltip: 'Добавить ячейку',
         child: const Icon(Icons.add),
       ),

@@ -4,9 +4,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/StorageConditionsController.dart';
 import '../../model/StorageConditions.dart';
 import 'GetStorageConditionsPage.dart';
-import 'ItemStorageConditionsPage.dart';
+import 'widget/ItemStorageConditionsWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllStorageConditionsPage extends StatefulWidget
 {
   const GetAllStorageConditionsPage({Key? key}) : super(key: key);
@@ -15,12 +14,14 @@ class GetAllStorageConditionsPage extends StatefulWidget
   _GetAllStorageConditionsPageState createState() => _GetAllStorageConditionsPageState();
 }
 
-// Домашняя страница
 class _GetAllStorageConditionsPageState extends StateMVC
 {
   late StorageConditionsController _controller;
 
   _GetAllStorageConditionsPageState() : super(StorageConditionsController()) {_controller = controller as StorageConditionsController;}
+
+  Widget appBarTitle = const Text("Условия хранения");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -35,23 +36,36 @@ class _GetAllStorageConditionsPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Условия хранения"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Условия хранения");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAddressPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAddressPage())); },
         tooltip: 'Добавить условия хранения',
         child: const Icon(Icons.add),
       ),
@@ -82,20 +96,16 @@ class _GetAllStorageConditionsPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
-                // ListView.builder создает элемент списка
-                // только когда он видим на экране
+                padding: const EdgeInsets.all(10),
                 child: ListView.builder(
                   itemCount: _storageConditionsList.length,
                   itemBuilder: (context, index) {
-                    // мы вынесли элемент списка в
-                    // отдельный виджет
                     return GestureDetector(
                       onTap: ()
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetStorageConditionsPage(id: _storageConditionsList[index].getIdStorageConditions!)));
                       },
-                      child: ItemStorageConditionsPage(_storageConditionsList[index]),
+                      child: ItemStorageConditionsWidget(_storageConditionsList[index]),
                     );
                   },
                 ),

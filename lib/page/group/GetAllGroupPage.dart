@@ -21,7 +21,7 @@ class _GetAllGroupPageState extends StateMVC
 
   _GetAllGroupPageState() : super(GroupController()) {_controller = controller as GroupController;}
 
-  Widget appBarTitle = const Text("Группы");
+  Widget appBarTitle = const Text("Группа");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllGroupPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Группы");
+                appBarTitle = const Text("Группа");
               }
             });
           } ,),]

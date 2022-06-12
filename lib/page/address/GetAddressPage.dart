@@ -10,7 +10,6 @@ class GetAddressPage extends StatefulWidget
   final int id;
   const GetAddressPage({Key? key, required this.id}) : super(key: key);
 
-
   @override
   GetAddressPageState createState() => GetAddressPageState(id);
 }
@@ -96,7 +95,7 @@ class GetAddressPageState extends StateMVC
                   Text("Квартира: ${_address.getApartment} \n"
                       "Подъезд: ${_address.getEntrance} \n"
                       "Дом: ${_address.getHouse} \n"
-                      "Улица ${_address.getStreet} \n"
+                      "Улица: ${_address.getStreet} \n"
                       "Регион: ${_address.getRegion} \n"
                       "Город: ${_address.getCity} \n"
                       "Страна: ${_address.getNation} "

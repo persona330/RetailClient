@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/nomenclature/PutNomenclaturePage.dart';
 
 import '../../../controller/BoxController.dart';
 import '../../../model/Box.dart';
@@ -55,7 +56,7 @@ class _PutListBoxWidgetState extends StateMVC
             setState(() {
               _box = item!;
             });
-            //CreateOrganizationPage.of(context)?.setAddress(_box);
+            PutNomenclaturePage.of(context)?.setBox(_box);
           }
       );
   }

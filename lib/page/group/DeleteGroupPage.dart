@@ -5,7 +5,7 @@ class DeleteGroupPage extends StatelessWidget
 {
   int id = 0;
 
-  DeleteGroupPage(this.id);
+  DeleteGroupPage(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context)

@@ -89,7 +89,7 @@ class PutMeasurementPageState extends StateMVC
                           fullName: _fullNameController.text,);
                       _controller?.putMeasurement(_measurement1, _id);
                       Navigator.pop(context, true);
-                      if (state is MeasurementAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Единица измерения изменена")));}
+                      if (state is MeasurementPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Единица измерения изменена")));}
                       if (state is MeasurementResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is MeasurementResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text( "Произошла ошибка при добавлении поста")));}
                     },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/address/PutAddressPage.dart';
+import 'package:retail/page/import/PutImportPage.dart';
 import '../../controller/ImportController.dart';
 import '../../model/Import.dart';
 import 'DeleteImportPage.dart';
@@ -33,7 +34,7 @@ class GetImportPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutImportPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -42,7 +43,7 @@ class GetImportPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteImport(_id);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удален")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Привоз удален")));
           Navigator.of(context).pop();
         }
         break;

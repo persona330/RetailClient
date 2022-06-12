@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Position.dart';
 
-import '../../model/Position.dart';
-
-class ItemPositionPage extends StatelessWidget
+class ItemPositionWidget extends StatelessWidget
 {
   final Position position;
 
-  ItemPositionPage(this.position);
+  ItemPositionWidget(this.position);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemPositionPage extends StatelessWidget
         child: ListTile(
           leading: Text("${position.getIdPosition}"),
           title: Text('${position.getName}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание \n'),
       ),
     );
   }

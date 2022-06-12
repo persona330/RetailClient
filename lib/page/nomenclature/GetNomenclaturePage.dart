@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
+import 'package:retail/page/nomenclature/PutNomenclaturePage.dart';
 import '../../controller/NomenclatureController.dart';
 import '../../model/Nomenclature.dart';
 import 'DeleteNomenclaturePage.dart';
@@ -33,7 +33,7 @@ class GetNomenclaturePageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutNomenclaturePage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -42,7 +42,7 @@ class GetNomenclaturePageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteNomenclature(_id);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Номенклатура удалена")));
           Navigator.of(context).pop();
         }
         break;

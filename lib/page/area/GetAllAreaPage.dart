@@ -15,14 +15,13 @@ class GetAllAreaPage extends StatefulWidget
   _GetAllAreaPageState createState() => _GetAllAreaPageState();
 }
 
-// Домашняя страница
 class _GetAllAreaPageState extends StateMVC
 {
   late AreaController _controller;
 
   _GetAllAreaPageState() : super(AddressController()) {_controller = controller as AreaController;}
 
-  Widget appBarTitle = const Text("Зоны");
+  Widget appBarTitle = const Text("Зона");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -59,7 +58,7 @@ class _GetAllAreaPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Зоны");
+                appBarTitle = const Text("Зона");
               }
             });
           } ,),]

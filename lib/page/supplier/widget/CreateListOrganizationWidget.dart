@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import '../../controller/OrganizationController.dart';
-import '../../model/Organization.dart';
-import '../store/CreateStorePage.dart';
-import '../supplier/CreateSupplierPage.dart';
 
-class ListOrganizationWidget extends StatefulWidget
+import '../../../controller/OrganizationController.dart';
+import '../../../model/Organization.dart';
+import '../CreateSupplierPage.dart';
+
+class CreateListOrganizationWidget extends StatefulWidget
 {
-  const ListOrganizationWidget({Key? key}) : super(key: key);
+  const CreateListOrganizationWidget({Key? key}) : super(key: key);
 
   @override
-  _ListOrganizationWidgetState createState() => _ListOrganizationWidgetState();
+  _CreateListOrganizationWidgetState createState() => _CreateListOrganizationWidgetState();
 }
 
-class _ListOrganizationWidgetState extends StateMVC
+class _CreateListOrganizationWidgetState extends StateMVC
 {
   late OrganizationController _controller;
   late Organization _organization;
 
-  _ListOrganizationWidgetState() : super(OrganizationController()) {_controller = controller as OrganizationController;}
+  _CreateListOrganizationWidgetState() : super(OrganizationController()) {_controller = controller as OrganizationController;}
 
   @override
   void initState()
@@ -56,7 +56,6 @@ class _ListOrganizationWidgetState extends StateMVC
             setState(() {
               _organization = item!;
             });
-            CreateStorePage.of(context)?.setOrganization(_organization);
             CreateSupplierPage.of(context)?.setOrganization(_organization);
           }
       );

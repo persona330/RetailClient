@@ -20,7 +20,7 @@ class _GetAllEmployeeStorePageState extends StateMVC
 
   _GetAllEmployeeStorePageState() : super(EmployeeStoreController()) {_controller = controller as EmployeeStoreController;}
 
-  Widget appBarTitle = const Text("Сотрудники");
+  Widget appBarTitle = const Text("Сотрудник");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllEmployeeStorePageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Сотрудники");
+                appBarTitle = const Text("Сотрудник");
               }
             });
           } ,),]

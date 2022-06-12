@@ -123,7 +123,7 @@ class PutAreaPageState extends StateMVC
                       if (state is AreaResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is AreaResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

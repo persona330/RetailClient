@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
-
 import '../../controller/PositionController.dart';
 import '../../model/Position.dart';
 
 class CreatePositionPage extends StatefulWidget
 {
-  CreatePositionPage({Key? key}) : super(key: key);
+  const CreatePositionPage({Key? key}) : super(key: key);
 
   @override
   _CreatePositionPageState createState() => _CreatePositionPageState();
@@ -50,9 +46,9 @@ class _CreatePositionPageState extends StateMVC
               children: [
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
                   decoration: const InputDecoration(labelText: "Название"),
-                  style: TextStyle(fontSize: 14, color: Colors.blue),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
                   textInputAction: TextInputAction.next,
                 ),
@@ -60,22 +56,15 @@ class _CreatePositionPageState extends StateMVC
                 OutlinedButton(
                   onPressed: ()
                   {
-                    Position _position = Position(idPosition: 1, name:_nameController.text);
+                    Position _position = Position(idPosition: UniqueKey().hashCode, name:_nameController.text);
                     _controller?.addPosition(_position);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is PositionAddResultSuccess)
-                    {
-                      print("Все ок");
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Добавлен")));
-                    }
-                    if (state is PositionResultLoading)
-                    {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Загрузка")));
-                    }
-                    if (state is PositionResultFailure) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
+                    if (state is PositionAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Должность создана")));}
+                    if (state is PositionResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                    if (state is PositionResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

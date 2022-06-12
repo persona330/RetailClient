@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/nomenclature/PutNomenclaturePage.dart';
 
 import '../../../controller/OrganizationController.dart';
 import '../../../model/Organization.dart';
@@ -55,8 +56,7 @@ class _PutListOrganizationWidgetState extends StateMVC
             setState(() {
               _organization = item!;
             });
-            //CreateStorePage.of(context)?.setOrganization(_organization);
-            //CreateSupplierPage.of(context)?.setOrganization(_organization);
+            PutNomenclaturePage.of(context)?.setOrganization(_organization);
           }
       );
   }

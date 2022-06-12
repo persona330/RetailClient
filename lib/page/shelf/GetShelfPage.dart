@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/ShelfController.dart';
 import '../../model/Shelf.dart';
 import 'DeleteShelfPage.dart';
+import 'PutShelfPage.dart';
 
 class GetShelfPage extends StatefulWidget
 {
   final int id;
   const GetShelfPage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetShelfPageState createState() => GetShelfPageState(id);
@@ -25,7 +19,7 @@ class GetShelfPageState extends StateMVC
   ShelfController? _controller;
   final int _id;
 
-  GetShelfPageState(this._id) : super(AddressController()) {_controller = controller as ShelfController;}
+  GetShelfPageState(this._id) : super(ShelfController()) {_controller = controller as ShelfController;}
 
   @override
   void initState()
@@ -39,7 +33,7 @@ class GetShelfPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutShelfPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -48,7 +42,7 @@ class GetShelfPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteShelf(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Полка удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -75,7 +69,7 @@ class GetShelfPageState extends StateMVC
       final _shelf = (state as ShelfGetItemResultSuccess).shelf;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о полке №${_id}"),
+            title: Text("Информация о полке №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -100,7 +94,7 @@ class GetShelfPageState extends StateMVC
                 children: [
                   Text("Номер: ${_shelf.getNumber} \n"
                       "Вместимость: ${_shelf.getSize}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

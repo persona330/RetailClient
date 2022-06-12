@@ -4,7 +4,7 @@ import '../../controller/StoreController.dart';
 import '../../model/Store.dart';
 import 'CreateStorePage.dart';
 import 'GetStorePage.dart';
-import 'ItemStorePage.dart';
+import 'widget/ItemStoreWidget.dart';
 
 // StatefulWidget - для изменяемых виджетов
 class GetAllStorePage extends StatefulWidget
@@ -22,6 +22,9 @@ class _GetAllStorePageState extends StateMVC
 
   _GetAllStorePageState() : super(StoreController()) {_controller = controller as StoreController;}
 
+  Widget appBarTitle = const Text("Склад");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
   @override
   void initState()
   {
@@ -35,23 +38,36 @@ class _GetAllStorePageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Склады"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Склад");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateStorePage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateStorePage())); },
         tooltip: 'Добавить склад',
         child: const Icon(Icons.add),
       ),
@@ -82,7 +98,7 @@ class _GetAllStorePageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -95,7 +111,7 @@ class _GetAllStorePageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetStorePage(id: storeList[index].getIdStore!)));
                       },
-                      child: ItemStorePage(storeList[index]),
+                      child: ItemStoreWidget(storeList[index]),
                     );
                   },
                 ),

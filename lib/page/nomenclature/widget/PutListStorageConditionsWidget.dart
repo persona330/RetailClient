@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/area/CreateAreaPage.dart';
-
+import 'package:retail/page/nomenclature/PutNomenclaturePage.dart';
 import '../../../controller/StorageConditionsController.dart';
 import '../../../model/StorageConditions.dart';
 
@@ -54,7 +53,7 @@ class _PutListStorageConditionsWidgetState extends StateMVC
           }).toList(),
           onChanged: (StorageConditions? item) {
             setState(() {_storageConditions = item!;});
-            //CreateAreaPage.of(context)?.setStorageConditions(_storageConditions);
+            PutNomenclaturePage.of(context)?.setStorageConditions(_storageConditions);
           }
       );
   }

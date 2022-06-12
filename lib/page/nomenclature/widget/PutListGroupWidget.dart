@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Group.dart';
+import 'package:retail/page/nomenclature/PutNomenclaturePage.dart';
 import '../../../controller/GroupController.dart';
 
 class PutListGroupWidget extends StatefulWidget
@@ -53,7 +54,7 @@ class _PutListGroupWidgetState extends StateMVC
           }).toList(),
           onChanged: (Group? item) {
             setState(() {_group = item!;});
-            //PutGroupPage.of(context)?.setType(_group);
+            PutNomenclaturePage.of(context)?.setGroup(_group);
           }
       );
   }

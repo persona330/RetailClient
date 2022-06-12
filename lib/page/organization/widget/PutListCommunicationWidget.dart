@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/organization/CreateOrganizationPage.dart';
-
 import '../../../controller/CommunicationController.dart';
 import '../../../model/Communication.dart';
 import '../PutOrganizationPage.dart';
@@ -60,8 +55,6 @@ class _PutListCommunicationWidgetState extends StateMVC
             setState(() {
               _communication = item!;
             });
-            print(_communication);
-            CreateOrganizationPage.of(context)?.setCommunication(_communication);
             PutOrganizationPage.of(context)?.setCommunication(_communication);
           }
       );

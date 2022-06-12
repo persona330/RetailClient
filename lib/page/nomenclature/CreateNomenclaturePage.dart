@@ -7,8 +7,8 @@ import 'package:retail/model/Measurement.dart';
 import 'package:retail/model/Organization.dart';
 import 'package:retail/model/StorageConditions.dart';
 import 'package:retail/page/nomenclature/widget/CreateListStorageConditionsWidget.dart';
-import 'package:retail/page/employee_store/widget/CreateListOrganizationWidget.dart';
-import 'package:retail/page/group/widget/CreateListGroupWidget.dart';
+import 'package:retail/page/nomenclature/widget/CreateListOrganizationWidget.dart';
+import 'package:retail/page/nomenclature/widget/CreateListGroupWidget.dart';
 import 'package:retail/page/nomenclature/widget/CreateListBoxWidget.dart';
 import 'package:retail/page/nomenclature/widget/CreateListMeasurementWidget.dart';
 import '../../controller/NomenclatureController.dart';
@@ -77,7 +77,7 @@ class _CreateNomenclaturePageState extends StateMVC
       firstDate: DateTime(2022),
       lastDate: DateTime(2050),
     );
-    if (_dateTime != null) setState(() {_productionDate = DateFormat("dd-MM-yyyy").format(_dateTime);});
+    if (_dateTime != null) setState(() {_productionDate = DateFormat("yyyy-MM-dd").format(_dateTime);});
   }
 
   Future<void> _selectExpirationDate(BuildContext context) async
@@ -88,7 +88,7 @@ class _CreateNomenclaturePageState extends StateMVC
       firstDate: DateTime(2022),
       lastDate: DateTime(2050),
     );
-    if (_dateTime != null) setState(() {_expirationDate = DateFormat("dd-MM-yyyy").format(_dateTime);});
+    if (_dateTime != null) setState(() {_expirationDate = DateFormat("yyyy-MM-dd").format(_dateTime);});
   }
 
   @override
@@ -204,7 +204,6 @@ class _CreateNomenclaturePageState extends StateMVC
                   child: CreateListMeasurementWidget(),
                 ),
                 const Flexible(
-                    fit: FlexFit.loose,
                     flex: 1,
                     child: CreateListGroupWidget(),
                 ),
@@ -224,8 +223,9 @@ class _CreateNomenclaturePageState extends StateMVC
                 OutlinedButton(
                   onPressed: ()
                   {
-                    Nomenclature _nomenclature = Nomenclature(idNomenclature: UniqueKey().hashCode, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions());
-                    print(_nomenclature);
+                    print(DateTime.parse("2000-12-12"));
+                    //Nomenclature _nomenclature = Nomenclature(idNomenclature: UniqueKey().hashCode, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions());
+                    //print(_nomenclature);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is NomenclatureAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Номенклатура создана")));}

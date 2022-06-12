@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:retail/model/Group.dart';
 import 'package:retail/model/Stillage.dart';
 

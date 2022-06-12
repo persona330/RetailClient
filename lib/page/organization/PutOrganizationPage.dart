@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/page/organization/widget/CreateListAddressWidget.dart';
 import 'package:retail/page/organization/widget/PutListAddressWidget.dart';
 import 'package:retail/page/organization/widget/PutListCommunicationWidget.dart';
 import '../../controller/OrganizationController.dart';
 import '../../model/Communication.dart';
 import '../../model/Organization.dart';
-import '../address/ListAddressWidget.dart';
-import 'widget/CreateListCommunicationWidget.dart';
 
 class PutOrganizationPage extends StatefulWidget
 {
@@ -41,8 +38,8 @@ class PutOrganizationPageState extends StateMVC
   final _innController = TextEditingController();
   final _kppController = TextEditingController();
 
-  late Communication _communication = Communication(idCommunication: 1, phone: "89128377496", email: "email@gmail.com");
-  late Address _address = Address(idAddress: 1, apartment: "5", entrance: 1, house: "107a", street: "Карла Маркса", region: "Курганский", city: "Курган", nation: "Россия");
+  late Communication _communication;
+  late Address _address;
 
   Address getAddress() { return _address; }
   void setAddress(Address address) { _address = address; }
@@ -141,11 +138,11 @@ class PutOrganizationPageState extends StateMVC
                       _controller?.putOrganization(_organization1, _id);
                       Navigator.pop(context, true);
                       final state = _controller?.currentState;
-                      if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                      if (state is OrganizationPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Организация изменена")));}
                       if (state is OrganizationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при обновлении организации")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

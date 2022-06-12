@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
-
+import 'package:retail/page/group/PutGroupPage.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
 import 'DeleteGroupPage.dart';
@@ -14,7 +9,6 @@ class GetGroupPage extends StatefulWidget
 {
   final int id;
   const GetGroupPage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetGroupPageState createState() => GetGroupPageState(id);
@@ -39,7 +33,7 @@ class GetGroupPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutGroupPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -48,7 +42,7 @@ class GetGroupPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteGroup(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Группа удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -75,7 +69,7 @@ class GetGroupPageState extends StateMVC
       final _group = (state as GroupGetItemResultSuccess).group;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о группе №${_id}"),
+            title: Text("Информация о группе №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -100,7 +94,7 @@ class GetGroupPageState extends StateMVC
                 children: [
                   Text("Название: ${_group.getName} \n"
                       "Дочерняя группа: ${_group.getType}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
 
                 ],
               ),

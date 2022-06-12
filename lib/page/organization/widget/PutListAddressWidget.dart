@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
-import 'package:retail/page/store/CreateStorePage.dart';
 import '../PutOrganizationPage.dart';
 
 class PutListAddressWidget extends StatefulWidget
@@ -58,7 +57,6 @@ class _PutListAddressWidgetState extends StateMVC
               _address = item!;
             });
             PutOrganizationPage.of(context)?.setAddress(_address);
-            CreateStorePage.of(context)?.setAddress(_address);
           }
       );
   }

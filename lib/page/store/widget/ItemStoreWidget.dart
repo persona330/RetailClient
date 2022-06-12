@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Store.dart';
 
-import '../../model/Store.dart';
-
-class ItemStorePage extends StatelessWidget
+class ItemStoreWidget extends StatelessWidget
 {
   final Store store;
 
-  ItemStorePage(this.store);
+  ItemStoreWidget(this.store);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemStorePage extends StatelessWidget
         child: ListTile(
           leading: Text("${store.getIdStore}"),
           title: Text('${store.getName}'),
-          subtitle: Text(
-          'Описание \n'
-          ),
+          subtitle: const Text('Описание'),
           //trailing: Text('${address.getIdAddress}'),
       ),
     );

@@ -21,7 +21,7 @@ class _GetAllAddressPageState extends StateMVC
 
   _GetAllAddressPageState() : super(AddressController()) {_controller = controller as AddressController;}
 
-  Widget appBarTitle = const Text("Адреса");
+  Widget appBarTitle = const Text("Адрес");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -64,7 +64,7 @@ class _GetAllAddressPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Адреса");
+                appBarTitle = const Text("Адрес");
               }
             });
           } ,),]
@@ -104,8 +104,6 @@ class _GetAllAddressPageState extends StateMVC
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                // ListView.builder создает элемент списка
-                // только когда он видим на экране
                 child: ListView.builder(
                   itemCount: _addressList.length,
                   itemBuilder: (context, index)

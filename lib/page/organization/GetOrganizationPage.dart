@@ -10,7 +10,6 @@ class GetOrganizationPage extends StatefulWidget
   final int id;
   const GetOrganizationPage({Key? key, required this.id}) : super(key: key);
 
-
   @override
   GetOrganizationPageState createState() => GetOrganizationPageState(id);
 }
@@ -43,7 +42,7 @@ class GetOrganizationPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteOrganization(_id);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Организация удалена")));
           Navigator.of(context).pop();
         }
         break;

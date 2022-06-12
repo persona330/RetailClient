@@ -89,14 +89,13 @@ class _CreateVerticalSectionsPageState extends StateMVC
                   {
                     VerticalSections _verticalSections = VerticalSections(idVerticalSections: UniqueKey().hashCode, number: _numberController.text, size: double.parse(_sizeController.text), stillage: getStillage());
                     _controller?.addVerticalSections(_verticalSections);
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция создана")));
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция создана")));}
                     if (state is VerticalSectionsResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is VerticalSectionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

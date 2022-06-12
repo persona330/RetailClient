@@ -107,14 +107,13 @@ class PutVerticalSectionsPageState extends StateMVC
                     onPressed: () {
                       VerticalSections _verticalSections = VerticalSections(idVerticalSections: _id, number: _numberController.text, size: double.parse(_sizeController.text), stillage: getStillage());
                       _controller?.putVerticalSections(_verticalSections, _id);
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция изменена")));
                       Navigator.pop(context, true);
                       final state = _controller?.currentState;
-                      if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                      if (state is VerticalSectionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция изменена")));}
                       if (state is VerticalSectionsResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is VerticalSectionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

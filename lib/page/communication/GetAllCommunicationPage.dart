@@ -6,7 +6,6 @@ import 'CreateCommunicationPage.dart';
 import 'GetCommunicationPage.dart';
 import 'widget/ItemCommunicationWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllCommunicationPage extends StatefulWidget
 {
   const GetAllCommunicationPage({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class _GetAllCommunicationPageState extends StateMVC
 
   _GetAllCommunicationPageState() : super(CommunicationController()) {_controller = controller as CommunicationController;}
 
-  Widget appBarTitle = const Text("Средства связи");
+  Widget appBarTitle = const Text("Средство связи");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +56,7 @@ class _GetAllCommunicationPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Средства связи");
+                appBarTitle = const Text("Средство связи");
               }
             });
           } ,),]

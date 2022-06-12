@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
-
+import 'package:retail/page/position/PutPositionPage.dart';
 import '../../controller/PositionController.dart';
 import '../../model/Position.dart';
 import 'DeletePositionPage.dart';
@@ -38,7 +33,7 @@ class GetPositionPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutPositionPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -47,7 +42,7 @@ class GetPositionPageState extends StateMVC
         if (value == true)
         {
           _controller?.deletePosition(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Должность удалена")));
           Navigator.of(context).pop();
         }
         break;
@@ -74,7 +69,7 @@ class GetPositionPageState extends StateMVC
       final _position = (state as PositionGetItemResultSuccess).position;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о должности №${_id}"),
+            title: Text("Информация о должности №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -98,7 +93,7 @@ class GetPositionPageState extends StateMVC
               child: Column (
                 children: [
                   Text("Название: ${_position.getName} \n"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

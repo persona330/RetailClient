@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Shelf.dart';
 
-import '../../model/Shelf.dart';
-
-class ItemShelfPage extends StatelessWidget
+class ItemShelfWidget extends StatelessWidget
 {
   final Shelf shelf;
 
-  ItemShelfPage(this.shelf);
+  ItemShelfWidget(this.shelf);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemShelfPage extends StatelessWidget
         child: ListTile(
           leading: Text("${shelf.getIdShelf}"),
           title: Text('${shelf.getNumber}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание'),
       ),
     );
   }

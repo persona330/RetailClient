@@ -9,8 +9,8 @@ import '../../model/Communication.dart';
 import '../../model/EmployeeStore.dart';
 import '../../model/Organization.dart';
 import '../../model/Position.dart';
-import '../organization/widget/PutListAddressWidget.dart';
-import '../organization/widget/PutListCommunicationWidget.dart';
+import '../employee_store/widget/PutListAddressWidget.dart';
+import '../employee_store/widget/PutListCommunicationWidget.dart';
 
 class PutEmployeeStorePage extends StatefulWidget
 {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
 import '../../controller/VerticalSectionsController.dart';
 import '../../model/VerticalSections.dart';
 import 'DeleteVerticalSectionsPage.dart';
+import 'PutVerticalSectionsPage.dart';
 
 class GetVerticalSectionsPage extends StatefulWidget
 {
@@ -33,7 +33,7 @@ class GetVerticalSectionsPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutVerticalSectionsPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -42,7 +42,7 @@ class GetVerticalSectionsPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteVerticalSections(_id);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалена")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Вертикальная секция удвлена")));
           Navigator.of(context).pop();
         }
         break;

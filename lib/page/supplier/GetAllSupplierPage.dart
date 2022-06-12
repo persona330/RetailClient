@@ -4,9 +4,8 @@ import '../../controller/SupplierController.dart';
 import '../../model/Supplier.dart';
 import 'CreateSupplierPage.dart';
 import 'GetSupplierPage.dart';
-import 'ItemSupplierPage.dart';
+import 'widget/ItemSupplierWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllSupplierPage extends StatefulWidget
 {
   const GetAllSupplierPage({Key? key}) : super(key: key);
@@ -15,12 +14,14 @@ class GetAllSupplierPage extends StatefulWidget
   _GetAllSupplierPageState createState() => _GetAllSupplierPageState();
 }
 
-// Домашняя страница
 class _GetAllSupplierPageState extends StateMVC
 {
   late SupplierController _controller;
 
   _GetAllSupplierPageState() : super(SupplierController()) {_controller = controller as SupplierController;}
+
+  Widget appBarTitle = const Text("Поставщик");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -35,23 +36,36 @@ class _GetAllSupplierPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Поставщики"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Поставщик");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateSupplierPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateSupplierPage())); },
         tooltip: 'Добавить поставщика',
         child: const Icon(Icons.add),
       ),
@@ -82,7 +96,7 @@ class _GetAllSupplierPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -95,7 +109,7 @@ class _GetAllSupplierPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetSupplierPage(id: _supplierList[index].getIdSupplier!)));
                       },
-                      child: ItemSupplierPage(_supplierList[index]),
+                      child: ItemSupplierWidget(_supplierList[index]),
                     );
                   },
                 ),

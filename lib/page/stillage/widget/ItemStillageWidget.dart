@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Stillage.dart';
 
-import '../../model/Stillage.dart';
-
-class ItemStillagePage extends StatelessWidget
+class ItemStillageWidget extends StatelessWidget
 {
   final Stillage stillage;
 
-  ItemStillagePage(this.stillage);
+  ItemStillageWidget(this.stillage);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemStillagePage extends StatelessWidget
         child: ListTile(
           leading: Text("${stillage.getIdStillage}"),
           title: Text('${stillage.getNumber}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание'),
       ),
     );
   }

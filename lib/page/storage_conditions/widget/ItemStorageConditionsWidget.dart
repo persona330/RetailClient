@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/StorageConditions.dart';
 
-import '../../model/StorageConditions.dart';
-
-class ItemStorageConditionsPage extends StatelessWidget
+class ItemStorageConditionsWidget extends StatelessWidget
 {
   final StorageConditions storageConditions;
 
-  ItemStorageConditionsPage(this.storageConditions);
+  ItemStorageConditionsWidget(this.storageConditions);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemStorageConditionsPage extends StatelessWidget
         child: ListTile(
           leading: Text("${storageConditions.getIdStorageConditions}"),
           title: Text('${storageConditions.getName}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание'),
       ),
     );
   }

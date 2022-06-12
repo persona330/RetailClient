@@ -1,51 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
+import '../../controller/PositionController.dart';
+import '../../model/Position.dart';
 
-class PutAddressPage extends StatefulWidget
+class PutPositionPage extends StatefulWidget
 {
   final int id;
-  const PutAddressPage({Key? key, required this.id}) : super(key: key);
+  const PutPositionPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  PutAddressPageState createState() => PutAddressPageState(id);
+  PutPositionPageState createState() => PutPositionPageState(id);
 }
 
-class PutAddressPageState extends StateMVC
+class PutPositionPageState extends StateMVC
 {
-  AddressController? _controller;
+  PositionController? _controller;
   final int _id;
 
-  PutAddressPageState(this._id) : super(AddressController()) {_controller = controller as AddressController;}
+  PutPositionPageState(this._id) : super(PositionController()) {_controller = controller as PositionController;}
 
-  final _apartmentController = TextEditingController();
-  final _entranceController = TextEditingController();
-  final _houseController = TextEditingController();
-  final _streetController = TextEditingController();
-  final _regionController = TextEditingController();
-  final _cityController = TextEditingController();
-  final _nationController = TextEditingController();
-
+  final _nameController = TextEditingController();
 
   @override
   void initState()
   {
     super.initState();
-    _controller?.getAddress(_id);
+    _controller?.getPosition(_id);
   }
 
   @override
   void dispose()
   {
-    _apartmentController.dispose();
-    _entranceController.dispose();
-    _houseController.dispose();
-    _streetController.dispose();
-    _regionController.dispose();
-    _cityController.dispose();
-    _nationController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -53,10 +40,10 @@ class PutAddressPageState extends StateMVC
   Widget build(BuildContext context)
   {
     final state = _controller?.currentState;
-    if (state is AddressResultLoading)
+    if (state is PositionResultLoading)
     {
       return const Center(child: CircularProgressIndicator());
-    } else if (state is AddressResultFailure)
+    } else if (state is PositionResultFailure)
     {
       return Center(
         child: Text(
@@ -66,16 +53,10 @@ class PutAddressPageState extends StateMVC
         ),
       );
     } else {
-      final _address = (state as AddressGetItemResultSuccess).address;
-      _apartmentController.text = _address.getApartment!;
-      _entranceController.text = _address.getEntrance!.toString();
-      _houseController.text = _address.getHouse!;
-      _streetController.text = _address.getStreet!;
-      _regionController.text = _address.getRegion!;
-      _cityController.text = _address.getCity!;
-      _nationController.text = _address.getNation!;
+      final _position = (state as PositionGetItemResultSuccess).position;
+      _nameController.text = _position.getName!;
       return Scaffold(
-        appBar: AppBar(title: const Text('Изменение адреса')),
+        appBar: AppBar(title: const Text('Изменение должности')),
         body: Scrollbar(
           child: Container(
             padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
@@ -83,115 +64,24 @@ class PutAddressPageState extends StateMVC
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер квартиры"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _apartmentController,
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                    decoration: const InputDecoration(labelText: "Название"),
+                    style: const TextStyle(fontSize: 14, color: Colors.blue),
+                    controller: _nameController,
                     textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Номер подъезда"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _entranceController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(labelText: "Номер дома"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _houseController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название улицы"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _streetController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование региона"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _regionController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я0-9]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Название населенного пункта"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _cityController,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r"[a-zA-Zа-яА-Я]")),
-                    ],
-                    decoration: const InputDecoration(
-                        labelText: "Наименование страны"),
-                    style: TextStyle(fontSize: 14, color: Colors.blue),
-                    controller: _nationController,
-                    textInputAction: TextInputAction.done,
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(
                     onPressed: () {
-                      Address _address1 = Address(idAddress: _id,
-                          apartment: _apartmentController.text,
-                          entrance: int.parse(_entranceController.text),
-                          house: _houseController.text,
-                          street: _streetController.text,
-                          region: _regionController.text,
-                          city: _cityController.text,
-                          nation: _nationController.text);
-                      _controller?.putAddress(_address1, _id);
+                      Position _position1 = Position(idPosition: _id, name:_nameController.text);
+                      _controller?.putPosition(_position1, _id);
                       Navigator.pop(context, true);
-                      if (state is AddressAddResultSuccess) {
-                        print("Все ок");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Добавлен")));
-                      }
-                      if (state is AddressResultLoading) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Загрузка")));
-                      }
-                      if (state is AddressResultFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(
-                                "Произошла ошибка при добавлении поста")));
-                      }
+                      final state = _controller?.currentState;
+                      if (state is PositionAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Должность изменена")));}
+                      if (state is PositionResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is PositionResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },
-                    child: const Text('Отправить'),
+                    child: const Text('Изменить'),
                   ),
                 ]
             ),

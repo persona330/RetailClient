@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Supplier.dart';
+import 'package:retail/page/consignment_note/widget/CreateListEmployeeStoreWidget.dart';
 import 'package:retail/page/consignment_note/widget/CreateListSupplierWidget.dart';
-import 'package:retail/page/import/widget/CreateListConsignmentNoteWidget.dart';
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
 import '../../model/EmployeeStore.dart';
@@ -54,7 +54,7 @@ class _CreateConsignmentNotePageState extends StateMVC
         firstDate: DateTime(2022),
         lastDate: DateTime(2050),
     );
-    if (_dateTime != null) setState(() {_arrivalDate = DateFormat("dd-MM-yyyy").format(_dateTime);});
+    if (_dateTime != null) setState(() {_arrivalDate = DateFormat("yyyy-MM-dd").format(_dateTime);});
   }
 
     @override
@@ -127,7 +127,7 @@ class _CreateConsignmentNotePageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: CreateListConsignmentNoteWidget(),
+                  child: CreateListEmployeeStoreWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(

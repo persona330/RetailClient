@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
+import 'package:retail/page/box/PutBoxPage.dart';
 import '../../controller/BoxController.dart';
 import '../../model/Box.dart';
 import 'DeleteBoxPage.dart';
@@ -33,7 +33,7 @@ class GetBoxPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutBoxPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(

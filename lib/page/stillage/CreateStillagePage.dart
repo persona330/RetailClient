@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/area/ListAreaWidget.dart';
+import 'package:retail/page/stillage/widget/CreateListAreaWidget.dart';
 import '../../controller/StillageController.dart';
 import '../../model/Area.dart';
 import '../../model/Stillage.dart';
@@ -81,7 +81,7 @@ class _CreateStillagePageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListAreaWidget(),
+                  child: CreateListAreaWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -91,11 +91,11 @@ class _CreateStillagePageState extends StateMVC
                     _controller?.addStillage(_stillage);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is StillageAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is StillageAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Стеллаж создан")));}
                     if (state is StillageResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is StillageResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

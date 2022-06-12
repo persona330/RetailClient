@@ -20,6 +20,9 @@ class _GetAllVerticalSectionsPageState extends StateMVC
 
   _GetAllVerticalSectionsPageState() : super(VerticalSectionsController()) {_controller = controller as VerticalSectionsController;}
 
+  Widget appBarTitle = const Text("Вертикальная секция");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
   @override
   void initState()
   {
@@ -32,18 +35,31 @@ class _GetAllVerticalSectionsPageState extends StateMVC
   {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Вертикальные секции"),
+        title: appBarTitle,
         leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Вертикальная секция");
+              }
+            });
+          } ,),]
       ),
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(

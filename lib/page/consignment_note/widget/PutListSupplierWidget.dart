@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../../controller/SupplierController.dart';
 import '../../../model/Supplier.dart';
+import '../PutConsignmentNotePage.dart';
 
 class PutListSupplierWidget extends StatefulWidget
 {
@@ -54,7 +55,7 @@ class _PutListSupplierWidgetState extends StateMVC
             setState(() {
               _supplier = item!;
             });
-            //CreateConsignmentNotePage.of(context)?.setSupplier(_supplier);
+            PutConsignmentNotePage.of(context)?.setSupplier(_supplier);
           }
       );
   }

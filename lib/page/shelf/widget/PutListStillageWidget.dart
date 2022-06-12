@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/organization/CreateOrganizationPage.dart';
-import 'package:retail/page/shelf/CreateShelfPage.dart';
-import 'package:retail/page/vertical_sections/CreateVerticalSectionsPage.dart';
+import 'package:retail/page/shelf/PutShelfPage.dart';
+import '../../../controller/StillageController.dart';
+import '../../../model/Stillage.dart';
 
-import '../../controller/StillageController.dart';
-import '../../model/Stillage.dart';
-
-class ListStillageWidget extends StatefulWidget
+class PutListStillageWidget extends StatefulWidget
 {
-  const ListStillageWidget({Key? key}) : super(key: key);
+  const PutListStillageWidget({Key? key}) : super(key: key);
 
   @override
-  _ListStillageWidgetState createState() => _ListStillageWidgetState();
+  _PutListStillageWidgetState createState() => _PutListStillageWidgetState();
 }
 
-class _ListStillageWidgetState extends StateMVC
+class _PutListStillageWidgetState extends StateMVC
 {
   late StillageController _controller;
   late Stillage _stillage;
 
-  _ListStillageWidgetState() : super(StillageController()) {_controller = controller as StillageController;}
+  _PutListStillageWidgetState() : super(StillageController()) {_controller = controller as StillageController;}
 
   @override
   void initState()
@@ -61,8 +55,7 @@ class _ListStillageWidgetState extends StateMVC
             setState(() {
               _stillage = item!;
             });
-            CreateVerticalSectionsPage.of(context)?.setStillage(_stillage);
-            CreateShelfPage.of(context)?.setStillage(_stillage);
+            PutShelfPage.of(context)?.setStillage(_stillage);
           }
       );
   }

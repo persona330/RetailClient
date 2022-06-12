@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../../controller/EmployeeStoreController.dart';
 import '../../../model/EmployeeStore.dart';
+import '../PutConsignmentNotePage.dart';
 
 class PutListEmployeeStoreWidget extends StatefulWidget
 {
@@ -52,7 +53,7 @@ class _PutListEmployeeStoreWidgetState extends StateMVC
           }).toList(),
           onChanged: (EmployeeStore? item) {
             setState(() {_employeeStore = item!;});
-            //CreateConsignmentNotePage.of(context)?.setSupplier(_supplier);
+            PutConsignmentNotePage.of(context)?.setEmployeeStore(_employeeStore);
           }
       );
   }

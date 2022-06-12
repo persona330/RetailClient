@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
+import 'package:retail/page/communication/PutCommunicationPage.dart';
 import '../../controller/CommunicationController.dart';
 import '../../model/Communication.dart';
 import 'DeleteCommunicationPage.dart';
@@ -33,7 +33,7 @@ class GetCommunicationPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutCommunicationPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -42,7 +42,7 @@ class GetCommunicationPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteCommunication(_id);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Средство связи")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Средство связи удалено")));
           Navigator.of(context).pop();
         }
         break;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/measurement/ListMeasurementWidget.dart';
+import 'package:retail/page/storage_conditions/widget/CreateListMeasurementHumidityWidget.dart';
+import 'package:retail/page/storage_conditions/widget/CreateListMeasurementIlluminationWidget.dart';
+import 'package:retail/page/storage_conditions/widget/CreateListMeasurementTemperatureWidget.dart';
 import '../../controller/StorageConditionsController.dart';
 import '../../model/Measurement.dart';
 import '../../model/StorageConditions.dart';
@@ -47,7 +49,6 @@ class _CreateStorageConditionsPageState extends StateMVC
   Measurement getMeasurementIllumination(){return _measurementIllumination;}
   void setMeasurementIllumination(Measurement measurement){_measurementIllumination = measurement;}
 
-
     @override
   void initState()
   {
@@ -67,8 +68,6 @@ class _CreateStorageConditionsPageState extends StateMVC
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       appBar: AppBar(title: const Text('Создание условий хранения')),
       body:  Scrollbar(
@@ -95,7 +94,7 @@ class _CreateStorageConditionsPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListMeasurementWidget(),
+                  child: CreateListMeasurementTemperatureWidget(),
                 ),
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
@@ -107,7 +106,7 @@ class _CreateStorageConditionsPageState extends StateMVC
                 ),
                 const Flexible(
                     flex: 2,
-                    child: ListMeasurementWidget()
+                    child: CreateListMeasurementHumidityWidget()
                 ),
                 TextFormField(
                   keyboardType: TextInputType.name,
@@ -119,7 +118,7 @@ class _CreateStorageConditionsPageState extends StateMVC
                 ),
                 const Flexible(
                     flex: 3,
-                    child: ListMeasurementWidget()
+                    child: CreateListMeasurementIlluminationWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -129,11 +128,11 @@ class _CreateStorageConditionsPageState extends StateMVC
                     _controller?.addStorageConditions(_storageConditions);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is StorageConditionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is StorageConditionsAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Условия хранения созданы")));}
                     if (state is StorageConditionsResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is StorageConditionsResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

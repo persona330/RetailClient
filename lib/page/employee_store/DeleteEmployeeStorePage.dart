@@ -5,7 +5,7 @@ class DeleteEmployeeStorePage extends StatelessWidget
 {
   int id = 0;
 
-  DeleteEmployeeStorePage(this.id);
+  DeleteEmployeeStorePage(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context)

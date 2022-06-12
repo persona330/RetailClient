@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
 import '../../controller/StoreController.dart';
-import '../../model/Address.dart';
 import '../../model/Store.dart';
 import 'DeleteStorePage.dart';
+import 'PutStorePage.dart';
 
 class GetStorePage extends StatefulWidget
 {
   final int id;
   const GetStorePage({Key? key, required this.id}) : super(key: key);
-
 
   @override
   GetStorePageState createState() => GetStorePageState(id);
@@ -35,7 +33,7 @@ class GetStorePageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutStorePage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -44,7 +42,7 @@ class GetStorePageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteStore(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удален")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Склад удален")));
           Navigator.of(context).pop();
         }
         break;
@@ -69,11 +67,9 @@ class GetStorePageState extends StateMVC
       );
     } else {
       final _store = (state as StoreGetItemResultSuccess).store;
-      Address? address = _store.getAddress;
-      print(address.toString());
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о складе №${_id}"),
+            title: Text("Информация о складе №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -100,7 +96,7 @@ class GetStorePageState extends StateMVC
                       "Вместимость: ${_store.getTotalCapacity} \n"
                       "Организация: ${_store.getOrganization} \n"
                       "Адрес: ${_store.address.toString()}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
 
                 ],
               ),

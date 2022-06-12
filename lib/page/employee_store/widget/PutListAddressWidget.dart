@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
+import 'package:retail/page/employee_store/PutEmployeeStorePage.dart';
 
 class PutListAddressWidget extends StatefulWidget
 {
@@ -55,7 +56,7 @@ class _PutListAddressWidgetState extends StateMVC
             setState(() {
               _address = item!;
             });
-            //CreateStorePage.of(context)?.setAddress(_address);
+            PutEmployeeStorePage.of(context)?.setAddress(_address);
           }
       );
   }

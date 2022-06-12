@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/employee_store/PutEmployeeStorePage.dart';
 import '../../../controller/CommunicationController.dart';
 import '../../../model/Communication.dart';
 
@@ -54,7 +55,7 @@ class _PutListCommunicationWidgetState extends StateMVC
             setState(() {
               _communication = item!;
             });
-            //PutOrganizationPage.of(context)?.setCommunication(_communication);
+            PutEmployeeStorePage.of(context)?.setCommunication(_communication);
           }
       );
   }

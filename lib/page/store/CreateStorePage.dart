@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/model/Organization.dart';
+import 'package:retail/page/store/widget/CreateListAddressWidget.dart';
+import 'package:retail/page/store/widget/CreateListOrganizationWidget.dart';
 import '../../controller/StoreController.dart';
 import '../../model/Store.dart';
-import '../address/ListAddressWidget.dart';
-import '../organization/ListOrganizationWidget.dart';
 
 class CreateStorePage extends StatefulWidget
 {
@@ -61,8 +61,6 @@ class _CreateStorePageState extends StateMVC
   @override
   Widget build(BuildContext context)
   {
-    // Scaffold - заполняет все свободное пространство
-    // Нужен для отображения основных виджетов
     return Scaffold(
       appBar: AppBar(title: const Text('Создание адреса')),
       body:  Scrollbar(
@@ -89,11 +87,11 @@ class _CreateStorePageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListAddressWidget(),
+                  child: CreateListAddressWidget(),
                 ),
                 const Flexible(
                     flex: 2,
-                    child: ListOrganizationWidget()
+                    child: CreateListOrganizationWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -103,11 +101,11 @@ class _CreateStorePageState extends StateMVC
                     _controller?.addStore(_store);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is StoreAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is StoreAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Склад создан")));}
                     if (state is StoreResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is StoreResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

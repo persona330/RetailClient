@@ -3,6 +3,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/import/CreateImportPage.dart';
 import '../../../controller/NomenclatureController.dart';
 import '../../../model/Nomenclature.dart';
+import '../PutImportPage.dart';
 
 class PutListNomenclatureWidget extends StatefulWidget
 {
@@ -53,7 +54,7 @@ class _PutListNomenclatureWidgetState extends StateMVC
           }).toList(),
           onChanged: (Nomenclature? item) {
             setState(() {_nomenclature = item!;});
-            //CreateImportPage.of(context)?.setNomenclature(_nomenclature);
+            PutImportPage.of(context)?.setNomenclature(_nomenclature);
           }
       );
   }

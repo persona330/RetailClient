@@ -36,8 +36,8 @@ class _CreateOrganizationPageState extends StateMVC
   final _innController = TextEditingController();
   final _kppController = TextEditingController();
 
-  late Communication communication = Communication(idCommunication: 1, phone: "89128377496", email: "email@gmail.com");
-  late Address address = Address(idAddress: 1, apartment: "5", entrance: 1, house: "107a", street: "Карла Маркса", region: "Курганский", city: "Курган", nation: "Россия");
+  late Communication communication;
+  late Address address;
 
   @override
   void initState()
@@ -117,11 +117,11 @@ class _CreateOrganizationPageState extends StateMVC
                       _controller?.addOrganization(organization);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Организация создана")));}
                     if (state is OrganizationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении организации")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

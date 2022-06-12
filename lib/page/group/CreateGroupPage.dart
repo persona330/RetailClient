@@ -81,11 +81,11 @@ class _CreateGroupPageState extends StateMVC
                     _controller?.addGroup(_group);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is GroupAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Группа добавлена")));}
+                    if (state is GroupAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Группа создана")));}
                     if (state is GroupResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is GroupResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Создание'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

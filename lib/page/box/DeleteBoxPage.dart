@@ -5,7 +5,7 @@ class DeleteBoxPage extends StatelessWidget
 {
   int id = 0;
 
-  DeleteBoxPage(this.id);
+  DeleteBoxPage(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context)

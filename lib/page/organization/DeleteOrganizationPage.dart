@@ -1,28 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
 
 class DeleteOrganizationPage extends StatelessWidget
 {
   int id = 0;
 
-  DeleteOrganizationPage(this.id);
+  DeleteOrganizationPage(this.id, {Key? key}) : super(key: key);
 
   Widget build(BuildContext context)
   {
     return CupertinoAlertDialog(
-      title: Text("Удалить?"),
-      content: Text("Данная организация будет удалена безвозвратно"),
+      title: const Text("Удалить?"),
+      content: const Text("Данная организация будет удалена безвозвратно"),
       actions: [
         CupertinoDialogAction(
-            child: Text("Да"),
+            child: const Text("Да"),
             onPressed: ()
             {
               Navigator.of(context).pop(true);
             }
         ),
         CupertinoDialogAction(
-            child: Text("Нет"),
+            child: const Text("Нет"),
             onPressed: (){
               Navigator.of(context).pop(false);
             }

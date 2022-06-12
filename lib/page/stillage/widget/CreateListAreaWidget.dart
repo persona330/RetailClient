@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/stillage/CreateStillagePage.dart';
-import '../../controller/AreaController.dart';
-import '../../model/Area.dart';
 
-class ListAreaWidget extends StatefulWidget
+import '../../../controller/AreaController.dart';
+import '../../../model/Area.dart';
+
+class CreateListAreaWidget extends StatefulWidget
 {
-  const ListAreaWidget({Key? key}) : super(key: key);
+  const CreateListAreaWidget({Key? key}) : super(key: key);
 
   @override
-  _ListAreaWidgetState createState() => _ListAreaWidgetState();
+  _CreateListAreaWidgetState createState() => _CreateListAreaWidgetState();
 }
 
-class _ListAreaWidgetState extends StateMVC
+class _CreateListAreaWidgetState extends StateMVC
 {
   late AreaController _controller;
   late Area _area;
 
-  _ListAreaWidgetState() : super(AreaController()) {_controller = controller as AreaController;}
+  _CreateListAreaWidgetState() : super(AreaController()) {_controller = controller as AreaController;}
 
   @override
   void initState()

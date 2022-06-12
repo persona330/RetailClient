@@ -21,7 +21,7 @@ class _GetAllImportPageState extends StateMVC
 
   _GetAllImportPageState() : super(ImportController()) {_controller = controller as ImportController;}
 
-  Widget appBarTitle = const Text("Привозы");
+  Widget appBarTitle = const Text("Привоз");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -58,7 +58,7 @@ class _GetAllImportPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Привозы");
+                appBarTitle = const Text("Привоз");
               }
             });
           } ,),]

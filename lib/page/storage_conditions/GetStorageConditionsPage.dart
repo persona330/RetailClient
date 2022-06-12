@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/StorageConditionsController.dart';
 import '../../model/StorageConditions.dart';
 import 'DeleteStorageConditionsPage.dart';
+import 'PutStorageConditionsPage.dart';
 
 class GetStorageConditionsPage extends StatefulWidget
 {
@@ -38,7 +33,7 @@ class GetStorageConditionsPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutStorageConditionsPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -47,7 +42,7 @@ class GetStorageConditionsPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteStorageConditions(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удалены")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:  Text("Условия храненния удалены")));
           Navigator.of(context).pop();
         }
         break;
@@ -74,7 +69,7 @@ class GetStorageConditionsPageState extends StateMVC
       final _storageConditions = (state as StorageConditionsGetItemResultSuccess).storageConditions;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация об условиях хранения №${_id}"),
+            title: Text("Информация об условиях хранения №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -98,10 +93,10 @@ class GetStorageConditionsPageState extends StateMVC
               child: Column (
                 children: [
                   Text("Название: ${_storageConditions.getName} \n"
-                      "Температура: ${_storageConditions.getTemperature} ${_storageConditions.getMeasurementTemperature} \n"
-                      "Влажность: ${_storageConditions.getHumidity} ${_storageConditions.getMeasurementHumidity}\n"
-                      "Усвещенность: ${_storageConditions.getIllumination} ${_storageConditions.getMeasurementIllumination} "
-                      , style: TextStyle(fontSize: 22)),
+                      "Температура: ${_storageConditions.getTemperature} ${_storageConditions.getMeasurementTemperature.toString()} \n"
+                      "Влажность: ${_storageConditions.getHumidity} ${_storageConditions.getMeasurementHumidity.toString()}\n"
+                      "Усвещенность: ${_storageConditions.getIllumination} ${_storageConditions.getMeasurementIllumination.toString()} "
+                      , style: const TextStyle(fontSize: 22)),
 
                 ],
               ),

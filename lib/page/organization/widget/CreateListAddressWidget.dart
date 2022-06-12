@@ -3,7 +3,6 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/page/organization/CreateOrganizationPage.dart';
-import 'package:retail/page/store/CreateStorePage.dart';
 
 class CreateListAddressWidget extends StatefulWidget
 {
@@ -58,7 +57,6 @@ class _CreateListAddressWidgetState extends StateMVC
               _address = item!;
             });
             CreateOrganizationPage.of(context)?.setAddress(_address);
-            CreateStorePage.of(context)?.setAddress(_address);
           }
       );
   }

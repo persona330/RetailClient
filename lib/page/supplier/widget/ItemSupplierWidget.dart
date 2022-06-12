@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:retail/model/Address.dart';
+import '../../../model/Supplier.dart';
 
-import '../../model/Supplier.dart';
-
-class ItemSupplierPage extends StatelessWidget
+class ItemSupplierWidget extends StatelessWidget
 {
   final Supplier supplier;
 
-  ItemSupplierPage(this.supplier);
+  ItemSupplierWidget(this.supplier);
 
+  @override
   Widget build(BuildContext context)
   {
     return Card(
@@ -19,9 +18,7 @@ class ItemSupplierPage extends StatelessWidget
         child: ListTile(
           leading: Text("${supplier.getIdSupplier}"),
           title: Text('${supplier.getName}'),
-          subtitle: Text(
-          'Тело: \n'
-          ),
+          subtitle: const Text('Описание'),
       ),
     );
   }

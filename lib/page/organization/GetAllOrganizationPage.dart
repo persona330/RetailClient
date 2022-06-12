@@ -6,7 +6,6 @@ import '../../model/Organization.dart';
 import 'GetOrganizationPage.dart';
 import 'widget/ItemOrganizationWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllOrganizationPage extends StatefulWidget
 {
   const GetAllOrganizationPage({Key? key}) : super(key: key);
@@ -15,12 +14,14 @@ class GetAllOrganizationPage extends StatefulWidget
   _GetAllOrganizationPageState createState() => _GetAllOrganizationPageState();
 }
 
-// Домашняя страница
 class _GetAllOrganizationPageState extends StateMVC
 {
   late OrganizationController _controller;
 
   _GetAllOrganizationPageState() : super(OrganizationController()) {_controller = controller as OrganizationController;}
+
+  Widget appBarTitle = const Text("Организация");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -33,18 +34,32 @@ class _GetAllOrganizationPageState extends StateMVC
   Widget build(BuildContext context)
   {
     return Scaffold(
-      // AppBar - верхняя панель
       appBar: AppBar(
-        title: const Text("Организация"),
+        title: appBarTitle,
         leading:  IconButton(icon: const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.settings),
-                onPressed: () => { print("Click on settings button") }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Организация");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),

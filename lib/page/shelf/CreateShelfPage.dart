@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Group.dart';
 import 'package:retail/model/Stillage.dart';
-import 'package:retail/page/stillage/ListStillageWidget.dart';
+import 'package:retail/page/shelf/widget/CreateListGroupWidget.dart';
+import 'package:retail/page/shelf/widget/CreateListStillageWidget.dart';
 import '../../controller/ShelfController.dart';
 import '../../model/Shelf.dart';
 
@@ -84,13 +85,13 @@ class _CreateShelfPageState extends StateMVC
                   controller: _sizeController,
                   textInputAction: TextInputAction.next,
                 ),
-                /*const Flexible(
+                const Flexible(
                   flex: 1,
-                  child: ListGroupWidget(),
-                ),*/
+                  child: CreateListGroupWidget(),
+                ),
                 const Flexible(
                     flex: 2,
-                    child: ListStillageWidget()
+                    child: CreateListStillageWidget()
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -100,11 +101,11 @@ class _CreateShelfPageState extends StateMVC
                     _controller?.addShelf(_shelf);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is ShelfAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is ShelfAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Полка создана")));}
                     if (state is ShelfResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is ShelfResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

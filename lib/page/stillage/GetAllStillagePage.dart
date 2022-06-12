@@ -4,9 +4,8 @@ import '../../controller/StillageController.dart';
 import '../../model/Stillage.dart';
 import 'CreateStillagePage.dart';
 import 'GetStillagePage.dart';
-import 'ItemStillagePage.dart';
+import 'widget/ItemStillageWidget.dart';
 
-// StatefulWidget - для изменяемых виджетов
 class GetAllStillagePage extends StatefulWidget
 {
   const GetAllStillagePage({Key? key}) : super(key: key);
@@ -15,12 +14,14 @@ class GetAllStillagePage extends StatefulWidget
   _GetAllStillagePageState createState() => _GetAllStillagePageState();
 }
 
-// Домашняя страница
 class _GetAllStillagePageState extends StateMVC
 {
   late StillageController _controller;
 
   _GetAllStillagePageState() : super(StillageController()) {_controller = controller as StillageController;}
+
+  Widget appBarTitle = const Text("Стеллаж");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -35,29 +36,40 @@ class _GetAllStillagePageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Стеллажи"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Стеллаж");
+              }
+            });
+          } ,),]
       ),
-      // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateStillagePage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateStillagePage())); },
         tooltip: 'Добавить стеллаж',
         child: const Icon(Icons.add),
       ),
     );
   }
-
   Widget _buildContent()
   {
     final state = _controller.currentState;
@@ -82,20 +94,16 @@ class _GetAllStillagePageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
-                // ListView.builder создает элемент списка
-                // только когда он видим на экране
+                padding: const EdgeInsets.all(10),
                 child: ListView.builder(
                   itemCount: _stillageList.length,
                   itemBuilder: (context, index) {
-                    // мы вынесли элемент списка в
-                    // отдельный виджет
                     return GestureDetector(
                       onTap: ()
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetStillagePage(id: _stillageList[index].getIdStillage!)));
                       },
-                      child: ItemStillagePage(_stillageList[index]),
+                      child: ItemStillageWidget(_stillageList[index]),
                     );
                   },
                 ),

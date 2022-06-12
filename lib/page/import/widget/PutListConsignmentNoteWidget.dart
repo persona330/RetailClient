@@ -4,6 +4,7 @@ import 'package:retail/page/import/CreateImportPage.dart';
 
 import '../../../controller/ConsignmentNoteController.dart';
 import '../../../model/ConsignmentNote.dart';
+import '../PutImportPage.dart';
 
 class PutListConsignmentNoteWidget extends StatefulWidget
 {
@@ -56,7 +57,7 @@ class _PutListConsignmentNoteWidgetState extends StateMVC
             setState(() {
               _consignmentNote = item!;
             });
-            //CreateImportPage.of(context)?.setConsignmentNote(_consignmentNote);
+            PutImportPage.of(context)?.setConsignmentNote(_consignmentNote);
           }
       );
   }

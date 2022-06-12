@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/controller/AddressController.dart';
-import 'package:retail/model/Address.dart';
-import 'package:retail/page/test/CreatePostPage.dart';
-import 'package:retail/page/SearchAddressPage.dart';
-import 'package:retail/page/address/PutAddressPage.dart';
-
 import '../../controller/SupplierController.dart';
 import '../../model/Supplier.dart';
 import 'DeleteSupplierPage.dart';
+import 'PutSupplierPage.dart';
 
 class GetSupplierPage extends StatefulWidget
 {
@@ -38,7 +33,7 @@ class GetSupplierPageState extends StateMVC
     switch (value)
     {
       case 'Изменить':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PutAddressPage(id: _id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PutSupplierPage(id: _id)));
         break;
       case 'Удалить':
         bool value = await Navigator.push(context, PageRouteBuilder(
@@ -47,7 +42,7 @@ class GetSupplierPageState extends StateMVC
         if (value == true)
         {
           _controller?.deleteSupplier(_id);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Удален")));
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Поставщик удален")));
           Navigator.of(context).pop();
         }
         break;
@@ -74,7 +69,7 @@ class GetSupplierPageState extends StateMVC
       final _supplier = (state as SupplierGetItemResultSuccess).supplier;
       return Scaffold(
           appBar: AppBar(
-            title: Text("Информация о поставщике №${_id}"),
+            title: Text("Информация о поставщике №$_id"),
             actions: <Widget>[
               PopupMenuButton<String>(
                 onSelected: _handleClick, // функция при нажатии
@@ -100,7 +95,7 @@ class GetSupplierPageState extends StateMVC
                   Text("Имя: ${_supplier.getName} \n"
                       "Должность: ${_supplier.getPosition.toString()} \n"
                       "Организация: ${_supplier.getOrganization.toString()}"
-                      , style: TextStyle(fontSize: 22)),
+                      , style: const TextStyle(fontSize: 22)),
                 ],
               ),
             ),

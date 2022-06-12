@@ -4,8 +4,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/ShelfController.dart';
 import '../../model/Shelf.dart';
 import 'CreateShelfPage.dart';
-import 'ItemShelfPage.dart';
-
+import 'widget/ItemShelfWidget.dart';
 
 class GetAllShelfPage extends StatefulWidget
 {
@@ -15,12 +14,14 @@ class GetAllShelfPage extends StatefulWidget
   _GetAllShelfPageState createState() => _GetAllShelfPageState();
 }
 
-// Домашняя страница
 class _GetAllShelfPageState extends StateMVC
 {
   late ShelfController _controller;
 
   _GetAllShelfPageState() : super(ShelfController()) {_controller = controller as ShelfController;}
+
+  Widget appBarTitle = const Text("Полка");
+  Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
@@ -35,23 +36,36 @@ class _GetAllShelfPageState extends StateMVC
     return Scaffold(
       // AppBar - верхняя панель
       appBar: AppBar(
-        title: Text("Полки"),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        title: appBarTitle,
+        leading: IconButton(icon:const Icon(Icons.arrow_back),
           onPressed:() => Navigator.pop(context, false),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.settings),
-                onPressed: () => {
-                  print("Click on settings button")
-                }
-                ),
-        ],
+          IconButton(icon: actionIcon,onPressed:()
+          {
+            setState(() {
+              if ( actionIcon.icon == Icons.search)
+              {
+                actionIcon = const Icon(Icons.close);
+                appBarTitle = const TextField(
+                  style: TextStyle(color: Colors.white,),
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search, color: Colors.white),
+                      hintText: "Поиск...",
+                      hintStyle: TextStyle(color: Colors.white)
+                  ),
+                );}
+              else {
+                actionIcon = const Icon(Icons.search);
+                appBarTitle = const Text("Полка");
+              }
+            });
+          } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateShelfPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateShelfPage())); },
         tooltip: 'Добавить полку',
         child: const Icon(Icons.add),
       ),
@@ -82,7 +96,7 @@ class _GetAllShelfPageState extends StateMVC
             child:
             Center(
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
@@ -95,7 +109,7 @@ class _GetAllShelfPageState extends StateMVC
                       {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: _shelfList[index].getIdShelf!)));
                       },
-                      child: ItemShelfPage(_shelfList[index]),
+                      child: ItemShelfWidget(_shelfList[index]),
                     );
                   },
                 ),

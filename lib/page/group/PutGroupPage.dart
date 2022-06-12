@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/group/widget/PutListGroupWidget.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
 
@@ -84,13 +85,17 @@ class PutGroupPageState extends StateMVC
                     controller: _nameController,
                     textInputAction: TextInputAction.next,
                   ),
-
+                  const Flexible(
+                    flex: 1,
+                    child: PutListGroupWidget(),
+                  ),
                   const SizedBox(height: 20),
                   OutlinedButton(
                     onPressed: () {
-                      //_controller?.putAddress(_address1, _id);
+                      Group _group1 = Group(idGroup: _id, name: _nameController.text, type: getType());
+                      _controller?.putGroup(_group1, _id);
                       Navigator.pop(context, true);
-                      if (state is GroupAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Группа изменена")));}
+                      if (state is GroupPutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Группа изменена")));}
                       if (state is GroupResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is GroupResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },

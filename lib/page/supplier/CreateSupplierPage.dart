@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/organization/ListOrganizationWidget.dart';
-import 'package:retail/page/position/ListPositionWidget.dart';
+import 'package:retail/page/supplier/widget/CreateListOrganizationWidget.dart';
+import 'package:retail/page/supplier/widget/CreateListPositionWidget.dart';
 import '../../controller/SupplierController.dart';
 import '../../model/Organization.dart';
 import '../../model/Position.dart';
@@ -78,11 +78,11 @@ class _CreateSupplierPageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: ListPositionWidget(),
+                  child: CreateListPositionWidget(),
                 ),
                 const Flexible(
                   flex: 2,
-                  child: ListOrganizationWidget(),
+                  child: CreateListOrganizationWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
@@ -92,11 +92,11 @@ class _CreateSupplierPageState extends StateMVC
                     _controller?.addSupplier(_supplier);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
-                    if (state is SupplierAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлен")));}
+                    if (state is SupplierAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Поставщик создан")));}
                     if (state is SupplierResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                     if (state is SupplierResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                   },
-                  child: const Text('Отправить'),
+                  child: const Text('Создать'),
                 ),
               ],
             ),

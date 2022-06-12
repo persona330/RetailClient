@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/consignment_note/widget/PutListEmployeeStoreWidget.dart';
 import 'package:retail/page/consignment_note/widget/PutListSupplierWidget.dart';
 import '../../controller/ConsignmentNoteController.dart';
 import '../../model/ConsignmentNote.dart';
 import '../../model/EmployeeStore.dart';
 import '../../model/Supplier.dart';
-import '../import/widget/PutListConsignmentNoteWidget.dart';
 
 class PutConsignmentNotePage extends StatefulWidget
 {
@@ -16,6 +16,16 @@ class PutConsignmentNotePage extends StatefulWidget
 
   @override
   PutConsignmentNotePageState createState() => PutConsignmentNotePageState(id);
+
+  static PutConsignmentNotePageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final PutConsignmentNotePageState? result =
+    context.findAncestorStateOfType<PutConsignmentNotePageState>();
+    return result;
+  }
 }
 
 class PutConsignmentNotePageState extends StateMVC
@@ -46,7 +56,7 @@ class PutConsignmentNotePageState extends StateMVC
       firstDate: DateTime(2022),
       lastDate: DateTime(2050),
     );
-    if (_dateTime != null) setState(() {_arrivalDate = DateFormat("dd-MM-yyyy").format(_dateTime);});
+    if (_dateTime != null) setState(() {_arrivalDate = DateFormat("yyyy-MM-dd").format(_dateTime);});
   }
 
   @override
@@ -136,7 +146,7 @@ class PutConsignmentNotePageState extends StateMVC
                   ),
                   const Flexible(
                     flex: 1,
-                    child: PutListConsignmentNoteWidget(),
+                    child: PutListEmployeeStoreWidget(),
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(
@@ -145,7 +155,7 @@ class PutConsignmentNotePageState extends StateMVC
                       _controller?.putConsignmentNote(_consignmentNote, _id);
                       Navigator.pop(context, true);
                       final state = _controller?.currentState;
-                      if (state is ConsignmentNoteAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Накладная изменена")));}
+                      if (state is ConsignmentNotePutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Накладная изменена")));}
                       if (state is ConsignmentNoteResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
                       if (state is ConsignmentNoteResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении поста")));}
                     },

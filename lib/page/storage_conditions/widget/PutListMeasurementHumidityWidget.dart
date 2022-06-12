@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/storage_conditions/CreateStorageConditionsPage.dart';
+import '../../../controller/MeasurementController.dart';
+import '../../../model/Measurement.dart';
+import '../PutStorageConditionsPage.dart';
 
-import '../../controller/MeasurementController.dart';
-import '../../model/Measurement.dart';
-
-class ListMeasurementWidget extends StatefulWidget
+class PutListMeasurementHumidityWidget extends StatefulWidget
 {
-  const ListMeasurementWidget({Key? key}) : super(key: key);
+  const PutListMeasurementHumidityWidget({Key? key}) : super(key: key);
 
   @override
-  _ListMeasurementWidgetState createState() => _ListMeasurementWidgetState();
+  _PutListMeasurementHumidityWidgetState createState() => _PutListMeasurementHumidityWidgetState();
 }
 
-class _ListMeasurementWidgetState extends StateMVC
+class _PutListMeasurementHumidityWidgetState extends StateMVC
 {
   late MeasurementController _controller;
   late Measurement _measurement;
 
-  _ListMeasurementWidgetState() : super(MeasurementController()) {_controller = controller as MeasurementController;}
+  _PutListMeasurementHumidityWidgetState() : super(MeasurementController()) {_controller = controller as MeasurementController;}
 
   @override
   void initState()
@@ -56,9 +55,7 @@ class _ListMeasurementWidgetState extends StateMVC
             setState(() {
               _measurement = item!;
             });
-            CreateStorageConditionsPage.of(context)?.setMeasurementTemperature(_measurement);
-            CreateStorageConditionsPage.of(context)?.setMeasurementHumidity(_measurement);
-            CreateStorageConditionsPage.of(context)?.setMeasurementIllumination(_measurement);
+            PutStorageConditionsPage.of(context)?.setMeasurementHumidity(_measurement);
           }
       );
   }

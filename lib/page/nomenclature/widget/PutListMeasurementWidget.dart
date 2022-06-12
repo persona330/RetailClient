@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/storage_conditions/CreateStorageConditionsPage.dart';
-
+import 'package:retail/page/nomenclature/PutNomenclaturePage.dart';
 import '../../../controller/MeasurementController.dart';
 import '../../../model/Measurement.dart';
 
@@ -56,9 +55,7 @@ class _PutListMeasurementWidgetState extends StateMVC
             setState(() {
               _measurement = item!;
             });
-            CreateStorageConditionsPage.of(context)?.setMeasurementTemperature(_measurement);
-            CreateStorageConditionsPage.of(context)?.setMeasurementHumidity(_measurement);
-            CreateStorageConditionsPage.of(context)?.setMeasurementIllumination(_measurement);
+            PutNomenclaturePage.of(context)?.setMeasurement(_measurement);
           }
       );
   }
