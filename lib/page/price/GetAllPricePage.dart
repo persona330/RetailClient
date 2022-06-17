@@ -1,41 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:retail/controller/AddressController.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import '../../controller/AreaController.dart';
-import '../../model/Area.dart';
-import 'CreateAreaPage.dart';
-import 'GetAreaPage.dart';
-import 'widget/ItemAreaWidget.dart';
+import 'package:retail/page/price/widget/ItemPriceWidget.dart';
+import '../../controller/PriceController.dart';
+import '../../model/Price.dart';
+import 'CreatePricePage.dart';
+import 'GetPricePage.dart';
 
-class GetAllAreaPage extends StatefulWidget
+
+class GetAllPricePage extends StatefulWidget
 {
-  const GetAllAreaPage({Key? key}) : super(key: key);
+  const GetAllPricePage({Key? key}) : super(key: key);
 
   @override
-  _GetAllAreaPageState createState() => _GetAllAreaPageState();
+  _GetAllPricePageState createState() => _GetAllPricePageState();
 }
 
-class _GetAllAreaPageState extends StateMVC
+class _GetAllPricePageState extends StateMVC
 {
-  late AreaController _controller;
+  late PriceController _controller;
 
-  _GetAllAreaPageState() : super(AreaController()) {_controller = controller as AreaController;}
+  _GetAllPricePageState() : super(PriceController()) {_controller = controller as PriceController;}
 
-  Widget appBarTitle = const Text("Зона");
+  Widget appBarTitle = const Text("Цена");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
   {
     super.initState();
-    _controller.getAreaList();
+    _controller.getPriceList();
   }
 
   @override
   Widget build(BuildContext context)
   {
     return Scaffold(
-      // AppBar - верхняя панель
       appBar: AppBar(
         title: appBarTitle,
         leading: IconButton(icon:const Icon(Icons.arrow_back),
@@ -58,7 +57,7 @@ class _GetAllAreaPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Зона");
+                appBarTitle = const Text("Цена");
               }
             });
           } ,),]
@@ -66,8 +65,8 @@ class _GetAllAreaPageState extends StateMVC
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAreaPage())); },
-        tooltip: 'Добавить зону',
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatePricePage())); },
+        tooltip: 'Добавить цену',
         child: const Icon(Icons.add),
       ),
     );
@@ -76,10 +75,10 @@ class _GetAllAreaPageState extends StateMVC
   Widget _buildContent()
   {
     final state = _controller.currentState;
-    if (state is AreaResultLoading)
+    if (state is PriceResultLoading)
     {
       return const Center(child: CircularProgressIndicator());
-    } else if (state is AreaResultFailure)
+    } else if (state is PriceResultFailure)
     {
       return Center(
         child: Text(
@@ -90,7 +89,7 @@ class _GetAllAreaPageState extends StateMVC
       );
     } else {
       // отображаем список постов
-      final areaList = (state as AreaGetListResultSuccess).areaList;
+      final _priceList = (state as PriceGetListResultSuccess).priceList;
       return Column(
         children: [
           Expanded(
@@ -101,16 +100,16 @@ class _GetAllAreaPageState extends StateMVC
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
-                  itemCount: areaList.length,
+                  itemCount: _priceList.length,
                   itemBuilder: (context, index) {
                     // мы вынесли элемент списка в
                     // отдельный виджет
                     return GestureDetector(
                       onTap: ()
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetAreaPage(id: areaList[index].getIdArea!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetPricePage(id: _priceList[index].getIdPrice!)));
                       },
-                      child: ItemAreaWidget(areaList[index]),
+                      child: ItemPriceWidget(_priceList[index]),
                     );
                   },
                 ),
