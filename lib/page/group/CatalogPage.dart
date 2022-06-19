@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
 import 'CreateGroupPage.dart';
-import 'GetGroupPage.dart';
 import 'widget/ItemGroupWidget.dart';
 
-class GetAllGroupPage extends StatefulWidget
+class CatalogPage extends StatefulWidget
 {
-  const GetAllGroupPage({Key? key}) : super(key: key);
+  final Group group;
+  const CatalogPage({Key? key, required this.group}) : super(key: key);
 
   @override
-  _GetAllGroupPageState createState() => _GetAllGroupPageState();
+  _CatalogPageState createState() => _CatalogPageState(group);
 }
 
 // Домашняя страница
-class _GetAllGroupPageState extends StateMVC
+class _CatalogPageState extends StateMVC
 {
   late GroupController _controller;
+  late Group _group;
 
-  _GetAllGroupPageState() : super(GroupController()) {_controller = controller as GroupController;}
+  _CatalogPageState(this._group) : super(GroupController()) {_controller = controller as GroupController;}
 
   Widget appBarTitle = const Text("Группы");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
+  Group getGroup(){return _group;}
+  void setGroup(Group group){_group = group;}
 
   @override
   void initState()
   {
     super.initState();
+    appBarTitle = Text("${_group.getName}");
     _controller.getGroupList();
   }
 
@@ -37,31 +41,31 @@ class _GetAllGroupPageState extends StateMVC
   {
     return Scaffold(
       appBar: AppBar(
-        title: appBarTitle,
-        leading: IconButton(icon:const Icon(Icons.arrow_back),
-          onPressed:() => Navigator.pop(context, false),
-        ),
-        actions: <Widget>[
-          IconButton(icon: actionIcon,onPressed:()
-          {
-            setState(() {
-              if ( actionIcon.icon == Icons.search)
-              {
-                actionIcon = const Icon(Icons.close);
-                appBarTitle = const TextField(
-                  style: TextStyle(color: Colors.white,),
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search, color: Colors.white),
-                      hintText: "Поиск...",
-                      hintStyle: TextStyle(color: Colors.white)
-                  ),
-                );}
-              else {
-                actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Группа");
-              }
-            });
-          } ,),]
+          title: appBarTitle,
+          leading: IconButton(icon:const Icon(Icons.arrow_back),
+            onPressed:() => Navigator.pop(context, false),
+          ),
+          actions: <Widget>[
+            IconButton(icon: actionIcon,onPressed:()
+            {
+              setState(() {
+                if ( actionIcon.icon == Icons.search)
+                {
+                  actionIcon = const Icon(Icons.close);
+                  appBarTitle = const TextField(
+                    style: TextStyle(color: Colors.white,),
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search, color: Colors.white),
+                        hintText: "Поиск...",
+                        hintStyle: TextStyle(color: Colors.white)
+                    ),
+                  );}
+                else {
+                  actionIcon = const Icon(Icons.search);
+                  appBarTitle = const Text("Группа");
+                }
+              });
+            } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
@@ -104,16 +108,13 @@ class _GetAllGroupPageState extends StateMVC
                 child: ListView.builder(
                   itemCount: groupList.length,
                   itemBuilder: (context, index) {
-                    // мы вынесли элемент списка в
-                    // отдельный виджет
-
-                    if (index != 0) {
+                    if (_group.getIdGroup == groupList[index].getType?.getIdGroup)
+                    {
                       return GestureDetector(
                         onTap: () {
+                          setGroup(groupList[index]);
                           Navigator.push(context, MaterialPageRoute(
-                              builder: (context) =>
-                                  GetGroupPage(
-                                      id: groupList[index].getIdGroup!)));
+                              builder: (context) => CatalogPage(group: groupList[index])));
                         },
                         child: ItemGroupWidget(groupList[index]),
                       );
@@ -126,7 +127,7 @@ class _GetAllGroupPageState extends StateMVC
           ),
         ],
       );
-  }
+    }
   }
 }
 

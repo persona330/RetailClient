@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:retail/page/address/GetAllAddreessPage.dart';
 import 'package:retail/page/communication/GetAllCommunicationPage.dart';
+import 'package:retail/page/group/CatalogPage.dart';
 import 'package:retail/page/store/GetAllStorePage.dart';
+import '../model/Group.dart';
 import 'consignment_note/GetAllConsignmentNotePage.dart';
 import 'employee_store/GetAllEmployeeStorePage.dart';
 import 'group/GetAllGroupPage.dart';
@@ -63,7 +65,7 @@ class _HomePageState extends State<HomePage>
               ListTile(
                 leading: const Icon(Icons.account_circle),
                 title: const Text('Каталог товаров'),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllGroupPage())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CatalogPage(group: Group(idGroup: 1, name: "Продукты", type: null)))),
               ),
               ListTile(
                 leading: const Icon(Icons.account_circle),
