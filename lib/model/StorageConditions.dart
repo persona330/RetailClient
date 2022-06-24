@@ -57,7 +57,7 @@ class StorageConditions
   Measurement? get getMeasurementIllumination => measurementIllumination;
 
   @override
-  String toString() {return 'Условия хранения $idStorageConditions: название $name, температура $temperature, влажность $humidity, освещенность $illumination, ед. измерения температуры $measurementTemperature, ед. измерения влажности $measurementHumidity, ед. измерения освещения $measurementIllumination';}
+  String toString() {return '$name: температура $temperature $measurementTemperature, влажность $humidity $measurementHumidity, освещенность $illumination $measurementIllumination';}
 }
 
 abstract class StorageConditionsResult {}

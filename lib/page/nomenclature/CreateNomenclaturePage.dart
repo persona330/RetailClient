@@ -6,6 +6,7 @@ import 'package:retail/model/Group.dart';
 import 'package:retail/model/Measurement.dart';
 import 'package:retail/model/Organization.dart';
 import 'package:retail/model/StorageConditions.dart';
+import 'package:retail/page/nomenclature/widget/CreateListProductWidget.dart';
 import 'package:retail/page/nomenclature/widget/CreateListStorageConditionsWidget.dart';
 import 'package:retail/page/nomenclature/widget/CreateListOrganizationWidget.dart';
 import 'package:retail/page/nomenclature/widget/CreateListGroupWidget.dart';
@@ -14,6 +15,7 @@ import 'package:retail/page/nomenclature/widget/CreateListMeasurementWidget.dart
 import '../../controller/NomenclatureController.dart';
 import '../../model/Box.dart';
 import '../../model/Nomenclature.dart';
+import '../../model/Product.dart';
 
 class CreateNomenclaturePage extends StatefulWidget
 {
@@ -53,6 +55,7 @@ class _CreateNomenclaturePageState extends StateMVC
   late Group _group;
   late Box _box;
   late StorageConditions _storageConditions;
+  late Product _product;
 
   Organization getOrganization(){return _organization;}
   void setOrganization(Organization organization){_organization = organization;}
@@ -68,6 +71,9 @@ class _CreateNomenclaturePageState extends StateMVC
 
   StorageConditions getStorageConditions(){return _storageConditions;}
   void setStorageConditions(StorageConditions storageConditions){_storageConditions = storageConditions;}
+
+  Product getProduct(){return _product;}
+  void setProduct(Product product){_product = product;}
 
   Future<void> _selectProductionDate(BuildContext context) async
   {
@@ -200,11 +206,11 @@ class _CreateNomenclaturePageState extends StateMVC
                   ],
                 ),
                 const Flexible(
-                  flex: 1,
+                  flex: 3,
                   child: CreateListMeasurementWidget(),
                 ),
                 const Flexible(
-                    flex: 1,
+                    flex: 3,
                     child: CreateListGroupWidget(),
                 ),
                 const Flexible(
@@ -212,12 +218,16 @@ class _CreateNomenclaturePageState extends StateMVC
                   child: CreateListOrganizationWidget(),
                 ),
                 const Flexible(
-                  flex: 4,
+                  flex: 3,
                   child: CreateListStorageConditionsWidget(),
                 ),
                 const Flexible(
-                  flex: 5,
+                  flex: 3,
                   child: CreateListBoxWidget(),
+                ),
+                const Flexible(
+                  flex: 3,
+                  child: CreateListProductWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(

@@ -47,7 +47,7 @@ class Import
   Nomenclature? get getNomenclature => nomenclature;
 
   @override
-  String toString() {return 'Привоз $idImport: колличество $quantity, цены $cost, НДС $vat, накладная $consignmentNote, номенклатура $nomenclature';}
+  String toString() {return 'Колличество $quantity, цена $cost, НДС $vat';}
 }
 
 abstract class ImportResult {}

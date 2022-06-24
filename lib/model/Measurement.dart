@@ -29,7 +29,7 @@ class Measurement
   String? get getFullName => fullName;
 
   @override
-  String toString() {return 'Единица измерения $idMeasurement: сокращение $name, полное название $fullName}';}
+  String toString() {return '$name';}
 }
 
 abstract class MeasurementResult {}

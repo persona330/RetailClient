@@ -30,7 +30,7 @@ class Communication
 
   @override
   String toString() {
-    return 'Средство связи $idCommunication: телефон $phone, эл.адрес $email';
+    return 'Телефон $phone, эл.адрес $email';
   }
 }
 

@@ -4,12 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/page/nomenclature/widget/PutListBoxWidget.dart';
 import 'package:retail/page/nomenclature/widget/PutListMeasurementWidget.dart';
+import 'package:retail/page/nomenclature/widget/PutListProductWidget.dart';
 import '../../controller/NomenclatureController.dart';
 import '../../model/Box.dart';
 import '../../model/Group.dart';
 import '../../model/Measurement.dart';
 import '../../model/Nomenclature.dart';
 import '../../model/Organization.dart';
+import '../../model/Product.dart';
 import '../../model/StorageConditions.dart';
 import '../nomenclature/widget/PutListStorageConditionsWidget.dart';
 import '../nomenclature/widget/PutListOrganizationWidget.dart';
@@ -55,6 +57,7 @@ class PutNomenclaturePageState extends StateMVC
   late Group _group;
   late Box _box;
   late StorageConditions _storageConditions;
+  late Product _product;
 
   Organization getOrganization(){return _organization;}
   void setOrganization(Organization organization){_organization = organization;}
@@ -70,6 +73,9 @@ class PutNomenclaturePageState extends StateMVC
 
   StorageConditions getStorageConditions(){return _storageConditions;}
   void setStorageConditions(StorageConditions storageConditions){_storageConditions = storageConditions;}
+
+  Product getProduct(){return _product;}
+  void setProduct(Product product){_product = product;}
 
   Future<void> _selectProductionDate(BuildContext context) async
   {
@@ -225,11 +231,11 @@ class PutNomenclaturePageState extends StateMVC
                   ],
                 ),
                 const Flexible(
-                  flex: 1,
+                  flex: 3,
                   child: PutListMeasurementWidget(),
                 ),
                 const Flexible(
-                  flex: 1,
+                  flex: 3,
                   child: PutListGroupWidget(),
                 ),
                 const Flexible(
@@ -237,18 +243,22 @@ class PutNomenclaturePageState extends StateMVC
                   child: PutListOrganizationWidget(),
                 ),
                 const Flexible(
-                  flex: 4,
+                  flex: 3,
                   child: PutListStorageConditionsWidget(),
                 ),
                 const Flexible(
-                  flex: 5,
+                  flex: 3,
                   child: PutListBoxWidget(),
+                ),
+                const Flexible(
+                  flex: 3,
+                  child: PutListProductWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(
                   onPressed: ()
                   {
-                    Nomenclature _nomenclature1 = Nomenclature(idNomenclature: _id, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions());
+                   // Nomenclature _nomenclature1 = Nomenclature(idNomenclature: _id, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions());
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is NomenclaturePutResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Номенклатура изменена")));}

@@ -41,7 +41,7 @@ class EmployeeStore extends Employee
       surname: json["surname"],
       name: json["name"],
       patronymic: json["patronymic"],
-      address: json["addressDTO"] != null ? Address.fromJson(json["storageConditionsDTO"]) : null,
+      address: json["addressDTO"] != null ? Address.fromJson(json["addressDTO"]) : null,
       communication: json["communicationDTO"] != null ? Communication.fromJson(json["communicationDTO"]) : null,
       free: json["free"],
       organization: json["organizationDTO"] != null ? Organization.fromJson(json["organizationDTO"]) : null,
@@ -82,7 +82,7 @@ class EmployeeStore extends Employee
   Position? get getPosition => position;
 
   @override
-  String toString() { return 'Сотрудник склада №$id: фамилия $surname, имя $name, отчество $patronymic, организация $organization, должность $position'; }
+  String toString() { return 'Фамилия $surname, имя $name, отчество $patronymic, организация $organization, должность $position'; }
 }
 
 abstract class EmployeeStoreResult {}

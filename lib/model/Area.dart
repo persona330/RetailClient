@@ -42,7 +42,7 @@ class Area
   Store? get getStore => store;
 
   @override
-  String toString() {return 'idArea $idArea: название $name, вместимость $capacity, условия хранения $storageConditions, склад $store';}
+  String toString() {return '$name: вместимость $capacity, условия хранения $storageConditions';}
 }
 
 abstract class AreaResult {}

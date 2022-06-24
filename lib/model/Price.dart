@@ -32,7 +32,7 @@ class Price
 
   @override
   String toString() {
-    return 'Цена №$idPrice: количество: $quantity, единица измерения $measurement}';
+    return 'Количество $quantity за $measurement';
   }
 }
 

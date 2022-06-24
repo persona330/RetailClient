@@ -1,5 +1,3 @@
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../model/EmployeeStore.dart';

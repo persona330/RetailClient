@@ -55,7 +55,7 @@ class Address
 
   @override
   String toString() {
-    return 'Адрес $idAddress: квартира $apartment, подъезд $entrance, дом $house, улица $street, регион $region, город $city, страна $nation';
+    return 'Квартира $apartment, подъезд $entrance, дом $house, улица $street, регион $region, город $city, страна $nation';
   }
 }
 

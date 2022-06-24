@@ -25,7 +25,7 @@ class Position
 
   @override
   String toString() {
-    return 'Должность $idPosition: название $name}';
+    return '$name';
   }
 }
 

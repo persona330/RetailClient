@@ -1,5 +1,3 @@
-import 'package:decimal/decimal.dart';
-
 import 'Shelf.dart';
 import 'VerticalSections.dart';
 
@@ -45,7 +43,7 @@ class Box
 
   @override
   String toString() {
-    return 'Ячейка $idBox: номер $number, вместимость $size, полка $shelf, вертикальная секция $verticalSections}';
+    return '$number: вместимость $size, полка $shelf, вертикал. секция $verticalSections';
   }
 }
 

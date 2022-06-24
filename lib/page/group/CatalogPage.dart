@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/group/widget/ProductListViewWidget.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
+import '../nomenclature/CreateNomenclaturePage.dart';
 import 'CreateGroupPage.dart';
 import 'widget/ItemGroupWidget.dart';
 
@@ -36,6 +38,16 @@ class _CatalogPageState extends StateMVC
     _controller.getGroupList();
   }
 
+  void _handleClick(String value) async
+  {
+    switch (value)
+    {
+      case 'Добавить товар':
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateNomenclaturePage()));
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context)
   {
@@ -65,7 +77,22 @@ class _CatalogPageState extends StateMVC
                   appBarTitle = const Text("Группа");
                 }
               });
-            } ,),]
+            } ,),
+            PopupMenuButton<String>(
+              onSelected: _handleClick, // функция при нажатии
+              itemBuilder: (BuildContext context)
+              {
+                return {'Добавить товар'}.map((String choice)
+                {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            ),
+          ]
+
       ),
       // body - задает основное содержимое
       body: _buildContent(),
@@ -96,6 +123,14 @@ class _CatalogPageState extends StateMVC
       // отображаем список постов
       final groupList = (state as GroupGetListResultSuccess).groupList;
       appBarTitle = Text(groupList[0].getName!);
+      List<Group> list = [];
+      for(var idx in groupList)
+      {
+        if (idx.getType?.getIdGroup == _group.getIdGroup)
+        {
+          list.add(idx);
+        }
+      }
       return Column(
         children: [
           Expanded(
@@ -105,25 +140,32 @@ class _CatalogPageState extends StateMVC
                 padding: const EdgeInsets.all(10),
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
-                child: ListView.builder(
-                  itemCount: groupList.length,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20),
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
-                    if (_group.getIdGroup == groupList[index].getType?.getIdGroup)
-                    {
                       return GestureDetector(
                         onTap: () {
-                          setGroup(groupList[index]);
+                          setGroup(list[index]);
                           Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => CatalogPage(group: groupList[index])));
+                              builder: (context) => CatalogPage(group: list[index])));
                         },
-                        child: ItemGroupWidget(groupList[index]),
+                        child: ItemGroupWidget(list[index]),
                       );
-                    }
-                    else{ return const Text("");}
                   },
                 ),
               ),
             ),
+          ),
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: NomenclatureListViewWidget(group: _group),
+              ),
           ),
         ],
       );

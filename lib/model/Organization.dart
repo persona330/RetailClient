@@ -47,7 +47,7 @@ class Organization
   Communication? get getCommunication => communication;
 
   @override
-  String toString() {return 'Организация $idOrganization: название $name, адрес $address, средства связи $communication, ИНН $inn, КПП $kpp';}
+  String toString() {return '$name: адрес $address, средства связи $communication, ИНН $inn, КПП $kpp';}
 }
 
 abstract class OrganizationResult {}

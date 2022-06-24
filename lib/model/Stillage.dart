@@ -37,7 +37,7 @@ class Stillage
   Area? get getArea => area;
 
   @override
-  String toString() {return 'Стеллаж $idStillage: номер $number, вместимость $size, зона $area}';}
+  String toString() {return '$number: вместимость $size, зона $area';}
 }
 
 abstract class StillageResult {}

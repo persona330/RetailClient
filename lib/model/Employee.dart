@@ -37,7 +37,7 @@ class Employee extends Person
       surname: json["surname"],
       name: json["name"],
       patronymic: json["patronymic"],
-      address: json["addressDTO"] != null ? Address.fromJson(json["storageConditionsDTO"]) : null,
+      address: json["addressDTO"] != null ? Address.fromJson(json["addressDTO"]) : null,
       communication: json["communicationDTO"] != null ? Communication.fromJson(json["communicationDTO"]) : null,
       free: json["free"],
       organization: json["organizationDTO"] != null ? Organization.fromJson(json["organizationDTO"]) : null,
@@ -45,7 +45,6 @@ class Employee extends Person
     );
   }
 
-  @override
   Map<String, dynamic> toJson() => {
     "surname": surname,
     "name": name,
@@ -73,7 +72,7 @@ class Employee extends Person
   Organization? get getOrganization => organization;
 
   @override
-  String toString() { return 'Сотрудник №$id: фамилия $surname, имя $name, отчество $patronymic, организация $organization'; }
+  String toString() { return 'Фамилия $surname, имя $name, отчество $patronymic, организация $organization'; }
 }
 
 abstract class EmployeeResult {}

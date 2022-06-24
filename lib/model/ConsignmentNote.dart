@@ -22,7 +22,7 @@ class ConsignmentNote
   factory ConsignmentNote.fromJson(Map<String, dynamic> json) {
     return ConsignmentNote(
       number: json["number"],
-      arrivalDate: json["arrivalDate"],
+      arrivalDate: json["arrivalDate"]!= null ? DateTime.tryParse(json["arrivalDate"]) : null,
       supplier: json["supplierDTO"] != null ? Supplier.fromJson(json["supplierDTO"]) : null,
       employeeStore: json["employeeStoreDTO"] != null ? EmployeeStore.fromJson(json["employeeStoreDTO"]) : null,
       forReturn: json["forReturn"],
@@ -32,7 +32,7 @@ class ConsignmentNote
 
   Map<String, dynamic> toJson() => {
     "number": number,
-    "arrivalDate": arrivalDate,
+    "arrivalDate": arrivalDate == null ? null : arrivalDate!.toString(),
     "supplierDTO": supplier == null ? null : supplier!.toJson(),
     "employeeStoreDTO": employeeStore == null ? null : employeeStore!.toJson(),
     "forReturn": forReturn,
@@ -46,9 +46,15 @@ class ConsignmentNote
   EmployeeStore? get getEmployeeStore => employeeStore;
   bool? get getForReturn => forReturn;
 
+  String getAnswer()
+  {
+    if(forReturn == true){ return "на возврат";}
+    else { return "приемка"; }
+  }
+
   @override
   String toString() {
-    return 'Накладная $idConsignmentNote: номер $number, дата прибытия $arrivalDate, поставщик $supplier, работник склада $employeeStore, на возврат $forReturn}';
+    return '$number: дата прибытия $arrivalDate, поставщик $supplier, работник склада $employeeStore, $getAnswer';
   }
 }
 

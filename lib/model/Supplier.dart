@@ -37,7 +37,7 @@ class Supplier
   Organization? get getOrganization => organization;
 
   @override
-  String toString() {return 'Поставщик $idSupplier: имя $name, должность $position, организация $organization}';}
+  String toString() {return 'Имя $name, должность $position, организация $organization';}
 }
 
 abstract class SupplierResult {}

@@ -43,7 +43,7 @@ class Store
   Address? get getAddress => address;
 
   @override
-  String toString() {return 'Склад $idStore: название $name, полная вместимость $totalCapacity, организация $organization, адрес $address';}
+  String toString() {return '$name: полная вместимость $totalCapacity, организация $organization, адрес $address';}
 }
 
 abstract class StoreResult {}

@@ -86,10 +86,11 @@ class GetNomenclaturePageState extends StateMVC
               ),
             ],
           ),
-          body: Scrollbar(
+          body: SingleChildScrollView(
             child: Container(
+              height: MediaQuery.of(context).size.height,
               // this.left, this.top, this.right, this.bottom
-              padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
+              padding: const EdgeInsets.fromLTRB(50, 30, 600, 0),
               child: Column (
                 children: [
                   Text("Название: ${_nomenclature.getName} \n"
@@ -103,8 +104,7 @@ class GetNomenclaturePageState extends StateMVC
                       "Производител: ${_nomenclature.getOrganization.toString()} \n"
                       "Единица измерения: ${_nomenclature.getMeasurement.toString()} \n"
                       "Ячейка: ${_nomenclature.getBox.toString()} \n"
-                      "Условия хранения: ${_nomenclature.getStorageConditions.toString()} \n"
-                      //"Объем: ${_address.getNation} "
+                      "Условия хранения: ${_nomenclature.getStorageConditions.toString()}"
                       , style: const TextStyle(fontSize: 22)),
                 ],
               ),

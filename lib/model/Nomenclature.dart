@@ -4,6 +4,7 @@ import 'package:retail/model/Measurement.dart';
 import 'package:retail/model/StorageConditions.dart';
 
 import 'Organization.dart';
+import 'Product.dart';
 
 class Nomenclature
 {
@@ -20,7 +21,7 @@ class Nomenclature
   final Measurement? measurement;
   final Box? box;
   final StorageConditions? storageConditions;
-  //final Box? box;
+  final Product? product;
 
   Nomenclature({
     required this.idNomenclature,
@@ -36,6 +37,7 @@ class Nomenclature
     required this.measurement,
     required this.box,
     required this.storageConditions,
+    required this.product,
   });
 
   factory Nomenclature.fromJson(Map<String, dynamic> json) {
@@ -43,8 +45,8 @@ class Nomenclature
       name: json["name"],
       brand: json["brand"],
       cost: json["cost"],
-      productionDate: json["productionDate"],
-      expirationDate: json["expirationDate"],
+      productionDate: json["productionDate"] != null ? DateTime.tryParse(json["productionDate"]) : null,
+      expirationDate: json["expirationDate"] != null ? DateTime.tryParse(json["expirationDate"]) : null,
       weight: json["weight"],
       size: json["size"],
       group: json["groupDTO"] != null ? Group.fromJson(json["groupDTO"]) : null,
@@ -52,6 +54,7 @@ class Nomenclature
       measurement: json["measurementDTO"] != null ? Measurement.fromJson(json["measurementDTO"]) : null,
       box: json["boxDTO"] != null ? Box.fromJson(json["boxDTO"]) : null,
       storageConditions: json["storageConditionsDTO"] != null ? StorageConditions.fromJson(json["storageConditionsDTO"]) : null,
+      product: json["productDTO"] != null ? Product.fromJson(json["productDTO"]) : null,
       idNomenclature: json["id_Nomenclature"],
     );
   }
@@ -60,8 +63,8 @@ class Nomenclature
     "name": name,
     "brand": brand,
     "cost": cost,
-    "productionDate": productionDate,
-    "expirationDate": expirationDate,
+    "productionDate": productionDate == null ? null : productionDate!.toString(),
+    "expirationDate": expirationDate == null ? null : expirationDate!.toString(),
     "weight": weight,
     "size": size,
     "groupDTO": group == null ? null : group!.toJson(),
@@ -69,6 +72,7 @@ class Nomenclature
     "measurementDTO": measurement == null ? null : measurement!.toJson(),
     "boxDTO": box == null ? null : box!.toJson(),
     "storageConditionsDTO": storageConditions == null ? null : storageConditions!.toJson(),
+    "productDTO": product == null ? null : product!.toJson(),
     "id_Nomenclature": idNomenclature,
   };
 
@@ -85,9 +89,10 @@ class Nomenclature
   Measurement? get getMeasurement => measurement;
   Box? get getBox => box;
   StorageConditions? get getStorageConditions => storageConditions;
+  Product? get getProduct => product;
 
   @override
-  String toString() {return 'Номенкладная $idNomenclature: название $name, бренд $brand, цена $cost, дата производства $productionDate, срок годности $expirationDate, вес $weight, объем $size, группа $group, производитель $organization, единица измерения $measurement, ячейка $box, условия хранения $storageConditions}';}
+  String toString() {return '$name: бренд $brand, цена $cost, дата производства $productionDate, срок годности $expirationDate, вес $weight, объем $size, группа $group, единица измерения $measurement';}
 }
 
 abstract class NomenclatureResult {}

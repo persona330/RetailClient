@@ -32,7 +32,7 @@ class Product
 
   @override
   String toString() {
-    return 'Товар №$idProduct: количество в начиличии $mengeAufLager, цена $price}';
+    return 'Количество в начиличии $mengeAufLager, цена $price';
   }
 }
 

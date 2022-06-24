@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/employee_store/GetEmployeeStorePage.dart';
-import 'package:retail/page/employee_store/widget/ItemEmployeeStoreWidget.dart';
+import 'package:retail/page/employee/widget/ItemEmployeeWidget.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import '../../controller/EmployeeStoreController.dart';
-import '../../model/EmployeeStore.dart';
-import 'CreateEmployeeStorePage.dart';
+import 'package:retail/page/employee_store/GetAllEmployeeStorePage.dart';
+import 'package:retail/page/supplier/GetAllSupplierPage.dart';
+import '../../controller/EmployeeController.dart';
+import '../../model/Employee.dart';
+import 'GetEmployeePage.dart';
 
-class GetAllEmployeeStorePage extends StatefulWidget
+class GetAllEmployeePage extends StatefulWidget
 {
-  const GetAllEmployeeStorePage({Key? key}) : super(key: key);
+  const GetAllEmployeePage({Key? key}) : super(key: key);
 
   @override
-  _GetAllEmployeeStorePageState createState() => _GetAllEmployeeStorePageState();
+  _GetAllEmployeePageState createState() => _GetAllEmployeePageState();
 }
 
-class _GetAllEmployeeStorePageState extends StateMVC
+class _GetAllEmployeePageState extends StateMVC
 {
-  late EmployeeStoreController _controller;
+  late EmployeeController _controller;
 
-  _GetAllEmployeeStorePageState() : super(EmployeeStoreController()) {_controller = controller as EmployeeStoreController;}
+  _GetAllEmployeePageState() : super(EmployeeController()) {_controller = controller as EmployeeController;}
 
-  Widget appBarTitle = const Text("Сотрудник склада");
+  Widget appBarTitle = const Text("Сотрудники");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
   void initState()
   {
     super.initState();
-    _controller.getEmployeeStoreList();
+    _controller.getEmployeeList();
   }
 
   @override
   Widget build(BuildContext context)
   {
     return Scaffold(
-      // AppBar - верхняя панель
       appBar: AppBar(
         title: appBarTitle,
         leading: IconButton(icon:const Icon(Icons.arrow_back),
@@ -57,28 +57,23 @@ class _GetAllEmployeeStorePageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Сотрудник склада");
+                appBarTitle = const Text("Сотрудники");
               }
             });
           } ,),]
       ),
       // body - задает основное содержимое
       body: _buildContent(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateEmployeeStorePage())); },
-        tooltip: 'Добавить сотрудника',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 
   Widget _buildContent()
   {
     final state = _controller.currentState;
-    if (state is EmployeeStoreResultLoading)
+    if (state is EmployeeResultLoading)
     {
       return const Center(child: CircularProgressIndicator());
-    } else if (state is EmployeeStoreResultFailure)
+    } else if (state is EmployeeResultFailure)
     {
       return Center(
         child: Text(
@@ -88,10 +83,31 @@ class _GetAllEmployeeStorePageState extends StateMVC
         ),
       );
     } else {
-      // отображаем список постов
-      final _employeeStoreList = (state as EmployeeStoreGetListResultSuccess).employeeStoreList;
+      final _employeeList = (state as EmployeeGetListResultSuccess).employeeList;
       return Column(
         children: [
+          Row(
+            children: [
+              Expanded(child:
+              OutlinedButton(
+                onPressed: ()
+                {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllEmployeeStorePage()));
+                },
+                child: const Text('Сотрудники склада'),
+              ),
+              ),
+              Expanded(child:
+              OutlinedButton(
+                onPressed: ()
+                {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllSupplierPage()));
+                },
+                child: const Text('Поставщики'),
+              ),
+              ),
+            ],
+          ),
           Expanded(
             child:
             Center(
@@ -100,15 +116,15 @@ class _GetAllEmployeeStorePageState extends StateMVC
                 // ListView.builder создает элемент списка
                 // только когда он видим на экране
                 child: ListView.builder(
-                  itemCount: _employeeStoreList.length,
+                  itemCount: _employeeList.length,
                   itemBuilder: (context, index)
                   {
                     return GestureDetector(
                       onTap: ()
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetEmployeeStorePage(id: _employeeStoreList[index].getId!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetEmployeePage(id: _employeeList[index].getId!)));
                       },
-                      child: ItemEmployeeStoreWidget(_employeeStoreList[index]),
+                      child: ItemEmployeeWidget(_employeeList[index]),
                     );
                   },
                 ),

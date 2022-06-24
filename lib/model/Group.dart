@@ -29,7 +29,7 @@ class Group
   Group? get getType => type;
 
   @override
-  String toString() {return 'Группа товаров $idGroup: название $name, тип $type';}
+  String toString() {return '$name: тип $type';}
 }
 
 abstract class GroupResult {}

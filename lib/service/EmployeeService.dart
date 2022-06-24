@@ -24,7 +24,7 @@ class EmployeeService
     }
   }
 
-  Future<List<Employee>> getEmployeeStoreList() async
+  Future<List<Employee>> getEmployeeList() async
   {
     final response = await http.get(Uri.parse(_url));
 

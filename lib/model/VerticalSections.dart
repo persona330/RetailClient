@@ -37,7 +37,7 @@ class VerticalSections
   Stillage? get getStillage => stillage;
 
   @override
-  String toString() {return 'Вертикальная секция $idVerticalSections: номер $number, вместисмость $size, стеллаж $stillage';}
+  String toString() {return '$number: вместисмость $size, стеллаж $stillage';}
 }
 
 abstract class VerticalSectionsResult {}

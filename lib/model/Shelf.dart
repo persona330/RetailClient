@@ -42,7 +42,7 @@ class Shelf
   Stillage? get getStillage => stillage;
 
   @override
-  String toString() {return 'Полка $idShelf: вместимость $size, номер $number, группа товаров $group, стеллаж $stillage';}
+  String toString() {return '$number: вместимость $size, группа товаров $group, стеллаж $stillage';}
 }
 
 abstract class ShelfResult {}
