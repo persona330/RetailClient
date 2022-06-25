@@ -6,6 +6,8 @@ import 'package:retail/page/organization/widget/CreateListAddressWidget.dart';
 import '../../controller/OrganizationController.dart';
 import '../../model/Communication.dart';
 import '../../model/Organization.dart';
+import '../address/CreateAddressPage.dart';
+import 'GetAllOrganizationPage.dart';
 import 'widget/CreateListCommunicationWidget.dart';
 
 class CreateOrganizationPage extends StatefulWidget
@@ -95,6 +97,21 @@ class _CreateOrganizationPageState extends StateMVC
                   controller: _kppController,
                   textInputAction: TextInputAction.next,
                 ),
+                Row(
+                  children: [
+                  const Flexible(
+                  flex: 1,
+                  child: CreateListAddressWidget(),
+                ),
+                OutlinedButton(
+                  onPressed: ()
+                  {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAddressPage()));
+                  },
+                  child: const Text('Добавить'),
+                ),
+                  ],
+                ),
                 const Flexible(
                   flex: 1,
                   child: CreateListAddressWidget(),
@@ -115,12 +132,13 @@ class _CreateOrganizationPageState extends StateMVC
                         inn: _innController.text,
                         kpp: _kppController.text);
                       _controller?.addOrganization(organization);
-                    Navigator.pop(context, true);
-                    final state = _controller?.currentState;
-                    if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Организация создана")));}
-                    if (state is OrganizationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
-                    if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении организации")));}
-                  },
+                      GetAllOrganizationPage.of(context)?.refresh();
+                      Navigator.pop(context, true);
+                      final state = _controller?.currentState;
+                      if (state is OrganizationAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Организация создана")));}
+                      if (state is OrganizationResultLoading) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Загрузка")));}
+                      if (state is OrganizationResultFailure) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Произошла ошибка при добавлении организации")));}
+                    },
                   child: const Text('Создать'),
                 ),
               ],

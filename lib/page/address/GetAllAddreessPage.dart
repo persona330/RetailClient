@@ -12,6 +12,16 @@ class GetAllAddressPage extends StatefulWidget
 
   @override
   _GetAllAddressPageState createState() => _GetAllAddressPageState();
+
+  static _GetAllAddressPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _GetAllAddressPageState? result =
+    context.findAncestorStateOfType<_GetAllAddressPageState>();
+    return result;
+  }
 }
 
 // Домашняя страница
@@ -23,6 +33,10 @@ class _GetAllAddressPageState extends StateMVC
 
   Widget appBarTitle = const Text("Адрес");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
+  refresh() {
+    setState(() {});
+  }
 
   @override
   void initState()

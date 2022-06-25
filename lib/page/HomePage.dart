@@ -86,6 +86,11 @@ class _HomePageState extends State<HomePage>
                 title: const Text('Склады'),
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllStorePage())),
               ),
+              ListTile(
+                leading: const Icon(Icons.store),
+                title: const Text('Адреса'),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const GetAllAddressPage())),
+              ),
             ],
           ),
         ),

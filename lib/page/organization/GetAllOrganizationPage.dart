@@ -12,6 +12,16 @@ class GetAllOrganizationPage extends StatefulWidget
 
   @override
   _GetAllOrganizationPageState createState() => _GetAllOrganizationPageState();
+
+  static _GetAllOrganizationPageState? of(BuildContext context)
+  {
+    // Эта конструкция нужна, чтобы можно было обращаться к нашему виджету
+    // через: TopScreen.of(context)
+    assert(context != null);
+    final _GetAllOrganizationPageState? result =
+    context.findAncestorStateOfType<_GetAllOrganizationPageState>();
+    return result;
+  }
 }
 
 class _GetAllOrganizationPageState extends StateMVC
@@ -22,6 +32,10 @@ class _GetAllOrganizationPageState extends StateMVC
 
   Widget appBarTitle = const Text("Организация");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
+
+  refresh() {
+    setState(() {});
+  }
 
   @override
   void initState()

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'GetAllAddreessPage.dart';
+
 class DeleteAddressPage extends StatelessWidget
 {
   int id = 0;
@@ -18,6 +20,7 @@ class DeleteAddressPage extends StatelessWidget
             child: const Text("Да"),
             onPressed: ()
             {
+              GetAllAddressPage.of(context)?.refresh();
               Navigator.of(context).pop(true);
             }
         ),

@@ -4,6 +4,8 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/controller/AddressController.dart';
 import 'package:retail/model/Address.dart';
 
+import 'GetAllAddreessPage.dart';
+
 class CreateAddressPage extends StatefulWidget
 {
   const CreateAddressPage({Key? key}) : super(key: key);
@@ -118,6 +120,7 @@ class _CreateAddressPageState extends StateMVC
                   {
                     Address _address = Address(idAddress: UniqueKey().hashCode, apartment:_apartmentController.text, entrance: int.parse(_entranceController.text), house: _houseController.text, street: _streetController.text, region: _regionController.text, city: _cityController.text, nation: _nationController.text);
                     _controller?.addAddress(_address);
+                    GetAllAddressPage.of(context)?.refresh();
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is AddressAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Адрес создан")));}
