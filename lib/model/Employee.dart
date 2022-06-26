@@ -1,5 +1,4 @@
 import 'package:retail/model/Person.dart';
-
 import 'Address.dart';
 import 'Communication.dart';
 import 'Organization.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/GroupController.dart';
 import '../../model/Group.dart';
@@ -58,7 +57,7 @@ class _GetAllGroupPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Группа");
+                appBarTitle = const Text("Группы");
               }
             });
           } ,),]

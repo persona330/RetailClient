@@ -1,8 +1,5 @@
-import 'package:retail/model/Address.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-
 import '../model/Organization.dart';
-import '../service/AddressService.dart';
 import '../service/OrganizationService.dart';
 
 class OrganizationController extends ControllerMVC
@@ -77,5 +74,4 @@ class OrganizationController extends ControllerMVC
       setState(() => currentState = OrganizationResultFailure("Нет интернета"));
     }
   }
-
 }

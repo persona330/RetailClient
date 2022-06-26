@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:retail/model/Address.dart';
 import 'package:retail/model/Organization.dart';
 

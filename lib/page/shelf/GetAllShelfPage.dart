@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/shelf/GetShelfPage.dart';
 import '../../controller/ShelfController.dart';
 import '../../model/Shelf.dart';
 import 'CreateShelfPage.dart';
@@ -20,7 +20,7 @@ class _GetAllShelfPageState extends StateMVC
 
   _GetAllShelfPageState() : super(ShelfController()) {_controller = controller as ShelfController;}
 
-  Widget appBarTitle = const Text("Полка");
+  Widget appBarTitle = const Text("Полки");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllShelfPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Полка");
+                appBarTitle = const Text("Полки");
               }
             });
           } ,),]
@@ -107,7 +107,7 @@ class _GetAllShelfPageState extends StateMVC
                     return GestureDetector(
                       onTap: ()
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: _shelfList[index].getIdShelf!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetShelfPage(id: _shelfList[index].getIdShelf!)));
                       },
                       child: ItemShelfWidget(_shelfList[index]),
                     );

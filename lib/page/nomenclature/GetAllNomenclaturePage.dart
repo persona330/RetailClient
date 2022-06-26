@@ -20,7 +20,7 @@ class _GetAllNomenclaturePageState extends StateMVC
 
   _GetAllNomenclaturePageState() : super(NomenclatureController()) {_controller = controller as NomenclatureController;}
 
-  Widget appBarTitle = const Text("Номенклатура");
+  Widget appBarTitle = const Text("Номенклатуры");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllNomenclaturePageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Номенклатура");
+                appBarTitle = const Text("Номенклатуры");
               }
             });
           } ,),]

@@ -30,7 +30,7 @@ class _GetAllOrganizationPageState extends StateMVC
 
   _GetAllOrganizationPageState() : super(OrganizationController()) {_controller = controller as OrganizationController;}
 
-  Widget appBarTitle = const Text("Организация");
+  Widget appBarTitle = const Text("Организации");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   refresh() {
@@ -70,7 +70,7 @@ class _GetAllOrganizationPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Организация");
+                appBarTitle = const Text("Организации");
               }
             });
           } ,),]

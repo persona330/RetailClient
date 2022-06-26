@@ -1,8 +1,8 @@
+import 'package:intl/intl.dart';
 import 'package:retail/model/Box.dart';
 import 'package:retail/model/Group.dart';
 import 'package:retail/model/Measurement.dart';
 import 'package:retail/model/StorageConditions.dart';
-
 import 'Organization.dart';
 import 'Product.dart';
 
@@ -63,8 +63,8 @@ class Nomenclature
     "name": name,
     "brand": brand,
     "cost": cost,
-    "productionDate": productionDate == null ? null : productionDate!.toString(),
-    "expirationDate": expirationDate == null ? null : expirationDate!.toString(),
+    "productionDate": productionDate == null ? null : DateFormat('yyyy-MM-dd').format(productionDate!),
+    "expirationDate": expirationDate == null ? null : DateFormat('yyyy-MM-dd').format(expirationDate!),
     "weight": weight,
     "size": size,
     "groupDTO": group == null ? null : group!.toJson(),

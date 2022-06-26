@@ -1,7 +1,4 @@
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-
 import '../model/Group.dart';
 import '../service/GroupService.dart';
 

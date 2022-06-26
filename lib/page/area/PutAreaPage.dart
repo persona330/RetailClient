@@ -82,7 +82,7 @@ class PutAreaPageState extends StateMVC
       _nameController.text = _area.getName!;
       _capacityController.text = _area.getCapacity!.toString();
       return Scaffold(
-        appBar: AppBar(title: const Text('Изменение адреса')),
+        appBar: AppBar(title: const Text('Изменение зоны')),
         body: Scrollbar(
           child: Container(
             padding: const EdgeInsets.fromLTRB(50, 30, 500, 0),
@@ -90,7 +90,7 @@ class PutAreaPageState extends StateMVC
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9\s]")),],
                     decoration: const InputDecoration(labelText: "Название"),
                     style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _nameController,

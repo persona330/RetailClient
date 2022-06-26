@@ -20,7 +20,7 @@ class _GetAllConsignmentNotePageState extends StateMVC
 
   _GetAllConsignmentNotePageState() : super(ConsignmentNoteController()) {_controller = controller as ConsignmentNoteController;}
 
-  Widget appBarTitle = const Text("Накладная");
+  Widget appBarTitle = const Text("Накладные");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllConsignmentNotePageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Накладная");
+                appBarTitle = const Text("Накладные");
               }
             });
           } ,),]

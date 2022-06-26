@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:retail/model/EmployeeStore.dart';
 import 'package:retail/model/Supplier.dart';
 
@@ -32,7 +33,7 @@ class ConsignmentNote
 
   Map<String, dynamic> toJson() => {
     "number": number,
-    "arrivalDate": arrivalDate == null ? null : arrivalDate!.toString(),
+    "arrivalDate": arrivalDate == null ? null : DateFormat('yyyy-MM-dd').format(arrivalDate!),
     "supplierDTO": supplier == null ? null : supplier!.toJson(),
     "employeeStoreDTO": employeeStore == null ? null : employeeStore!.toJson(),
     "forReturn": forReturn,

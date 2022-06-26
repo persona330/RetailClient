@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:retail/model/Measurement.dart';
-import 'package:retail/page/area/widget/CreateListStorageConditionsWidget.dart';
+import 'package:retail/page/price/widget/CreateListMeasurementWidget.dart';
 import '../../controller/PriceController.dart';
 import '../../model/Price.dart';
 
@@ -71,7 +71,7 @@ class _CreatePricePageState extends StateMVC
                 ),
                 const Flexible(
                   flex: 1,
-                  child: CreateListStorageConditionsWidget(),
+                  child: CreateListMeasurementWidget(),
                 ),
                 const SizedBox(height: 20),
                 OutlinedButton(

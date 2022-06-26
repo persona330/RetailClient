@@ -20,7 +20,7 @@ class _GetAllCommunicationPageState extends StateMVC
 
   _GetAllCommunicationPageState() : super(CommunicationController()) {_controller = controller as CommunicationController;}
 
-  Widget appBarTitle = const Text("Средство связи");
+  Widget appBarTitle = const Text("Средства связи");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -56,7 +56,7 @@ class _GetAllCommunicationPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Средство связи");
+                appBarTitle = const Text("Средства связи");
               }
             });
           } ,),]

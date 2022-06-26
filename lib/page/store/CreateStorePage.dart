@@ -62,7 +62,7 @@ class _CreateStorePageState extends StateMVC
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: AppBar(title: const Text('Создание адреса')),
+      appBar: AppBar(title: const Text('Создание склада')),
       body:  Scrollbar(
           child: Container(
             // this.left, this.top, this.right, this.bottom

@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../model/Person.dart';
 
 class PersonService
 {
-  final String _url = 'http://localhost:8080/employee';
+  final String _url = 'http://localhost:8080/person';
 
   Map<String, String> headers = {
     "content-type": "application/json; charset=UTF-8",
@@ -24,7 +23,7 @@ class PersonService
     }
   }
 
-  Future<List<Person>> getEmployeeStoreList() async
+  Future<List<Person>> getPersonList() async
   {
     final response = await http.get(Uri.parse(_url));
 

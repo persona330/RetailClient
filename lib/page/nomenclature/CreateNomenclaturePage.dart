@@ -131,7 +131,7 @@ class _CreateNomenclaturePageState extends StateMVC
               children: [
                 TextFormField(
                   keyboardType: TextInputType.name,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9\s]")),],
                   decoration: const InputDecoration(labelText: "Название"),
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _nameController,
@@ -139,7 +139,7 @@ class _CreateNomenclaturePageState extends StateMVC
                 ),
                 TextFormField(
                   keyboardType: TextInputType.name,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я\s]")),],
                   decoration: const InputDecoration(labelText: "Бренд"),
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _brandController,
@@ -159,6 +159,14 @@ class _CreateNomenclaturePageState extends StateMVC
                   decoration: const InputDecoration(labelText: "Объем"),
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _sizeController,
+                  textInputAction: TextInputAction.next,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                  decoration: const InputDecoration(labelText: "Цена"),
+                  style: const TextStyle(fontSize: 14, color: Colors.blue),
+                  controller: _costController,
                   textInputAction: TextInputAction.next,
                 ),
                 Row(
@@ -233,9 +241,8 @@ class _CreateNomenclaturePageState extends StateMVC
                 OutlinedButton(
                   onPressed: ()
                   {
-                    print(DateTime.parse("2000-12-12"));
-                    //Nomenclature _nomenclature = Nomenclature(idNomenclature: UniqueKey().hashCode, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions());
-                    //print(_nomenclature);
+                    Nomenclature _nomenclature = Nomenclature(idNomenclature: UniqueKey().hashCode, name: _nameController.text, brand: _brandController.text, cost: double.parse(_costController.text), productionDate: DateTime.parse(_productionDate!), expirationDate: DateTime.parse(_expirationDate!), weight: double.parse(_weightController.text), size: double.parse(_sizeController.text), group: getGroup(), organization: getOrganization(), measurement: getMeasurement(), box: getBox(), storageConditions: getStorageConditions(), product: getProduct());
+                    _controller?.addNomenclature(_nomenclature);
                     Navigator.pop(context, true);
                     final state = _controller?.currentState;
                     if (state is NomenclatureAddResultSuccess) {ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Номенклатура создана")));}

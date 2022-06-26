@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/area/widget/PutListStorageConditionsWidget.dart';
-import '../../controller/AreaController.dart';
+import 'package:retail/page/price/widget/PutListMeasurementWidget.dart';
 import '../../controller/PriceController.dart';
 import '../../model/Measurement.dart';
 import '../../model/Price.dart';
@@ -31,7 +30,7 @@ class PutPricePageState extends StateMVC
   PriceController? _controller;
   final int _id;
 
-  PutPricePageState(this._id) : super(AreaController()) {_controller = controller as PriceController;}
+  PutPricePageState(this._id) : super(PriceController()) {_controller = controller as PriceController;}
 
   final _quantityController = TextEditingController();
   late Measurement _measurement;
@@ -89,7 +88,7 @@ class PutPricePageState extends StateMVC
                   ),
                   const Flexible(
                     flex: 1,
-                    child: PutListStorageConditionsWidget(),
+                    child: PutListMeasurementWidget(),
                   ),
                   const SizedBox(height: 20),
                   OutlinedButton(

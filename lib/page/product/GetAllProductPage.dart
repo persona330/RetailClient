@@ -20,7 +20,7 @@ class _GetAllProductPageState extends StateMVC
 
   _GetAllProductPageState() : super(ProductController()) {_controller = controller as ProductController;}
 
-  Widget appBarTitle = const Text("Товар");
+  Widget appBarTitle = const Text("Товары");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -56,7 +56,7 @@ class _GetAllProductPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Товар");
+                appBarTitle = const Text("Товары");
               }
             });
           } ,),]

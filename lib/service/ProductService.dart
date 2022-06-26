@@ -1,9 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:retail/model/Area.dart';
-
 import '../model/Product.dart';
 
 class ProductService

@@ -64,7 +64,7 @@ class PutPositionPageState extends StateMVC
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.streetAddress,
-                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я\s]")),],
                     decoration: const InputDecoration(labelText: "Название"),
                     style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _nameController,

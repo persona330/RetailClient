@@ -84,7 +84,7 @@ class _CreateConsignmentNotePageState extends StateMVC
               children: [
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9]")),],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я0-9\-]")),],
                   decoration: const InputDecoration(labelText: "Номер"),
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _numberController,

@@ -21,7 +21,7 @@ class _GetAllMeasurementPageState extends StateMVC
 
   _GetAllMeasurementPageState() : super(MeasurementController()) {_controller = controller as MeasurementController;}
 
-  Widget appBarTitle = const Text("Единица измерения");
+  Widget appBarTitle = const Text("Единицы измерения");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -58,7 +58,7 @@ class _GetAllMeasurementPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Единица измерения");
+                appBarTitle = const Text("Единицы измерения");
               }
             });
           } ,),]

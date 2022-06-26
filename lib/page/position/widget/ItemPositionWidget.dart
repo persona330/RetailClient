@@ -18,7 +18,7 @@ class ItemPositionWidget extends StatelessWidget
         child: ListTile(
           leading: Text("${position.getIdPosition}"),
           title: Text('${position.getName}'),
-          subtitle: const Text('Описание \n'),
+          subtitle: const Text('Описание'),
       ),
     );
   }

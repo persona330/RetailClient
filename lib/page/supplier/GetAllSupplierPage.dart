@@ -20,7 +20,7 @@ class _GetAllSupplierPageState extends StateMVC
 
   _GetAllSupplierPageState() : super(SupplierController()) {_controller = controller as SupplierController;}
 
-  Widget appBarTitle = const Text("Поставщик");
+  Widget appBarTitle = const Text("Поставщики");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllSupplierPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Поставщик");
+                appBarTitle = const Text("Поставщики");
               }
             });
           } ,),]

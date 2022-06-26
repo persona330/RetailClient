@@ -1,10 +1,5 @@
-import 'package:retail/model/Address.dart';
-import 'package:retail/service/AddressService.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-
-import '../model/Area.dart';
 import '../model/Product.dart';
-import '../service/AreaService.dart';
 import '../service/ProductService.dart';
 
 class ProductController extends ControllerMVC

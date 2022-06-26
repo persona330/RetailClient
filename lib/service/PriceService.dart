@@ -5,7 +5,7 @@ import '../model/Price.dart';
 
 class PriceService
 {
-  final String _url = 'http://localhost:8080/area';
+  final String _url = 'http://localhost:8080/price';
 
   Map<String, String> headers = {
     "content-type": "application/json; charset=UTF-8",

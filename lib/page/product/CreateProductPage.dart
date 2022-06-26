@@ -63,7 +63,7 @@ class _CreateProductPageState extends StateMVC
               children: [
                 TextFormField(
                   keyboardType: TextInputType.streetAddress,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9]")),],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[0-9\s]")),],
                   decoration: const InputDecoration(labelText: "Количетсво в наличии"),
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
                   controller: _mengeAufLagerController,

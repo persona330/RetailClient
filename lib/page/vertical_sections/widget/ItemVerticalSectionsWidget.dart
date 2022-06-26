@@ -18,7 +18,7 @@ class ItemVerticalSectionsWidget extends StatelessWidget
         child: ListTile(
           leading: Text("${verticalSections.getIdVerticalSections}"),
           title: Text('${verticalSections.getNumber}'),
-          subtitle: const Text('Тело: \n'),
+          subtitle: const Text('Описание'),
       ),
     );
   }

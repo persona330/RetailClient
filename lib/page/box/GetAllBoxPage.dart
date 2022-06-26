@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/address/CreateAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/box/CreateBoxPage.dart';
 import '../../controller/BoxController.dart';
 import '../../model/Box.dart';
 import 'GetBoxPage.dart';
@@ -65,7 +65,7 @@ class _GetAllBoxPageState extends StateMVC
       // body - задает основное содержимое
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAddressPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateBoxPage())); },
         tooltip: 'Добавить ячейку',
         child: const Icon(Icons.add),
       ),

@@ -1,8 +1,6 @@
-import 'package:retail/model/Address.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
 import '../model/Supplier.dart';
 
 class SupplierService

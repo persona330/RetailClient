@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/address/GetAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:retail/page/position/GetPositionPage.dart';
 import '../../controller/PositionController.dart';
 import '../../model/Position.dart';
 import 'CreatePositionPage.dart';
@@ -21,7 +21,7 @@ class _GetAllPositionPageState extends StateMVC
 
   _GetAllPositionPageState() : super(PositionController()) {_controller = controller as PositionController;}
 
-  Widget appBarTitle = const Text("Должность");
+  Widget appBarTitle = const Text("Должности");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -58,7 +58,7 @@ class _GetAllPositionPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Должность");
+                appBarTitle = const Text("Должности");
               }
             });
           } ,),]
@@ -108,7 +108,7 @@ class _GetAllPositionPageState extends StateMVC
                     return GestureDetector(
                       onTap: ()
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetAddressPage(id: _positionList[index].getIdPosition!)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GetPositionPage(id: _positionList[index].getIdPosition!)));
                       },
                       child: ItemPositionWidget(_positionList[index]),
                     );

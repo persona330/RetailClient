@@ -21,7 +21,7 @@ class _GetAllPricePageState extends StateMVC
 
   _GetAllPricePageState() : super(PriceController()) {_controller = controller as PriceController;}
 
-  Widget appBarTitle = const Text("Цена");
+  Widget appBarTitle = const Text("Цены");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllPricePageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Цена");
+                appBarTitle = const Text("Цены");
               }
             });
           } ,),]

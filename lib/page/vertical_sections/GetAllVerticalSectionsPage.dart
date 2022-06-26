@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:retail/page/address/CreateAddressPage.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/VerticalSectionsController.dart';
 import '../../model/VerticalSections.dart';
+import 'CreateVerticalSectionsPage.dart';
 import 'GetVerticalSectionsPage.dart';
 import 'widget/ItemVerticalSectionsWidget.dart';
 
@@ -20,7 +20,7 @@ class _GetAllVerticalSectionsPageState extends StateMVC
 
   _GetAllVerticalSectionsPageState() : super(VerticalSectionsController()) {_controller = controller as VerticalSectionsController;}
 
-  Widget appBarTitle = const Text("Вертикальная секция");
+  Widget appBarTitle = const Text("Вертикальные секции");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -56,14 +56,14 @@ class _GetAllVerticalSectionsPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Вертикальная секция");
+                appBarTitle = const Text("Вертикальные секции");
               }
             });
           } ,),]
       ),
       body: _buildContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAddressPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateVerticalSectionsPage())); },
         tooltip: 'Добавить вертикальную секцию',
         child: const Icon(Icons.add),
       ),

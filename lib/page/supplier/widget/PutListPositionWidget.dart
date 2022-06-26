@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
-import 'package:retail/page/supplier/CreateSupplierPage.dart';
-
 import '../../../controller/PositionController.dart';
 import '../../../model/Position.dart';
 import '../PutSupplierPage.dart';

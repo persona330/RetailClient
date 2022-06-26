@@ -20,7 +20,7 @@ class _GetAllStillagePageState extends StateMVC
 
   _GetAllStillagePageState() : super(StillageController()) {_controller = controller as StillageController;}
 
-  Widget appBarTitle = const Text("Стеллаж");
+  Widget appBarTitle = const Text("Стеллажи");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -57,7 +57,7 @@ class _GetAllStillagePageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Стеллаж");
+                appBarTitle = const Text("Стеллажи");
               }
             });
           } ,),]

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:retail/controller/AddressController.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../controller/AreaController.dart';
 import '../../model/Area.dart';
@@ -21,7 +20,7 @@ class _GetAllAreaPageState extends StateMVC
 
   _GetAllAreaPageState() : super(AreaController()) {_controller = controller as AreaController;}
 
-  Widget appBarTitle = const Text("Зона");
+  Widget appBarTitle = const Text("Зоны");
   Icon actionIcon = const Icon(Icons.search, color: Colors.white,);
 
   @override
@@ -58,7 +57,7 @@ class _GetAllAreaPageState extends StateMVC
                 );}
               else {
                 actionIcon = const Icon(Icons.search);
-                appBarTitle = const Text("Зона");
+                appBarTitle = const Text("Зоны");
               }
             });
           } ,),]

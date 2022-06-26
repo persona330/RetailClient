@@ -75,7 +75,7 @@ class PutMeasurementPageState extends StateMVC
                   ),
                   TextFormField(
                     keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я]")),],
+                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r"[a-zA-Zа-яА-Я\s]")),],
                     decoration: const InputDecoration(labelText: "Полное название"),
                     style: const TextStyle(fontSize: 14, color: Colors.blue),
                     controller: _fullNameController,
